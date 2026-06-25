@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitProcess.schema.json",
+  "title": "Process unit",
+  "version": "0.1.0",
+  "description": "Chunk that describes how a system, workflow, lifecycle, or sequence behaves over time.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
+  "properties": {
+    "unitType": { "const": "process" },
+    "informationType": { "const": "process" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "components/sharedBlockElementProperties.schema.json" }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "content"]
+}

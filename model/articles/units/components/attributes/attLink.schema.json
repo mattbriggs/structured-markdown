@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attLink.schema.json",
+  "title": "Link attribute",
+  "version": "0.1.0",
+  "description": "Inline hyperlink.",
+  "x-markdown-regex": "\\[([^\\]]+)\\]\\(([^)]+)\\)",
+  "x-html-element": "a",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attLink" },
+    "href": { "type": "string" },
+    "text": { "type": "string" }
+  },
+  "required": ["attType", "href", "markdown"]
+}

@@ -1,0 +1,56 @@
+site_name: Structure-Aware Parser
+site_description: Structure-aware parser and validator for structured Markdown and rendered HTML
+repo_url: https://github.com/mb/structured-markdown
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - Layers: architecture/layers.md
+      - Contracts: architecture/contracts.md
+      - Diagnostics: architecture/diagnostics.md
+      - Provenance: architecture/provenance.md
+      - Diagrams: architecture/diagrams.md
+  - User Guide:
+      - CLI Reference: user-guide/cli.md
+      - Markdown Validation: user-guide/markdown-validation.md
+      - Author Feedback: user-guide/author-feedback.md
+      - Transform Readiness: user-guide/transform-readiness.md
+      - Debug Inspection: user-guide/debug-inspection.md
+  - Developer Guide:
+      - Adapters: developer-guide/adapters.md
+      - Validators: developer-guide/validators.md
+      - Compatibility: developer-guide/compatibility.md
+      - Testing: developer-guide/testing.md
+      - Schema Versioning: developer-guide/schema-versioning.md
+  - Schemas:
+      - Parser Contract v1: schemas/parser-contract-v1.md
+      - Structured Markdown v1: schemas/structured-markdown-v1.md
+  - API Reference: api/index.md

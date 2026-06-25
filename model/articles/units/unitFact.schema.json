@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitFact.schema.json",
+  "title": "Fact unit",
+  "version": "0.1.0",
+  "description": "Chunk that records lookup facts, values, constraints, fields, parameters, or other stable statements.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
+  "properties": {
+    "unitType": { "const": "fact" },
+    "informationType": { "const": "fact" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "components/sharedBlockElementProperties.schema.json" }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "content"]
+}

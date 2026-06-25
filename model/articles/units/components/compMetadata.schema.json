@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compMetadata.schema.json",
+  "title": "Component metadata hooks",
+  "version": "0.1.0",
+  "description": "Optional metadata hook for block-level components. Core component typing belongs in componentType, not in this bag.",
+  "type": "object",
+  "additionalProperties": {
+    "type": ["string", "number", "integer", "array", "object", "boolean", "null"]
+  }
+}

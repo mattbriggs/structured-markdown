@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "componentId": "compAlertWarning",
+    "title": "Warning Alert",
+    "version": "0.0.1",
+    "description": " Optional information to help a user be more successful.",
+    "markdown": "> [!WARNING]\r\n> Dangerous certain consequences of an action.",
+    "html": "<div class=\"alert is-warning\">\r\n<p class=\"alert-title\"><span class=\"docon docon-status-warning-outline\" aria-hidden=\"true\"></span> Warning</p>\r\n<p>Dangerous certain consequences of an action.</p>\r\n</div>",
+    "regex": "> \\[!WARNING\\] > ([A-Za-z]+( [A-Za-z]+)+)\\.",
+    "type": "object",    
+    "properties": {
+        "metadata": {
+            "allOf": [
+                { "$ref": "compMetadata.schema.json" },
+                {
+                    "properties": {
+                        "componentType": {
+                            "enum": ["compAlertWarning"]
+                        }
+                    }
+                }
+            ]
+        },
+        "markdown": {
+            "type": "string",
+            "description": "Text content for the component."
+        }         
+    },
+    "required": ["metadata", "markdown"]
+}

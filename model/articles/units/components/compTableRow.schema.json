@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compTableRow.schema.json",
+  "title": "Table row component",
+  "version": "0.1.0",
+  "description": "Dependent component that is only valid inside a table component.",
+  "x-html-element": "tr",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compTableRow" },
+    "rowIndex": { "type": "integer", "minimum": 1 },
+    "rowRole": { "enum": ["header", "body", "footer"] },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "compTableCell.schema.json" }
+    }
+  },
+  "required": ["componentType", "rowIndex", "rowRole", "content"]
+}

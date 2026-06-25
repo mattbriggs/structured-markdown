@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "componentId": "compAlertImportant",
+    "title": "Important Alert",
+    "version": "0.0.1",
+    "description": "Essential information required for user success.",
+    "markdown": "> [!IMPORTANT]\r\n> Essential information required for user success.",
+    "html": "<div class=\"alert is-primary\">\r\n<p class=\"alert-title\"><span class=\"docon docon-status-info-outline\" aria-hidden=\"true\"></span> Important</p>\r\n<p>Essential information required for user success.</p>\r\n</div>",
+    "regex": "> \\[!IMPORTANT\\] > ([A-Za-z]+( [A-Za-z]+)+)\\.",
+    "type": "object",    
+    "properties": {
+        "metadata": {
+            "allOf": [
+                { "$ref": "compMetadata.schema.json" },
+                {
+                    "properties": {
+                        "componentType": {
+                            "enum": ["compAlertImportant"]
+                        }
+                    }
+                }
+            ]
+        },
+        "markdown": {
+            "type": "string",
+            "description": "Text content for the component."
+        }        
+    },
+    "required": ["metadata", "markdown"]
+}

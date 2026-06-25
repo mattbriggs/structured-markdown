@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attBold.schema.json",
+  "title": "Bold attribute",
+  "version": "0.1.0",
+  "description": "Inline bold text.",
+  "x-markdown-regex": "\\*\\*([^*]+)\\*\\*|__([^_]+)__",
+  "x-html-element": "b",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attBold" }
+  },
+  "required": ["attType", "markdown"]
+}

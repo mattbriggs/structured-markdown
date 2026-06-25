@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compBlockCode.schema.json",
+  "title": "Code block component",
+  "version": "0.1.0",
+  "description": "Block component for fenced or indented code.",
+  "x-markdown-regex": "^```[^\\n]*\\n[\\s\\S]*?\\n```$",
+  "x-html-element": "pre code",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compBlockCode" },
+    "language": { "type": "string" },
+    "code": { "type": "string" }
+  },
+  "required": ["componentType", "markdown", "code"]
+}

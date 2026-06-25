@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compHeaderH2.schema.json",
+  "title": "H2 heading component",
+  "version": "0.1.0",
+  "description": "Second-level section heading.",
+  "x-markdown-regex": "^##\\s+.+$",
+  "x-html-element": "h2",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compHeaderH2" },
+    "level": { "const": 2 }
+  },
+  "required": ["componentType", "level", "markdown"]
+}

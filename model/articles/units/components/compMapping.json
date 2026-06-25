@@ -1,0 +1,99 @@
+[
+  {
+    "componentType": "compParagraph",
+    "markdown": "paragraph",
+    "html5": "p",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compHeaderH1",
+    "markdown": "# heading",
+    "html5": "h1",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compHeaderH2",
+    "markdown": "## heading",
+    "html5": "h2",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compHeaderH3",
+    "markdown": "### heading",
+    "html5": "h3",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compBlockCode",
+    "markdown": "```language",
+    "html5": "pre code",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compAlert",
+    "markdown": "> [!NOTE]",
+    "html5": ".alert",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compListOrdered",
+    "markdown": "1. item",
+    "html5": "ol",
+    "modelRole": "container",
+    "allowedChildren": ["compListItem"]
+  },
+  {
+    "componentType": "compListUnordered",
+    "markdown": "- item",
+    "html5": "ul",
+    "modelRole": "container",
+    "allowedChildren": ["compListItem"]
+  },
+  {
+    "componentType": "compListItem",
+    "markdown": "- item | 1. item",
+    "html5": "li",
+    "modelRole": "dependent",
+    "allowedParents": ["compListOrdered", "compListUnordered"]
+  },
+  {
+    "componentType": "compTable",
+    "markdown": "pipe table",
+    "html5": "table",
+    "modelRole": "container",
+    "allowedChildren": ["compTableRow"]
+  },
+  {
+    "componentType": "compTableRow",
+    "markdown": "table row",
+    "html5": "tr",
+    "modelRole": "dependent",
+    "allowedParents": ["compTable"],
+    "allowedChildren": ["compTableCell"]
+  },
+  {
+    "componentType": "compTableCell",
+    "markdown": "table cell",
+    "html5": "td | th",
+    "modelRole": "dependent",
+    "allowedParents": ["compTableRow"]
+  },
+  {
+    "componentType": "compLink",
+    "markdown": "[text](href)",
+    "html5": "a",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compInclude",
+    "markdown": "[!INCLUDE[]()]",
+    "html5": "resolved include content",
+    "modelRole": "block"
+  },
+  {
+    "componentType": "compUnknown",
+    "markdown": "unclassified block",
+    "html5": "unclassified element",
+    "modelRole": "fallback"
+  }
+]

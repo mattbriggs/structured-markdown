@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compListUnordered.schema.json",
+  "title": "Unordered list component",
+  "version": "0.1.0",
+  "description": "Block component for an unordered sequence. Its content must be list-item components.",
+  "x-markdown-regex": "^(\\s*[-*+]\\s+.+\\n?)+$",
+  "x-html-element": "ul",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compListUnordered" },
+    "count": { "type": "integer", "minimum": 1 },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "compListItem.schema.json" }
+    }
+  },
+  "required": ["componentType", "count", "content"]
+}

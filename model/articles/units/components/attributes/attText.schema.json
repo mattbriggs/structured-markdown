@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attText.schema.json",
+  "title": "Text attribute",
+  "version": "0.1.0",
+  "description": "Plain inline text with no additional Markdown or HTML semantics.",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attText" }
+  },
+  "required": ["attType", "text"]
+}

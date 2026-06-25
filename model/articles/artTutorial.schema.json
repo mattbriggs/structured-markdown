@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "artTutorial.schema.json",
+  "title": "Tutorial article",
+  "version": "0.1.0",
+  "description": "A specialized how-to article that teaches by walking through a complete scenario or proof of concept.",
+  "type": "object",
+  "allOf": [{ "$ref": "sharedArticle.schema.json#/$defs/articleBase" }],
+  "properties": {
+    "articleType": { "const": "tutorial" },
+    "ditaType": { "const": "howto" },
+    "informationType": { "const": "procedure" },
+    "title": { "type": "string", "pattern": "^(Tutorial:|Tutorial -|Tutorial ).+" },
+    "content": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "anyOf": [
+          { "$ref": "units/unitIntroduction.schema.json" },
+          { "$ref": "units/unitPrerequisites.schema.json" },
+          { "$ref": "units/unitProcedure.schema.json" },
+          { "$ref": "units/unitProcedureOrderedlist.schema.json" },
+          { "$ref": "units/unitProcedureCodeblock.schema.json" },
+          { "$ref": "units/unitConcept.schema.json" },
+          { "$ref": "units/unitLinkNextstep.schema.json" },
+          { "$ref": "units/unitLinkRelated.schema.json" },
+          { "$ref": "units/unitUnknown.schema.json" }
+        ]
+      },
+      "contains": {
+        "anyOf": [
+          { "$ref": "units/unitProcedure.schema.json" },
+          { "$ref": "units/unitProcedureOrderedlist.schema.json" },
+          { "$ref": "units/unitProcedureCodeblock.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["schema", "version", "articleId", "articleType", "ditaType", "informationType", "title", "content"]
+}

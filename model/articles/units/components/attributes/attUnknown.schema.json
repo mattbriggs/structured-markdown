@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attUnknown.schema.json",
+  "title": "Unknown inline attribute",
+  "version": "0.1.0",
+  "description": "Fallback inline element for content the parser cannot confidently classify.",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attUnknown" },
+    "triageStatus": { "const": "unknown" }
+  },
+  "required": ["attType", "triageStatus", "markdown"]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "artTopic.schema.json",
+  "title": "Topic article",
+  "version": "0.1.0",
+  "description": "Generic root-level topic container. Topic is the least specific known article type and can contain any known unit type.",
+  "type": "object",
+  "allOf": [{ "$ref": "sharedArticle.schema.json#/$defs/articleBase" }],
+  "properties": {
+    "articleType": { "const": "topic" },
+    "ditaType": { "const": "topic" },
+    "informationType": {
+      "enum": ["concept", "procedure", "principle", "process", "fact", "mixed", "unknown"]
+    },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "units/sharedUnits.schema.json" }
+    }
+  },
+  "required": ["schema", "version", "articleId", "articleType", "ditaType", "informationType", "content"]
+}

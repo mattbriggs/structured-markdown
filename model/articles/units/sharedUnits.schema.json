@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "sharedUnits.schema.json",
+  "title": "Shared unit union",
+  "version": "0.1.0",
+  "description": "A unit is a logical content chunk within one article. Units carry the information-mapping layer of the model.",
+  "anyOf": [
+    { "$ref": "unitIntroduction.schema.json" },
+    { "$ref": "unitConcept.schema.json" },
+    { "$ref": "unitProcedure.schema.json" },
+    { "$ref": "unitProcedureOrderedlist.schema.json" },
+    { "$ref": "unitProcedureCodeblock.schema.json" },
+    { "$ref": "unitPrinciple.schema.json" },
+    { "$ref": "unitProcess.schema.json" },
+    { "$ref": "unitFact.schema.json" },
+    { "$ref": "unitReference.schema.json" },
+    { "$ref": "unitTroubleshooting.schema.json" },
+    { "$ref": "unitGlossary.schema.json" },
+    { "$ref": "unitGlossentry.schema.json" },
+    { "$ref": "unitPrerequisites.schema.json" },
+    { "$ref": "unitLinkNextstep.schema.json" },
+    { "$ref": "unitLinkRelated.schema.json" },
+    { "$ref": "unitUnknown.schema.json" }
+  ]
+}

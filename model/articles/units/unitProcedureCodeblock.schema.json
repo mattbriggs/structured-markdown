@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitProcedureCodeblock.schema.json",
+  "title": "Code-block procedure unit",
+  "version": "0.1.0",
+  "description": "Procedure chunk whose required action sequence is represented mainly by executable or copyable code blocks.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitProcedure.schema.json" }],
+  "properties": {
+    "unitType": { "const": "procedure" },
+    "informationType": { "const": "procedure" },
+    "procedureRepresentation": { "const": "code-block" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "components/compHeaderH2.schema.json" },
+          { "$ref": "components/compHeaderH3.schema.json" },
+          { "$ref": "components/compParagraph.schema.json" },
+          { "$ref": "components/compBlockCode.schema.json" },
+          { "$ref": "components/compAlert.schema.json" },
+          { "$ref": "components/compUnknown.schema.json" }
+        ]
+      },
+      "contains": { "$ref": "components/compBlockCode.schema.json" }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "procedureRepresentation", "content"]
+}

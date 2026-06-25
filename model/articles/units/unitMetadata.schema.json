@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "unitId": "metadata",
+    "title": "Metadata",
+    "type": "object",
+    "properties": {},
+    "additionalProperties": {
+        "type": ["string", "integer", "array", "object", "boolean"]
+    },
+    "required": []
+}

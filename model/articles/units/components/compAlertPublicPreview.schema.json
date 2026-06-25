@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "componentId": "compAlertPublicPreview",
+    "title": "Public Preview Alert",
+    "version": "0.0.1",
+    "description": "Definition",
+    "markdown": "",
+    "html": "",
+    "regex": "",
+    "type": "object",    
+    "properties": {
+        "metadata": {
+            "allOf": [
+                { "$ref": "compMetadata.schema.json" },
+                {
+                    "properties": {
+                        "componentType": {
+                            "enum": ["compAlertPublicPreview"]
+                        }
+                    }
+                }
+            ]
+        },
+        "markdown": {
+            "type": "string",
+            "description": "Text content for the component."
+        }        
+    },
+    "required": ["metadata", "markdown"]
+}

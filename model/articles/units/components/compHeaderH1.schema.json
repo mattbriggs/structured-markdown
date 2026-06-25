@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compHeaderH1.schema.json",
+  "title": "H1 heading component",
+  "version": "0.1.0",
+  "description": "Top-level article heading.",
+  "x-markdown-regex": "^#\\s+.+$",
+  "x-html-element": "h1",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compHeaderH1" },
+    "level": { "const": 1 }
+  },
+  "required": ["componentType", "level", "markdown"]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitGlossentry.schema.json",
+  "title": "Glossary entry unit",
+  "version": "0.1.0",
+  "description": "Chunk containing one term and its definition.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
+  "properties": {
+    "unitType": { "const": "glossentry" },
+    "informationType": { "const": "fact" },
+    "term": { "type": "string", "minLength": 1 },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "components/compHeaderH2.schema.json" },
+          { "$ref": "components/compHeaderH3.schema.json" },
+          { "$ref": "components/compParagraph.schema.json" },
+          { "$ref": "components/compListUnordered.schema.json" },
+          { "$ref": "components/compUnknown.schema.json" }
+        ]
+      },
+      "contains": { "$ref": "components/compParagraph.schema.json" }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "term", "content"]
+}

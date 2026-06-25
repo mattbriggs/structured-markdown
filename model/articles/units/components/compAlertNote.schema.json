@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "componentId": "compAlertNote",
+    "title": "Note Alert",
+    "version": "0.0.1",
+    "description": "Information the user should notice even if skimming.",
+    "markdown": "> [!NOTE]\r\n> Information the user should notice even if skimming.",
+    "html": "<div class=\"alert is-info\">\r\n<p class=\"alert-title\"><span class=\"docon docon-status-error-outline\" aria-hidden=\"true\"></span> Note</p>\r\n<p>Information the user should notice even if skimming.</p>\r\n</div>",
+    "regex": "> \\[!NOTE\\] > ([A-Za-z]+( [A-Za-z]+)+)\\.",
+    "type": "object",    
+    "properties": {
+        "metadata": {
+            "allOf": [
+                { "$ref": "compMetadata.schema.json" },
+                {
+                    "properties": {
+                        "componentType": {
+                            "enum": ["compAlertNote"]
+                        }
+                    }
+                }
+            ]
+        },
+        "markdown": {
+            "type": "string",
+            "description": "Text content for the component."
+        }        
+    },
+    "required": ["markdown", "metadata"]
+}
