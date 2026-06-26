@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitProcedure.schema.json",
+  "title": "Procedure unit",
+  "version": "0.1.0",
+  "description": "Chunk that describes actions a reader performs to accomplish a goal.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
+  "properties": {
+    "unitType": { "const": "procedure" },
+    "informationType": { "const": "procedure" },
+    "procedureRepresentation": {
+      "enum": ["ordered-list", "code-block", "mixed", "unknown"]
+    },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "components/sharedBlockElementProperties.schema.json" },
+      "contains": {
+        "oneOf": [
+          { "$ref": "components/compListOrdered.schema.json" },
+          { "$ref": "components/compBlockCode.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "procedureRepresentation", "content"]
+}

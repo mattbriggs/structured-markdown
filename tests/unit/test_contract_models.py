@@ -4,16 +4,27 @@ from pydantic import ValidationError
 
 from structure_parser.contracts.config import ParserConfig
 from structure_parser.contracts.diagnostics import Diagnostic, DiagnosticFactory
-from structure_parser.contracts.references import Reference
-from structure_parser.contracts.parsed_document import ParsedDocument
 from structure_parser.contracts.parse_run_result import ParseRunResult, ParseStats
-from structure_parser.contracts.structured_markdown import StructuredContent, Unit, Component, Attribute
-from structure_parser.contracts.validation import ModelValidationResult
+from structure_parser.contracts.parsed_document import ParsedDocument
+from structure_parser.contracts.references import Reference
+from structure_parser.contracts.structured_markdown import (
+    Attribute,
+    Component,
+    StructuredContent,
+    Unit,
+)
 from structure_parser.contracts.transform_readiness import TargetReadiness, TransformReadiness
 from structure_parser.domain.enums import (
-    Severity, ResolutionState, SourceFormat, TriageStatus,
-    ArticleType, UnitType, ComponentType, AttributeType,
-    DiagnosticCategory, InformationType, ReadinessStatus,
+    ArticleType,
+    AttributeType,
+    ComponentType,
+    DiagnosticCategory,
+    ReadinessStatus,
+    ResolutionState,
+    Severity,
+    SourceFormat,
+    TriageStatus,
+    UnitType,
 )
 
 

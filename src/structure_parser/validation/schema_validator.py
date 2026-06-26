@@ -5,37 +5,52 @@ import json
 from pathlib import Path
 from typing import Any
 
-from jsonschema import Draft7Validator, RefResolver
+from jsonschema import Draft7Validator
+from referencing import Registry, Resource
+from referencing.jsonschema import DRAFT7
 
 from structure_parser.contracts.diagnostics import DiagnosticFactory
 from structure_parser.contracts.validation import ModelValidationResult
-from structure_parser.domain.errors import SchemaRepositoryError
-from structure_parser.repositories.schema_repository import get_default_model_dir, load_schema
+from structure_parser.repositories.schema_repository import get_default_model_dir
+
+# Meta-schema URIs stubbed offline so the registry never hits the network.
+_OFFLINE_META_URIS = [
+    "https://json-schema.org/draft/2019-09/schema",
+    "https://json-schema.org/draft-07/schema",
+    "https://json-schema.org/draft-07/schema#",
+    "http://json-schema.org/draft-07/schema#",
+    "http://json-schema.org/draft-07/schema",
+]
+_META_STUB: dict[str, Any] = {"type": "object"}
 
 
-def _build_schema_store(model_dir: Path) -> dict[str, Any]:
-    """Pre-load all .schema.json files so RefResolver never hits the filesystem directly.
+def _build_registry(model_dir: Path) -> Registry:
+    """Build a referencing.Registry with all model schemas pre-loaded.
 
-    Registers each schema under three keys so all $ref forms resolve:
-      1. The bare filename ("artHowto.schema.json")
-      2. The file:// URI of the actual file
-      3. The $id value if it differs from the filename
+    Each schema is registered under its absolute file:// URI so that relative
+    ``$ref`` values resolve correctly within the model directory tree.  Schemas
+    are also indexed under their bare filename and ``$id`` for flexible lookup.
     """
-    store: dict[str, Any] = {}
+    resources: list[tuple[str, Resource[Any]]] = []
+
+    stub = Resource.from_contents(_META_STUB, default_specification=DRAFT7)
+    for uri in _OFFLINE_META_URIS:
+        resources.append((uri, stub))
+
     for schema_file in model_dir.rglob("*.schema.json"):
         try:
             schema = json.loads(schema_file.read_text(encoding="utf-8"))
         except Exception:
             continue
+        resource = Resource.from_contents(schema, default_specification=DRAFT7)
         file_uri = schema_file.as_uri()
-        store[file_uri] = schema
-        # Also register by bare filename so relative $refs resolve
-        store[schema_file.name] = schema
-        # Register by $id if present
+        resources.append((file_uri, resource))
+        resources.append((schema_file.name, resource))
         schema_id = schema.get("$id")
-        if schema_id and schema_id not in store:
-            store[schema_id] = schema
-    return store
+        if schema_id and schema_id not in (file_uri, schema_file.name):
+            resources.append((schema_id, resource))
+
+    return Registry().with_resources(resources)
 
 
 def validate_against_schema(
@@ -54,17 +69,6 @@ def validate_against_schema(
     """
     base = model_dir or get_default_model_dir()
 
-    try:
-        schema = load_schema(schema_id, base)
-    except SchemaRepositoryError as exc:
-        return ModelValidationResult(
-            schema_id=schema_id,
-            valid=False,
-            source_path=source_path,
-            diagnostics=[DiagnosticFactory.schema_file_not_found(str(exc))],
-        )
-
-    # Locate the schema file to anchor the RefResolver's base URI
     matches = list(base.rglob(schema_id))
     if not matches:
         return ModelValidationResult(
@@ -74,24 +78,21 @@ def validate_against_schema(
             diagnostics=[DiagnosticFactory.schema_file_not_found(schema_id)],
         )
 
-    schema_path = matches[0]
-    store = _build_schema_store(base)
-
-    resolver = RefResolver(
-        base_uri=schema_path.as_uri(),
-        referrer=schema,
-        store=store,
-    )
+    registry = _build_registry(base)
+    schema_file_uri = matches[0].as_uri()
 
     try:
-        errors = list(Draft7Validator(schema, resolver=resolver).iter_errors(data))
+        # Use a $ref wrapper so the validator retrieves the schema from the registry
+        # by its file:// URI — this gives relative $refs the correct directory context.
+        root = {"$ref": schema_file_uri}
+        errors = list(Draft7Validator(root, registry=registry).iter_errors(data))
     except Exception as exc:
         return ModelValidationResult(
             schema_id=schema_id,
             valid=False,
             source_path=source_path,
             diagnostics=[DiagnosticFactory.schema_validation_failed(
-                detail=f"Validator error: {exc}",
+                detail=f"Schema resolution inconclusive: {exc}",
                 source_path=source_path,
             )],
         )

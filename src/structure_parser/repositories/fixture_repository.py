@@ -1,9 +1,9 @@
 """Fixture repository — loads test fixtures and expected contract outputs."""
 from __future__ import annotations
+
 import json
 from pathlib import Path
 from typing import Any
-
 
 _FIXTURE_DIR = Path(__file__).parent.parent.parent.parent / "tests" / "fixtures"
 

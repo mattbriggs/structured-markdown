@@ -1,8 +1,10 @@
 """Source file repository — handles file-system intake and validation."""
 from __future__ import annotations
+
 import hashlib
-from pathlib import Path
 from dataclasses import dataclass
+from pathlib import Path
+
 from structure_parser.domain.errors import SourceFileNotFoundError
 
 

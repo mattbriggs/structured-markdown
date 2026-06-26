@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitPrinciple.schema.json",
+  "title": "Principle unit",
+  "version": "0.1.0",
+  "description": "Chunk that states a governing rule, policy, design principle, or constraint.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
+  "properties": {
+    "unitType": { "const": "principle" },
+    "informationType": { "const": "principle" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "components/sharedBlockElementProperties.schema.json" }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "content"]
+}

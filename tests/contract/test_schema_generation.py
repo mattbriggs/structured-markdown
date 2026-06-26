@@ -1,13 +1,13 @@
 """Contract test: schema repository loads schemas correctly."""
-import pytest
-from pathlib import Path
 
+import pytest
+
+from structure_parser.domain.errors import SchemaRepositoryError
 from structure_parser.repositories.schema_repository import (
     get_default_model_dir,
-    load_schema,
     list_schemas,
+    load_schema,
 )
-from structure_parser.domain.errors import SchemaRepositoryError
 
 
 class TestSchemaRepository:

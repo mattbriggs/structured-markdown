@@ -1,0 +1,119 @@
+{
+  "$defs": {
+    "DiagnosticCategory": {
+      "enum": [
+        "parse_error",
+        "metadata_error",
+        "structural_warning",
+        "authoring_violation",
+        "reference_error",
+        "schema_error",
+        "unknown_classification",
+        "transform_readiness",
+        "internal_error"
+      ],
+      "title": "DiagnosticCategory",
+      "type": "string"
+    },
+    "ProvenanceStatus": {
+      "enum": [
+        "available",
+        "unavailable",
+        "partial"
+      ],
+      "title": "ProvenanceStatus",
+      "type": "string"
+    },
+    "Severity": {
+      "enum": [
+        "error",
+        "warning",
+        "info",
+        "debug"
+      ],
+      "title": "Severity",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "code": {
+      "title": "Code",
+      "type": "string"
+    },
+    "severity": {
+      "$ref": "#/$defs/Severity"
+    },
+    "category": {
+      "$ref": "#/$defs/DiagnosticCategory"
+    },
+    "message": {
+      "title": "Message",
+      "type": "string"
+    },
+    "detail": {
+      "default": "",
+      "title": "Detail",
+      "type": "string"
+    },
+    "remediation": {
+      "default": "",
+      "title": "Remediation",
+      "type": "string"
+    },
+    "provenance_status": {
+      "$ref": "#/$defs/ProvenanceStatus",
+      "default": "unavailable"
+    },
+    "source_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Path"
+    },
+    "start_line": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Start Line"
+    },
+    "end_line": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "End Line"
+    }
+  },
+  "required": [
+    "code",
+    "severity",
+    "category",
+    "message"
+  ],
+  "title": "Diagnostic",
+  "type": "object"
+}

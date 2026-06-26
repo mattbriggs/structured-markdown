@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compListOrdered.schema.json",
+  "title": "Ordered list component",
+  "version": "0.1.0",
+  "description": "Block component for an ordered sequence. Its content must be list-item components.",
+  "x-markdown-regex": "^(\\s*\\d+\\.\\s+.+\\n?)+$",
+  "x-html-element": "ol",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compListOrdered" },
+    "count": { "type": "integer", "minimum": 1 },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "compListItem.schema.json" }
+    }
+  },
+  "required": ["componentType", "count", "content"]
+}

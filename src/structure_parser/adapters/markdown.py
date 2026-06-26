@@ -357,7 +357,11 @@ def _detect_alert_type(tokens: list) -> str | None:
     """Detect GitHub Alert type from blockquote content tokens."""
     for tok in tokens:
         if tok.type == "inline" and tok.content:
-            m = re.match(r"^\[!(NOTE|TIP|IMPORTANT|CAUTION|WARNING|PUBLIC-PREVIEW)\]", tok.content.strip(), re.I)
+            m = re.match(
+                r"^\[!(NOTE|TIP|IMPORTANT|CAUTION|WARNING|PUBLIC-PREVIEW)\]",
+                tok.content.strip(),
+                re.I,
+            )
             if m:
                 return m.group(1).lower()
     return None

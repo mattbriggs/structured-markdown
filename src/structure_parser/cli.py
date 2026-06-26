@@ -1,25 +1,23 @@
 """Typer CLI entry point for the structure-parser tool."""
 from __future__ import annotations
-import json
-import sys
+
 from pathlib import Path
-from typing import Optional
+from typing import Annotated
 
 import typer
-from typing_extensions import Annotated
 
-from structure_parser.contracts.config import ParserConfig
-from structure_parser.logging_config import configure_logging
 from structure_parser.application.commands import (
-    ParseCommand,
-    ValidateMarkdownCommand,
-    InspectStructureCommand,
+    InspectDiagnosticsCommand,
     InspectModelCommand,
     InspectReferencesCommand,
-    InspectDiagnosticsCommand,
+    InspectStructureCommand,
+    ParseCommand,
     TransformReadinessCommand,
     ValidateContractCommand,
+    ValidateMarkdownCommand,
 )
+from structure_parser.contracts.config import ParserConfig
+from structure_parser.logging_config import configure_logging
 
 app = typer.Typer(
     name="structure-parser",
@@ -28,10 +26,14 @@ app = typer.Typer(
 )
 
 _JsonOption = Annotated[bool, typer.Option("--json", help="Emit JSON output.")]
-_StrictOption = Annotated[bool, typer.Option("--strict", help="Exit 1 on warnings in addition to errors.")]
+_StrictOption = Annotated[
+    bool, typer.Option("--strict", help="Exit 1 on warnings in addition to errors.")
+]
 _DebugOption = Annotated[bool, typer.Option("--debug", help="Enable debug logging.")]
-_SchemaOption = Annotated[Optional[str], typer.Option("--schema", help="Schema ID for validation.")]
-_TargetOption = Annotated[Optional[list[str]], typer.Option("--target", help="Readiness target (repeatable).")]
+_SchemaOption = Annotated[str | None, typer.Option("--schema", help="Schema ID for validation.")]
+_TargetOption = Annotated[
+    list[str] | None, typer.Option("--target", help="Readiness target (repeatable).")
+]
 
 
 def _config(debug: bool = False) -> ParserConfig:

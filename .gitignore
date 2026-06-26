@@ -164,8 +164,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/site
 
 # mypy
 .mypy_cache/
@@ -208,6 +206,23 @@ tempCodeRunnerFile.py
 
 # PyPI configuration file
 .pypirc
+
+# MkDocs generated site (use docs/ for GitHub Pages output, site/ for local builds)
+/site
+
+# Generated docs build output and coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Distribution build artifacts
+dist/
+build/
+*.whl
+*.tar.gz
+
+# macOS metadata
+.DS_Store
 
 # Marimo
 marimo/_static/

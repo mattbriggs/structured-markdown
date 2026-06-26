@@ -2,25 +2,39 @@
 from __future__ import annotations
 
 import json
+from importlib import resources
 from pathlib import Path
 from typing import Any
 
 from structure_parser.domain.errors import SchemaRepositoryError
 
-# The bundled model directory is two levels above this file:
-# src/structure_parser/repositories/ -> src/structure_parser/ -> src/ -> repo root
-_REPO_ROOT = Path(__file__).parent.parent.parent.parent
-_BUNDLED_MODEL_DIR = _REPO_ROOT / "model" / "articles"
-
 
 def get_default_model_dir() -> Path:
-    """Return the path to the bundled model schema directory."""
-    if not _BUNDLED_MODEL_DIR.exists():
-        # Fallback: try relative to src
-        fallback = Path(__file__).parent.parent.parent / "model" / "articles"
-        if fallback.exists():
-            return fallback
-    return _BUNDLED_MODEL_DIR
+    """Return the path to the bundled model schema directory.
+
+    Prefers the package-internal resources (works from a wheel install).
+    Falls back to the source-checkout path for development installs.
+    """
+    # Installed package: schemas live inside the package as resources
+    try:
+        pkg_resources = resources.files("structure_parser.resources.model.articles")
+        candidate = Path(str(pkg_resources))
+        if candidate.exists():
+            return candidate
+    except (ModuleNotFoundError, AttributeError, TypeError):
+        pass
+
+    # Source checkout or editable install: schemas live in model/ at the repo root
+    repo_root = Path(__file__).parent.parent.parent.parent
+    source_dir = repo_root / "model" / "articles"
+    if source_dir.exists():
+        return source_dir
+
+    raise SchemaRepositoryError(
+        "Model schema directory not found. "
+        "Install the package properly or run from the source checkout.",
+        path="model/articles",
+    )
 
 
 def load_schema(schema_id: str, model_dir: Path | None = None) -> dict[str, Any]:

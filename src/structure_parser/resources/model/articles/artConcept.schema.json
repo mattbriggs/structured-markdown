@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "artConcept.schema.json",
+  "title": "Concept article",
+  "version": "0.1.0",
+  "description": "A root-level article pattern for explaining what something is, why it matters, and how its parts relate.",
+  "type": "object",
+  "allOf": [{ "$ref": "sharedArticle.schema.json#/$defs/articleBase" }],
+  "properties": {
+    "articleType": { "const": "concept" },
+    "ditaType": { "const": "concept" },
+    "informationType": { "const": "concept" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "anyOf": [
+          { "$ref": "units/unitIntroduction.schema.json" },
+          { "$ref": "units/unitConcept.schema.json" },
+          { "$ref": "units/unitPrinciple.schema.json" },
+          { "$ref": "units/unitFact.schema.json" },
+          { "$ref": "units/unitReference.schema.json" },
+          { "$ref": "units/unitLinkRelated.schema.json" },
+          { "$ref": "units/unitUnknown.schema.json" }
+        ]
+      },
+      "contains": { "$ref": "units/unitConcept.schema.json" }
+    }
+  },
+  "required": ["schema", "version", "articleId", "articleType", "ditaType", "informationType", "content"]
+}

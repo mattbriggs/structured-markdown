@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "artReference.schema.json",
+  "title": "Reference article",
+  "version": "0.1.0",
+  "description": "A root-level article pattern for lookup-oriented facts, parameters, tables, catalogs, options, or API details.",
+  "type": "object",
+  "allOf": [{ "$ref": "sharedArticle.schema.json#/$defs/articleBase" }],
+  "properties": {
+    "articleType": { "const": "reference" },
+    "ditaType": { "const": "reference" },
+    "informationType": { "const": "fact" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "anyOf": [
+          { "$ref": "units/unitIntroduction.schema.json" },
+          { "$ref": "units/unitReference.schema.json" },
+          { "$ref": "units/unitFact.schema.json" },
+          { "$ref": "units/unitLinkRelated.schema.json" },
+          { "$ref": "units/unitUnknown.schema.json" }
+        ]
+      },
+      "contains": { "$ref": "units/unitReference.schema.json" }
+    }
+  },
+  "required": ["schema", "version", "articleId", "articleType", "ditaType", "informationType", "content"]
+}

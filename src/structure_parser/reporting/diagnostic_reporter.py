@@ -1,8 +1,9 @@
 """Diagnostic reporter — formats diagnostics for human consumption."""
 from __future__ import annotations
+
 from structure_parser.contracts.diagnostics import Diagnostic
 from structure_parser.domain.enums import Severity
-from structure_parser.validation.author_feedback import format_feedback, group_by_severity
+from structure_parser.validation.author_feedback import format_feedback
 
 
 def report_diagnostics(

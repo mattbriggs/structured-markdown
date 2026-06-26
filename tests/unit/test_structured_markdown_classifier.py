@@ -1,13 +1,12 @@
 """Tests for the structured Markdown classifier."""
-import tempfile
 import os
-import pytest
+import tempfile
 from pathlib import Path
 
 from structure_parser.adapters.markdown import MarkdownAdapter
 from structure_parser.contracts.config import ParserConfig
+from structure_parser.domain.enums import ArticleType, UnitType
 from structure_parser.structured_markdown.classifier import classify
-from structure_parser.domain.enums import ArticleType, UnitType, TriageStatus
 
 
 def _parse_md(content: str) -> object:
@@ -67,7 +66,10 @@ class TestClassifier:
         assert len(units) >= 1
 
     def test_content_order_preserved(self):
-        md = "---\ntitle: T\n---\n# T\n\n## Introduction\n\nX\n\n## Steps\n\n1. A\n\n## Next Steps\n\n- See also\n"
+        md = (
+            "---\ntitle: T\n---\n# T\n\n## Introduction\n\nX\n\n## Steps\n\n1. A\n\n"
+            "## Next Steps\n\n- See also\n"
+        )
         raw = _parse_md(md)
         sc, diags = classify(raw, {"title": "T"})
         titles = [u.title for u in sc.content]

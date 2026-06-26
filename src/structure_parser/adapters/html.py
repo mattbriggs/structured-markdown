@@ -1,11 +1,12 @@
 """Rendered HTML adapter using lxml."""
 from __future__ import annotations
+
 import hashlib
 from pathlib import Path
 from typing import Any
 
 try:
-    from lxml import etree, html as lxml_html
+    from lxml import html as lxml_html
     _LXML_AVAILABLE = True
 except ImportError:
     _LXML_AVAILABLE = False
@@ -171,7 +172,9 @@ def _inline_elements(element: Any) -> list[RawNode]:
             elif tag == "img":
                 src = child.get("src", "")
                 alt = child.get("alt", "")
-                nodes.append(RawNode(node_type="image", tag="img", content=alt, attrs={"src": src, "alt": alt}))
+                nodes.append(RawNode(
+                    node_type="image", tag="img", content=alt, attrs={"src": src, "alt": alt}
+                ))
             if child.tail:
                 nodes.append(RawNode(node_type="text", tag="span", content=child.tail))
 

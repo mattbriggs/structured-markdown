@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitReference.schema.json",
+  "title": "Reference unit",
+  "version": "0.1.0",
+  "description": "Chunk optimized for lookup-oriented reference content, usually tables, lists, terms, fields, or examples.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
+  "properties": {
+    "unitType": { "const": "reference" },
+    "informationType": { "const": "fact" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "components/compHeaderH2.schema.json" },
+          { "$ref": "components/compHeaderH3.schema.json" },
+          { "$ref": "components/compParagraph.schema.json" },
+          { "$ref": "components/compTable.schema.json" },
+          { "$ref": "components/compListUnordered.schema.json" },
+          { "$ref": "components/compBlockCode.schema.json" },
+          { "$ref": "components/compUnknown.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "content"]
+}

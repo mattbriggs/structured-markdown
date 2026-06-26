@@ -1,11 +1,9 @@
 """Tests for the local file reference resolver."""
-import tempfile, os
-from pathlib import Path
 import pytest
 
 from structure_parser.contracts.references import Reference
-from structure_parser.resolution.local_file_resolver import LocalFileResolver
 from structure_parser.domain.enums import ResolutionState
+from structure_parser.resolution.local_file_resolver import LocalFileResolver
 
 
 @pytest.fixture

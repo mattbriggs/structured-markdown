@@ -1,9 +1,11 @@
 """CLI command objects — unit-testable command implementations."""
 from __future__ import annotations
+
 import json
 from pathlib import Path
+
+from structure_parser.application.orchestrator import parse_many, parse_one
 from structure_parser.contracts.config import ParserConfig
-from structure_parser.application.orchestrator import parse_one, parse_many
 from structure_parser.validation.author_feedback import format_feedback
 from structure_parser.validation.model_validator import validate_model
 

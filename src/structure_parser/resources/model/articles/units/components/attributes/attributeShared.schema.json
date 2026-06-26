@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attributeShared.schema.json",
+  "title": "Shared inline attribute contract",
+  "version": "0.1.0",
+  "description": "Shared fields for inline Markdown and HTML5 elements.",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "metadataHooks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "array", "object", "null"]
+      }
+    },
+    "sourceSpan": {
+      "type": "object",
+      "properties": {
+        "sourcePath": { "type": "string" },
+        "startLine": { "type": "integer", "minimum": 1 },
+        "endLine": { "type": "integer", "minimum": 1 },
+        "queryPath": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "attributeBase": {
+      "type": "object",
+      "properties": {
+        "attType": {
+          "enum": [
+            "attText",
+            "attLink",
+            "attAnchor",
+            "attBold",
+            "attCode",
+            "attEmphasis",
+            "attImage",
+            "attItalic",
+            "attSpan",
+            "attStrong",
+            "attSub",
+            "attSuper",
+            "attUnknown"
+          ]
+        },
+        "attId": { "$ref": "#/$defs/identifier" },
+        "markdown": { "type": "string" },
+        "html": { "type": "string" },
+        "text": { "type": "string" },
+        "href": { "type": "string" },
+        "target": { "type": "string" },
+        "source": { "type": "string" },
+        "altText": { "type": "string" },
+        "metadata": { "$ref": "#/$defs/metadataHooks" },
+        "provenance": { "$ref": "#/$defs/sourceSpan" },
+        "content": {
+          "type": "array",
+          "items": { "$ref": "sharedInLineElementProperties.schema.json" }
+        },
+        "triageStatus": { "enum": ["known", "unknown", "ambiguous"] }
+      }
+    }
+  }
+}

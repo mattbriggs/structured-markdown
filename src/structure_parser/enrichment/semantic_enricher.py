@@ -1,23 +1,20 @@
 """Semantic enricher — converts a RawParseModel to a ParsedDocument."""
 from __future__ import annotations
-from pathlib import Path
-from typing import Any
 
 from structure_parser.contracts.config import ParserConfig
 from structure_parser.contracts.diagnostics import Diagnostic, DiagnosticFactory
 from structure_parser.contracts.parsed_document import ParsedDocument
 from structure_parser.contracts.provenance import DocumentProvenance
 from structure_parser.contracts.raw import RawParseModel
-from structure_parser.domain.enums import SourceFormat
 from structure_parser.enrichment.metadata_extractor import extract_metadata
-from structure_parser.enrichment.structure_builder import build_structure
 from structure_parser.enrichment.reference_classifier import classify_references
+from structure_parser.enrichment.structure_builder import build_structure
+from structure_parser.readiness.dita import DitaReadinessEvaluator
+from structure_parser.readiness.evaluator import evaluate_readiness
+from structure_parser.readiness.rag_ingestion import RagIngestionReadinessEvaluator
+from structure_parser.readiness.schema_org import SchemaOrgReadinessEvaluator
 from structure_parser.structured_markdown.classifier import classify
 from structure_parser.validation.model_validator import validate_model
-from structure_parser.readiness.evaluator import evaluate_readiness
-from structure_parser.readiness.dita import DitaReadinessEvaluator
-from structure_parser.readiness.schema_org import SchemaOrgReadinessEvaluator
-from structure_parser.readiness.rag_ingestion import RagIngestionReadinessEvaluator
 
 
 def enrich(raw: RawParseModel, config: ParserConfig) -> ParsedDocument:

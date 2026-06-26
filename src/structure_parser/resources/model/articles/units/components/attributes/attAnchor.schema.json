@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attAnchor.schema.json",
+  "title": "Anchor attribute",
+  "version": "0.1.0",
+  "description": "Inline or heading anchor target.",
+  "x-html-element": "a",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attAnchor" },
+    "target": { "type": "string" }
+  },
+  "required": ["attType", "target"]
+}

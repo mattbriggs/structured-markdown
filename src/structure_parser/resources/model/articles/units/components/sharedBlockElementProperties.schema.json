@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "sharedBlockElementProperties.schema.json",
+  "title": "Shared block component union",
+  "version": "0.1.0",
+  "description": "Block-level component union allowed directly inside units. Dependent fragments such as list items and table rows are only valid inside their parent component.",
+  "oneOf": [
+    { "$ref": "compAlert.schema.json" },
+    { "$ref": "compBlockCode.schema.json" },
+    { "$ref": "compBlockQuote.schema.json" },
+    { "$ref": "compBlueBox.schema.json" },
+    { "$ref": "compColumns.schema.json" },
+    { "$ref": "compHeaderH1.schema.json" },
+    { "$ref": "compHeaderH2.schema.json" },
+    { "$ref": "compHeaderH3.schema.json" },
+    { "$ref": "compHeaderH4.schema.json" },
+    { "$ref": "compHeaderH5.schema.json" },
+    { "$ref": "compHeaderH6.schema.json" },
+    { "$ref": "compInclude.schema.json" },
+    { "$ref": "compLink.schema.json" },
+    { "$ref": "compListOrdered.schema.json" },
+    { "$ref": "compListUnordered.schema.json" },
+    { "$ref": "compParagraph.schema.json" },
+    { "$ref": "compTable.schema.json" },
+    { "$ref": "compUnknown.schema.json" },
+    { "$ref": "compVideo.schema.json" }
+  ]
+}

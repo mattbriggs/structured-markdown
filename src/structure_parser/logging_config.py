@@ -1,5 +1,6 @@
 """Structured logging configuration for structure_parser."""
 from __future__ import annotations
+
 import logging
 import sys
 

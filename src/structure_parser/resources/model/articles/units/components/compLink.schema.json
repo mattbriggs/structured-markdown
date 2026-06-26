@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compLink.schema.json",
+  "title": "Standalone link component",
+  "version": "0.1.0",
+  "description": "Block-level link component, such as a card, next-step link, or single-line standalone link.",
+  "x-markdown-regex": "^\\[[^\\]]+\\]\\([^)]+\\)$",
+  "x-html-element": "a",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compLink" },
+    "href": { "type": "string" },
+    "text": { "type": "string" }
+  },
+  "required": ["componentType", "href", "markdown"]
+}

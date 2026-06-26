@@ -1,10 +1,11 @@
 """Debug inspector — human-readable views of parsed document internals."""
 from __future__ import annotations
+
 from structure_parser.contracts.parsed_document import ParsedDocument
 from structure_parser.reporting.diagnostic_reporter import report_diagnostics
-from structure_parser.reporting.structure_reporter import report_structure
-from structure_parser.reporting.reference_reporter import report_references
 from structure_parser.reporting.readiness_reporter import report_readiness
+from structure_parser.reporting.reference_reporter import report_references
+from structure_parser.reporting.structure_reporter import report_structure
 
 
 def inspect_document(doc: ParsedDocument) -> str:

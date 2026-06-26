@@ -1,5 +1,6 @@
 """Readiness reporter — formats TransformReadiness for human consumption."""
 from __future__ import annotations
+
 from structure_parser.contracts.transform_readiness import TransformReadiness
 
 
@@ -8,12 +9,12 @@ def report_readiness(readiness: TransformReadiness) -> str:
     if not readiness.targets:
         return "No readiness targets evaluated."
 
-    lines: list[str] = [f"Transform readiness:"]
+    lines: list[str] = ["Transform readiness:"]
     if readiness.source_path:
         lines[0] += f" {readiness.source_path}"
     lines.append("")
 
-    _STATUS_ICONS = {
+    status_icons = {
         "ready": "+",
         "degraded": "~",
         "blocked": "-",
@@ -21,7 +22,7 @@ def report_readiness(readiness: TransformReadiness) -> str:
     }
 
     for t in readiness.targets:
-        status_icon = _STATUS_ICONS.get(t.status.value, "?")
+        status_icon = status_icons.get(t.status.value, "?")
         lines.append(f"  [{status_icon}] {t.target}: {t.status.value.upper()}")
         for p in t.prerequisites_met:
             lines.append(f"      + {p}")

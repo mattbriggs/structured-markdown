@@ -1,7 +1,9 @@
 """Run context — shared state for one orchestrated parse run."""
 from __future__ import annotations
+
 import time
 from dataclasses import dataclass, field
+
 from structure_parser.contracts.config import ParserConfig
 from structure_parser.contracts.diagnostics import Diagnostic
 

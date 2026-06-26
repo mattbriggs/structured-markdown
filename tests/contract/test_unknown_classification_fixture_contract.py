@@ -1,10 +1,14 @@
 """Contract test: unknown-classification fixture preserves unclassified content."""
-import pytest
 from pathlib import Path
+
+import pytest
+
 from structure_parser import parse_file
 from structure_parser.domain.enums import ArticleType
 
-UNKNOWN_FIXTURE = Path(__file__).parent.parent / "fixtures" / "markdown" / "unknown_classification.md"
+UNKNOWN_FIXTURE = (
+    Path(__file__).parent.parent / "fixtures" / "markdown" / "unknown_classification.md"
+)
 
 
 @pytest.fixture

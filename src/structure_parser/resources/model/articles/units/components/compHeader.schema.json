@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compHeader.schema.json",
+  "title": "Heading component union",
+  "version": "0.1.0",
+  "description": "Union schema for Markdown and HTML5 heading components.",
+  "oneOf": [
+    { "$ref": "compHeaderH1.schema.json" },
+    { "$ref": "compHeaderH2.schema.json" },
+    { "$ref": "compHeaderH3.schema.json" },
+    { "$ref": "compHeaderH4.schema.json" },
+    { "$ref": "compHeaderH5.schema.json" },
+    { "$ref": "compHeaderH6.schema.json" }
+  ]
+}

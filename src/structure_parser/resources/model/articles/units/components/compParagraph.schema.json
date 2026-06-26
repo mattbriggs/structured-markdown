@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compParagraph.schema.json",
+  "title": "Paragraph component",
+  "version": "0.1.0",
+  "description": "Block component for paragraph text.",
+  "x-markdown-pattern": "A nonblank line or wrapped paragraph separated by blank lines.",
+  "x-html-element": "p",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compParagraph" },
+    "content": {
+      "type": "array",
+      "items": { "$ref": "attributes/sharedInLineElementProperties.schema.json" }
+    }
+  },
+  "required": ["componentType", "markdown"]
+}

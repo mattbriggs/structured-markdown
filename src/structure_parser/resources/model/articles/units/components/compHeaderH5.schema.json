@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compHeaderH5.schema.json",
+  "title": "H5 heading component",
+  "version": "0.1.0",
+  "description": "Fifth-level section heading.",
+  "x-markdown-regex": "^#####\\s+.+$",
+  "x-html-element": "h5",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compHeaderH5" },
+    "level": { "const": 5 }
+  },
+  "required": ["componentType", "level", "markdown"]
+}

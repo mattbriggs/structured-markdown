@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compColumns.schema.json",
+  "title": "Columns component",
+  "version": "0.1.0",
+  "description": "Block component for columnar content.",
+  "x-html-selector": ".columns",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compColumns" },
+    "columnCount": { "type": "integer", "minimum": 2 },
+    "content": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "oneOf": [
+          { "$ref": "compParagraph.schema.json" },
+          { "$ref": "compListUnordered.schema.json" },
+          { "$ref": "compLink.schema.json" },
+          { "$ref": "compUnknown.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["componentType", "columnCount", "content"]
+}

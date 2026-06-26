@@ -1,11 +1,13 @@
 """Structure builder — builds DocumentStructure from raw nodes."""
 from __future__ import annotations
+
 import uuid
-from structure_parser.contracts.raw import RawNode, RawParseModel
-from structure_parser.contracts.structure import DocumentStructure, StructuralNode
+
 from structure_parser.contracts.diagnostics import Diagnostic, DiagnosticFactory
 from structure_parser.contracts.provenance import SourceSpan
-from structure_parser.domain.enums import TriageStatus, ProvenanceStatus
+from structure_parser.contracts.raw import RawParseModel
+from structure_parser.contracts.structure import DocumentStructure, StructuralNode
+from structure_parser.domain.enums import ProvenanceStatus
 
 
 def build_structure(raw: RawParseModel) -> tuple[DocumentStructure, list[Diagnostic]]:
@@ -36,7 +38,9 @@ def build_structure(raw: RawParseModel) -> tuple[DocumentStructure, list[Diagnos
         node_type="document",
         title=None,
         path="/",
-        source=SourceSpan(source_path=raw.source_path, provenance_status=ProvenanceStatus.unavailable),
+        source=SourceSpan(
+            source_path=raw.source_path, provenance_status=ProvenanceStatus.unavailable
+        ),
     )
 
     stack: list[StructuralNode] = [root]
@@ -62,7 +66,9 @@ def build_structure(raw: RawParseModel) -> tuple[DocumentStructure, list[Diagnos
             source_path=raw.source_path,
             start_line=node.start_line,
             end_line=node.end_line,
-            provenance_status=ProvenanceStatus.available if node.start_line else ProvenanceStatus.unavailable,
+            provenance_status=(
+                ProvenanceStatus.available if node.start_line else ProvenanceStatus.unavailable
+            ),
         )
 
         section = StructuralNode(

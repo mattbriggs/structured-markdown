@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "artArticle.schema.json",
+  "title": "Article pattern",
+  "version": "0.1.0",
+  "description": "Union schema for one Markdown source file or HTML5 page parsed into the structured Markdown pattern language.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "artTopic.schema.json" },
+    { "$ref": "artConcept.schema.json" },
+    { "$ref": "artHowto.schema.json" },
+    { "$ref": "artReference.schema.json" },
+    { "$ref": "artTroubleshooting.schema.json" },
+    { "$ref": "artGlossary.schema.json" },
+    { "$ref": "artGlossentry.schema.json" },
+    { "$ref": "artOverview.schema.json" },
+    { "$ref": "artQuickstart.schema.json" },
+    { "$ref": "artTutorial.schema.json" },
+    { "$ref": "artUnknown.schema.json" }
+  ]
+}

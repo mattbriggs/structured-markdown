@@ -1,13 +1,10 @@
 """End-to-end parse integration tests."""
-import tempfile
 import os
-import pytest
+import tempfile
 from pathlib import Path
 
 from structure_parser import parse_file, parse_files
-from structure_parser.contracts.config import ParserConfig
-from structure_parser.domain.enums import SourceFormat, ArticleType
-
+from structure_parser.domain.enums import ArticleType, SourceFormat
 
 HOWTO_MD = """\
 ---
@@ -101,7 +98,9 @@ class TestParseFileEndToEnd:
     def test_parse_missing_file_returns_diagnostic(self):
         doc = parse_file("/tmp/absolutely-does-not-exist-xyz.md")
         assert doc.has_errors
-        assert any(d.code == "SP-001" or d.code == "SP-003" or d.code == "SP-099" for d in doc.diagnostics)
+        assert any(
+            d.code in ("SP-001", "SP-003", "SP-099") for d in doc.diagnostics
+        )
 
 
 class TestParseFilesEndToEnd:

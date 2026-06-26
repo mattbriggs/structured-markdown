@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attSub.schema.json",
+  "title": "Subscript attribute",
+  "version": "0.1.0",
+  "description": "Inline subscript text.",
+  "x-html-element": "sub",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attSub" }
+  },
+  "required": ["attType", "markdown"]
+}

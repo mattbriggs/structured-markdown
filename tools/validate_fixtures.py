@@ -4,6 +4,7 @@
 Run with: python tools/validate_fixtures.py
 """
 from __future__ import annotations
+
 import sys
 from pathlib import Path
 
@@ -39,7 +40,8 @@ def main() -> None:
                 print(f"  {e.code}: {e.message}")
             all_pass = False
         else:
-            status = f"title={doc.title!r}, units={len(doc.structured_content.content) if doc.structured_content else 0}, diags={len(doc.diagnostics)}"
+            unit_count = len(doc.structured_content.content) if doc.structured_content else 0
+            status = f"title={doc.title!r}, units={unit_count}, diags={len(doc.diagnostics)}"
             print(f"PASS: {fixture_rel.name} — {status}")
 
     sys.exit(0 if all_pass else 1)

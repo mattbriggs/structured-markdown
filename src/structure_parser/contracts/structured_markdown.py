@@ -13,7 +13,6 @@ from structure_parser.domain.enums import (
     ComponentType,
     InformationType,
     ProcedureRepresentation,
-    SourceFormat,
     TriageStatus,
     UnitType,
 )

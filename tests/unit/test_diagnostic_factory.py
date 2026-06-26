@@ -1,8 +1,7 @@
 """Tests for DiagnosticFactory — all MVP diagnostic codes."""
-import pytest
-from structure_parser.contracts.diagnostics import DiagnosticFactory, Diagnostic
-from structure_parser.domain.enums import Severity, DiagnosticCategory
+from structure_parser.contracts.diagnostics import Diagnostic, DiagnosticFactory
 from structure_parser.domain.diagnostic_codes import DIAGNOSTIC_CODES
+from structure_parser.domain.enums import DiagnosticCategory, Severity
 
 
 class TestDiagnosticCodes:
@@ -39,7 +38,9 @@ class TestDiagnosticFactory:
         assert "syntax error" in d.message
 
     def test_malformed_front_matter(self):
-        d = DiagnosticFactory.malformed_front_matter("invalid YAML", source_path="x.md", start_line=1)
+        d = DiagnosticFactory.malformed_front_matter(
+            "invalid YAML", source_path="x.md", start_line=1
+        )
         assert d.code == "SP-010"
         assert d.severity == Severity.warning
         assert d.start_line == 1

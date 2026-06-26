@@ -1,10 +1,12 @@
 """Tests for the reference classifier."""
-import tempfile, os, pytest
+import os
+import tempfile
 from pathlib import Path
+
 from structure_parser.adapters.markdown import MarkdownAdapter
 from structure_parser.contracts.config import ParserConfig
-from structure_parser.enrichment.reference_classifier import classify_references
 from structure_parser.domain.enums import ResolutionState
+from structure_parser.enrichment.reference_classifier import classify_references
 
 
 def _parse_md(content: str):

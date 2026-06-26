@@ -5,15 +5,16 @@ Run with: python tools/generate_json_schemas.py
 Output goes to schemas/parser/v1/ and schemas/structured_markdown/v1/
 """
 from __future__ import annotations
+
 import json
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from structure_parser.contracts.parsed_document import ParsedDocument
-from structure_parser.contracts.parse_run_result import ParseRunResult
 from structure_parser.contracts.diagnostics import Diagnostic
+from structure_parser.contracts.parse_run_result import ParseRunResult
+from structure_parser.contracts.parsed_document import ParsedDocument
 from structure_parser.contracts.references import Reference
 from structure_parser.contracts.structured_markdown import StructuredContent
 

@@ -1,11 +1,12 @@
 """Public API entry points for the structure parser."""
 from __future__ import annotations
+
 from pathlib import Path
 
+from structure_parser.application.orchestrator import parse_many, parse_one
 from structure_parser.contracts.config import ParserConfig
-from structure_parser.contracts.parse_run_result import ParseRunResult, ParseStats
+from structure_parser.contracts.parse_run_result import ParseRunResult
 from structure_parser.contracts.parsed_document import ParsedDocument
-from structure_parser.application.orchestrator import parse_one, parse_many
 from structure_parser.logging_config import configure_logging
 
 

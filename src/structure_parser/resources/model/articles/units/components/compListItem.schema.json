@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compListItem.schema.json",
+  "title": "List item component",
+  "version": "0.1.0",
+  "description": "Dependent component that is only valid inside ordered or unordered list components.",
+  "x-markdown-regex": "^\\s*(?:[-*+]|\\d+\\.)\\s+.+$",
+  "x-html-element": "li",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compListItem" },
+    "order": { "type": "integer", "minimum": 1 },
+    "content": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "$ref": "attributes/sharedInLineElementProperties.schema.json" },
+          { "$ref": "compParagraph.schema.json" },
+          { "$ref": "compBlockCode.schema.json" },
+          { "$ref": "compListOrdered.schema.json" },
+          { "$ref": "compListUnordered.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["componentType", "order", "markdown"]
+}

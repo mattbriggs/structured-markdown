@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attStrong.schema.json",
+  "title": "Strong attribute",
+  "version": "0.1.0",
+  "description": "Inline strong-importance text.",
+  "x-markdown-regex": "\\*\\*([^*]+)\\*\\*|__([^_]+)__",
+  "x-html-element": "strong",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attStrong" }
+  },
+  "required": ["attType", "markdown"]
+}

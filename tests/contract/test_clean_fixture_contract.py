@@ -1,8 +1,9 @@
 """Contract test: clean fixture produces valid parser output."""
-import pytest
 from pathlib import Path
+
+import pytest
+
 from structure_parser import parse_file
-from structure_parser.contracts.config import ParserConfig
 
 CLEAN_FIXTURE = Path(__file__).parent.parent / "fixtures" / "markdown" / "clean.md"
 

@@ -1,9 +1,11 @@
 """JSON serializer — serializes Pydantic contracts to stable JSON."""
 from __future__ import annotations
+
 import json
 from typing import Any
-from structure_parser.contracts.parsed_document import ParsedDocument
+
 from structure_parser.contracts.parse_run_result import ParseRunResult
+from structure_parser.contracts.parsed_document import ParsedDocument
 
 
 def serialize_document(doc: ParsedDocument, indent: int = 2) -> str:

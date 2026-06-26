@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attImage.schema.json",
+  "title": "Image attribute",
+  "version": "0.1.0",
+  "description": "Inline image reference.",
+  "x-markdown-regex": "!\\[([^\\]]*)\\]\\(([^)]+)\\)",
+  "x-html-element": "img",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attImage" },
+    "source": { "type": "string" },
+    "altText": { "type": "string" }
+  },
+  "required": ["attType", "source", "altText", "markdown"]
+}

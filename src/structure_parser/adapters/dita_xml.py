@@ -1,8 +1,8 @@
 """DITA/XML adapter — deferred per A-004. Placeholder for future implementation."""
 from pathlib import Path
+
 from structure_parser.contracts.config import ParserConfig
 from structure_parser.contracts.raw import RawParseModel
-from structure_parser.domain.enums import SourceFormat
 from structure_parser.domain.errors import UnsupportedFormatError
 
 

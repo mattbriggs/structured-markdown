@@ -1,6 +1,8 @@
 """Contract test: known-failure fixture produces expected diagnostics."""
-import pytest
 from pathlib import Path
+
+import pytest
+
 from structure_parser import parse_file
 
 FAILURE_FIXTURE = Path(__file__).parent.parent / "fixtures" / "markdown" / "known_failure.md"

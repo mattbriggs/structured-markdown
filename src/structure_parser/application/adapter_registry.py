@@ -1,10 +1,12 @@
 """Adapter registry — selects the correct format adapter for a source file."""
 from __future__ import annotations
+
 from pathlib import Path
-from structure_parser.adapters.markdown import MarkdownAdapter
-from structure_parser.adapters.html import HtmlAdapter
-from structure_parser.adapters.dita_xml import DitaXmlAdapter
+
 from structure_parser.adapters.base import IFormatAdapter
+from structure_parser.adapters.dita_xml import DitaXmlAdapter
+from structure_parser.adapters.html import HtmlAdapter
+from structure_parser.adapters.markdown import MarkdownAdapter
 from structure_parser.contracts.config import ParserConfig
 from structure_parser.domain.enums import SourceFormat
 from structure_parser.domain.errors import UnsupportedFormatError

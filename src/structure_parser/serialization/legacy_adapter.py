@@ -1,6 +1,8 @@
 """Legacy compatibility adapter — placeholder per assumption A-005."""
 from __future__ import annotations
+
 from typing import Any
+
 from structure_parser.contracts.parsed_document import ParsedDocument
 
 

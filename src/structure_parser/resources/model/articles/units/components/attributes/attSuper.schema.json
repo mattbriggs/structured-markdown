@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attSuper.schema.json",
+  "title": "Superscript attribute",
+  "version": "0.1.0",
+  "description": "Inline superscript text.",
+  "x-html-element": "sup",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attSuper" }
+  },
+  "required": ["attType", "markdown"]
+}

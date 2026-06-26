@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compAlert.schema.json",
+  "title": "Alert component",
+  "version": "0.1.0",
+  "description": "Block component for note, tip, important, caution, warning, public-preview, or generic alert content.",
+  "x-markdown-regex": "^>\\s*\\[!(NOTE|TIP|IMPORTANT|CAUTION|WARNING)\\]",
+  "x-html-selector": ".alert",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compAlert" },
+    "alertType": {
+      "enum": ["note", "tip", "important", "caution", "warning", "public-preview", "generic"]
+    },
+    "content": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "$ref": "compParagraph.schema.json" },
+          { "$ref": "compListUnordered.schema.json" },
+          { "$ref": "compBlockCode.schema.json" },
+          { "$ref": "attributes/sharedInLineElementProperties.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["componentType", "alertType", "markdown"]
+}

@@ -1,48 +1,48 @@
 """Enumerations for the structure parser domain."""
 
-import enum
+from enum import StrEnum
 
 
-class Severity(str, enum.Enum):
+class Severity(StrEnum):
     error = "error"
     warning = "warning"
     info = "info"
     debug = "debug"
 
 
-class ResolutionState(str, enum.Enum):
+class ResolutionState(StrEnum):
     not_attempted = "not_attempted"
     resolved = "resolved"
     unresolved = "unresolved"
     unsupported = "unsupported"
 
 
-class SourceFormat(str, enum.Enum):
+class SourceFormat(StrEnum):
     markdown = "markdown"
     html5 = "html5"
     unknown = "unknown"
 
 
-class TriageStatus(str, enum.Enum):
+class TriageStatus(StrEnum):
     known = "known"
     unknown = "unknown"
     ambiguous = "ambiguous"
 
 
-class ProvenanceStatus(str, enum.Enum):
+class ProvenanceStatus(StrEnum):
     available = "available"
     unavailable = "unavailable"
     partial = "partial"
 
 
-class ReadinessStatus(str, enum.Enum):
+class ReadinessStatus(StrEnum):
     ready = "ready"
     blocked = "blocked"
     degraded = "degraded"
     not_evaluated = "not_evaluated"
 
 
-class InformationType(str, enum.Enum):
+class InformationType(StrEnum):
     concept = "concept"
     procedure = "procedure"
     principle = "principle"
@@ -52,7 +52,7 @@ class InformationType(str, enum.Enum):
     unknown = "unknown"
 
 
-class ArticleType(str, enum.Enum):
+class ArticleType(StrEnum):
     topic = "topic"
     concept = "concept"
     howto = "howto"
@@ -66,7 +66,7 @@ class ArticleType(str, enum.Enum):
     unknown = "unknown"
 
 
-class UnitType(str, enum.Enum):
+class UnitType(StrEnum):
     introduction = "introduction"
     concept = "concept"
     procedure = "procedure"
@@ -83,7 +83,7 @@ class UnitType(str, enum.Enum):
     unknown = "unknown"
 
 
-class ComponentType(str, enum.Enum):
+class ComponentType(StrEnum):
     compAlert = "compAlert"
     compBlockCode = "compBlockCode"
     compBlockQuote = "compBlockQuote"
@@ -109,7 +109,7 @@ class ComponentType(str, enum.Enum):
     compMetadata = "compMetadata"
 
 
-class AttributeType(str, enum.Enum):
+class AttributeType(StrEnum):
     attText = "attText"
     attLink = "attLink"
     attAnchor = "attAnchor"
@@ -125,7 +125,7 @@ class AttributeType(str, enum.Enum):
     attUnknown = "attUnknown"
 
 
-class DiagnosticCategory(str, enum.Enum):
+class DiagnosticCategory(StrEnum):
     parse_error = "parse_error"
     metadata_error = "metadata_error"
     structural_warning = "structural_warning"
@@ -137,7 +137,7 @@ class DiagnosticCategory(str, enum.Enum):
     internal_error = "internal_error"
 
 
-class ProcedureRepresentation(str, enum.Enum):
+class ProcedureRepresentation(StrEnum):
     ordered_list = "ordered-list"
     code_block = "code-block"
     mixed = "mixed"

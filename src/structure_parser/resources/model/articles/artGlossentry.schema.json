@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "artGlossentry.schema.json",
+  "title": "Glossentry article",
+  "version": "0.1.0",
+  "description": "A root-level article pattern for a single glossary term and definition.",
+  "type": "object",
+  "allOf": [{ "$ref": "sharedArticle.schema.json#/$defs/articleBase" }],
+  "properties": {
+    "articleType": { "const": "glossentry" },
+    "ditaType": { "const": "glossentry" },
+    "informationType": { "const": "fact" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "anyOf": [
+          { "$ref": "units/unitGlossentry.schema.json" },
+          { "$ref": "units/unitUnknown.schema.json" }
+        ]
+      },
+      "contains": { "$ref": "units/unitGlossentry.schema.json" }
+    }
+  },
+  "required": ["schema", "version", "articleId", "articleType", "ditaType", "informationType", "content"]
+}

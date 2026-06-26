@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compUnknown.schema.json",
+  "title": "Unknown component",
+  "version": "0.1.0",
+  "description": "Fallback block component for parsed content the parser cannot confidently classify.",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compUnknown" },
+    "triageStatus": { "const": "unknown" }
+  },
+  "required": ["componentType", "triageStatus", "markdown"]
+}

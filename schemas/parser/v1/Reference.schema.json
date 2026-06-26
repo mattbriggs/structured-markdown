@@ -1,0 +1,113 @@
+{
+  "$defs": {
+    "ResolutionState": {
+      "enum": [
+        "not_attempted",
+        "resolved",
+        "unresolved",
+        "unsupported"
+      ],
+      "title": "ResolutionState",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "ref_type": {
+      "title": "Ref Type",
+      "type": "string"
+    },
+    "href": {
+      "title": "Href",
+      "type": "string"
+    },
+    "text": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Text"
+    },
+    "alt_text": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Alt Text"
+    },
+    "state": {
+      "$ref": "#/$defs/ResolutionState",
+      "default": "not_attempted"
+    },
+    "resolved_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Resolved Path"
+    },
+    "source_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Path"
+    },
+    "start_line": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Start Line"
+    },
+    "end_line": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "End Line"
+    }
+  },
+  "required": [
+    "ref_type",
+    "href"
+  ],
+  "title": "Reference",
+  "type": "object"
+}

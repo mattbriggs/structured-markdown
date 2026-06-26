@@ -1,4 +1,6 @@
 site_name: Structure-Aware Parser
+docs_dir: docs_src
+site_dir: docs
 site_description: Structure-aware parser and validator for structured Markdown and rendered HTML
 repo_url: https://github.com/mb/structured-markdown
 
@@ -31,26 +33,40 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Background:
+      - Why Markdown Is Not a Semantic Format: concept/markdown-semantics.md
+      - The Structured Markdown Pattern Language: concept/structured-markdown.md
+      - Information Architecture: concept/information-architecture.md
+      - Comparison with Similar Approaches: concept/comparison.md
+      - "Parsing Approaches: AST, BNF, and Schema Mapping": concept/parsing-approaches.md
   - Architecture:
       - Overview: architecture/overview.md
-      - Layers: architecture/layers.md
+      - Layer Reference: architecture/layers.md
       - Contracts: architecture/contracts.md
       - Diagnostics: architecture/diagnostics.md
       - Provenance: architecture/provenance.md
+      - UML System Model: architecture/uml.md
       - Diagrams: architecture/diagrams.md
   - User Guide:
+      - Use Cases: user-guide/use-cases.md
       - CLI Reference: user-guide/cli.md
-      - Markdown Validation: user-guide/markdown-validation.md
+      - Validating Markdown: user-guide/markdown-validation.md
       - Author Feedback: user-guide/author-feedback.md
       - Transform Readiness: user-guide/transform-readiness.md
-      - Debug Inspection: user-guide/debug-inspection.md
+      - Inspecting Parse Output: user-guide/debug-inspection.md
+  - Model Reference:
+      - Overview: model/overview.md
+      - Article Types: model/articles.md
+      - Unit Types: model/units.md
+      - Component Types: model/components.md
+      - Attribute Types: model/attributes.md
   - Developer Guide:
-      - Adapters: developer-guide/adapters.md
-      - Validators: developer-guide/validators.md
+      - Writing Adapters: developer-guide/adapters.md
+      - Writing Validators: developer-guide/validators.md
       - Compatibility: developer-guide/compatibility.md
       - Testing: developer-guide/testing.md
       - Schema Versioning: developer-guide/schema-versioning.md
-  - Schemas:
+  - API Reference: api/index.md
+  - Schema Reference:
       - Parser Contract v1: schemas/parser-contract-v1.md
       - Structured Markdown v1: schemas/structured-markdown-v1.md
-  - API Reference: api/index.md

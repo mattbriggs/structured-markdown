@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitGlossary.schema.json",
+  "title": "Glossary unit",
+  "version": "0.1.0",
+  "description": "Chunk containing multiple glossary entries.",
+  "type": "object",
+  "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
+  "properties": {
+    "unitType": { "const": "glossary" },
+    "informationType": { "const": "fact" },
+    "content": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "components/compHeaderH2.schema.json" },
+          { "$ref": "components/compTable.schema.json" },
+          { "$ref": "components/compListUnordered.schema.json" },
+          { "$ref": "components/compUnknown.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["unitType", "unitId", "informationType", "content"]
+}

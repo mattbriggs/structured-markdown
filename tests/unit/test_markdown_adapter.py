@@ -1,13 +1,13 @@
 """Tests for the Markdown adapter."""
-import tempfile
 import os
-import pytest
+import tempfile
 from pathlib import Path
+
+import pytest
 
 from structure_parser.adapters.markdown import MarkdownAdapter
 from structure_parser.contracts.config import ParserConfig
 from structure_parser.domain.enums import SourceFormat
-
 
 CLEAN_MD = """\
 ---
@@ -118,7 +118,7 @@ class TestMarkdownAdapter:
         try:
             raw = adapter.parse(path, config)
             lists = [n for n in raw.nodes if n.node_type == "list"]
-            ordered = [l for l in lists if l.tag == "ol"]
+            ordered = [item for item in lists if item.tag == "ol"]
             assert len(ordered) >= 1
             assert len(ordered[0].children) == 2
         finally:

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "unitShared.schema.json",
+  "title": "Shared unit contract",
+  "version": "0.1.0",
+  "description": "Shared constraints for article units. A unit is a logical chunk of an article, often introduced by a heading.",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "metadataHooks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "array", "object", "null"]
+      }
+    },
+    "sourceSpan": {
+      "type": "object",
+      "properties": {
+        "sourcePath": { "type": "string" },
+        "startLine": { "type": "integer", "minimum": 1 },
+        "endLine": { "type": "integer", "minimum": 1 },
+        "queryPath": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "unitBase": {
+      "type": "object",
+      "properties": {
+        "unitType": {
+          "enum": [
+            "introduction",
+            "concept",
+            "procedure",
+            "principle",
+            "process",
+            "fact",
+            "reference",
+            "troubleshooting",
+            "glossary",
+            "glossentry",
+            "prerequisites",
+            "link-nextstep",
+            "link-related",
+            "unknown"
+          ]
+        },
+        "unitId": { "$ref": "#/$defs/identifier" },
+        "informationType": {
+          "enum": ["concept", "procedure", "principle", "process", "fact", "mixed", "unknown"]
+        },
+        "title": { "type": "string" },
+        "triageStatus": { "enum": ["known", "unknown", "ambiguous"] },
+        "metadata": { "$ref": "#/$defs/metadataHooks" },
+        "source": { "$ref": "#/$defs/sourceSpan" },
+        "procedureRepresentation": {
+          "enum": ["ordered-list", "code-block", "mixed", "unknown"]
+        },
+        "term": { "type": "string" },
+        "content": {
+          "type": "array",
+          "items": { "$ref": "components/sharedBlockElementProperties.schema.json" }
+        }
+      }
+    }
+  }
+}

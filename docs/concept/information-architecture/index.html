@@ -1,0 +1,2058 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Structure-aware parser and validator for structured Markdown and rendered HTML">
+      
+      
+      
+      
+        <link rel="prev" href="../structured-markdown/">
+      
+      
+        <link rel="next" href="../comparison/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Information Architecture - Structure-Aware Parser</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#information-architecture-robert-horn-and-dita" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Structure-Aware Parser" class="md-header__button md-logo" aria-label="Structure-Aware Parser" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Structure-Aware Parser
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Information Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mb/structured-markdown" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../markdown-semantics/" class="md-tabs__link">
+          
+  
+  
+  Background
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/overview/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user-guide/use-cases/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../model/overview/" class="md-tabs__link">
+          
+  
+  
+  Model Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer-guide/adapters/" class="md-tabs__link">
+          
+  
+  
+  Developer Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../schemas/parser-contract-v1/" class="md-tabs__link">
+          
+  
+  
+  Schema Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Structure-Aware Parser" class="md-nav__button md-logo" aria-label="Structure-Aware Parser" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Structure-Aware Parser
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mb/structured-markdown" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Background
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Background
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../markdown-semantics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Markdown Is Not a Semantic Format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structured-markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Structured Markdown Pattern Language
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Information Architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Information Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#two-independent-classification-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two Independent Classification Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#robert-horns-information-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Robert Horn's Information Mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dita-13-topic-specializations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DITA 1.3 Topic Specializations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-two-systems-map-to-each-other" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the Two Systems Map to Each Other
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#information-mixing-at-the-unit-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Information Mixing at the Unit Level
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classification-in-the-parser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification in the Parser
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparison with Similar Approaches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsing-approaches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parsing Approaches: AST, BNF, and Schema Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/layers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layer Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/diagnostics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Provenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/uml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UML System Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/use-cases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/markdown-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/author-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Author Feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/transform-readiness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transform Readiness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/debug-inspection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inspecting Parse Output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Article Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model/units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model/components/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Component Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model/attributes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attribute Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/adapters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing Adapters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/validators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing Validators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer-guide/schema-versioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schema Versioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schema Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Schema Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schemas/parser-contract-v1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parser Contract v1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schemas/structured-markdown-v1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structured Markdown v1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="information-architecture-robert-horn-and-dita">Information Architecture: Robert Horn and DITA<a class="headerlink" href="#information-architecture-robert-horn-and-dita" title="Permanent link">&para;</a></h1>
+<p>Every piece of structured technical content must answer two questions simultaneously: what kind of thinking does it ask of the reader, and what publication shape does it require? These are distinct questions, and conflating them produces classification systems that serve neither purpose well. The Structured Markdown model answers them separately, using Robert Horn's information mapping system for the first and DITA 1.3's topic specialization hierarchy for the second — then carries both answers at every level of the document hierarchy.</p>
+<h2 id="two-independent-classification-systems">Two Independent Classification Systems<a class="headerlink" href="#two-independent-classification-systems" title="Permanent link">&para;</a></h2>
+<p>The Structured Markdown model carries two independent classification systems at the article and unit levels — Robert Horn's information mapping types and DITA 1.3's topic specializations — because they answer different questions about the same content. Horn's types answer "what kind of thinking does this content ask of the reader?" and map to rhetorical purpose: is the reader building a mental model, executing a sequence of steps, or looking up a discrete value? DITA's types answer "what publication shape and transformation pipeline does this content require?" and map to structural contracts: does the content need ordered steps, a symptom-condition-remedy structure, or a definition list?</p>
+<p>A single article classified as <code>artHowto</code> carries both <code>ditaType: howto</code> (the DITA publication shape that requires step structure) and <code>informationType: procedure</code> (the Horn rhetorical function that asks the reader to execute actions in sequence). Both classifications apply simultaneously and are not redundant: the DITA type governs what a transformation pipeline produces, while the Horn type governs how a content analytics system assesses the rhetorical health of the content. A corpus analysis that finds an <code>artHowto</code> article with no <code>unitProcedure</code> units is using the Horn classification to identify a structural problem. A DITA-OT transformation pipeline is using the DITA classification to select the correct output template.</p>
+<p>The unit level carries both classifications as well. A <code>unitProcedure</code> carries <code>informationType: procedure</code>, while a <code>unitConcept</code> within the same article carries <code>informationType: concept</code>. This per-unit classification enables the model to describe the internal rhetorical composition of an article — what percentage of a how-to article is conceptual explanation versus procedural instruction versus reference lookup — which neither classification system alone can express.</p>
+<h2 id="robert-horns-information-mapping">Robert Horn's Information Mapping<a class="headerlink" href="#robert-horns-information-mapping" title="Permanent link">&para;</a></h2>
+<p>Robert Horn's information mapping system, developed in the 1960s and 1970s, identifies five fundamental information types that correspond to distinct patterns of human cognition and communication. Each type describes a different cognitive task that the reader performs when engaging with the content:</p>
+<ul>
+<li><strong>Concept</strong>: defines what something is, what it is not, and how its parts relate. A concept unit builds a mental model.</li>
+<li><strong>Procedure</strong>: describes a sequence of steps to accomplish a goal. A procedure unit asks the reader to execute actions in order.</li>
+<li><strong>Principle</strong>: states a rule, policy, guideline, or design constraint that governs behavior. A principle unit asks the reader to apply a judgment criterion.</li>
+<li><strong>Process</strong>: explains how something works over time, through stages or mechanisms that the reader does not directly control. A process unit builds causal understanding.</li>
+<li><strong>Fact</strong>: records discrete, lookup-oriented information — values, parameters, identifiers, specifications, compatibility tables. A fact unit asks the reader to retrieve a specific datum.</li>
+</ul>
+<p>The five types are cognitively distinct in a meaningful sense: a reader processing a concept is constructing and connecting mental nodes; a reader processing a procedure is executing actions and tracking state; a reader processing a fact is matching a query to a stored datum. Mixing types without signaling the transition creates cognitive load because the reader must shift cognitive modes without warning. Horn's core claim is that well-typed information is more scannable, more learnable, and more maintainable because readers and writers alike have shared expectations about what each type contains and how it is organized.</p>
+<p>Horn's system has a practical weakness that the Structured Markdown model must account for: it is a rhetorical classification, not a machine-processable schema. A trained human editor can read a section of prose and determine whether it is explaining what a thing is (concept) or explaining how something works (process) — the distinction is real, but it depends on reading comprehension. A parser cannot make that determination from syntactic signals alone. The Structured Markdown model therefore infers Horn's information types from structural signals — heading text, article type, unit position — rather than content analysis, which means the inference is an approximation that benefits from author cooperation through heading naming conventions.</p>
+<h2 id="dita-13-topic-specializations">DITA 1.3 Topic Specializations<a class="headerlink" href="#dita-13-topic-specializations" title="Permanent link">&para;</a></h2>
+<p>DITA 1.3's topic specialization hierarchy solves a different problem — it defines publication shapes and transformation rules for content management systems and publishing pipelines — and it solves that problem through schema enforcement rather than rhetorical analysis. Each DITA topic type is a structural contract:</p>
+<ul>
+<li><code>concept</code>: conceptual explanation with no required task structure. A <code>&lt;conbody&gt;</code> contains paragraphs, sections, and examples but no mandatory step elements.</li>
+<li><code>task</code> (mapped to <code>howto</code> in Structured Markdown): task-oriented, requiring a <code>&lt;taskbody&gt;</code> that must contain <code>&lt;steps&gt;</code> or <code>&lt;steps-unordered&gt;</code>, each with <code>&lt;step&gt;</code> children containing at minimum a <code>&lt;cmd&gt;</code> element.</li>
+<li><code>reference</code>: lookup-oriented, typically containing <code>&lt;refsyn&gt;</code> (syntax definition), <code>&lt;properties&gt;</code> tables, or <code>&lt;simpletable&gt;</code> structures.</li>
+<li><code>troubleshooting</code>: extends task with a mandatory <code>&lt;troublebody&gt;</code> that must contain <code>&lt;condition&gt;</code>, <code>&lt;cause&gt;</code>, and <code>&lt;remedy&gt;</code> elements — the symptom-condition-remedy diagnostic structure.</li>
+<li><code>glossary</code>/<code>glossentry</code>: terminology definition, requiring <code>&lt;glossterm&gt;</code> and <code>&lt;glossdef&gt;</code> elements in a constrained structure.</li>
+</ul>
+<p>The constraint model means that a DITA-OT transformation pipeline can make structural assumptions before reading a single word of content. A pipeline processing a <code>&lt;task&gt;</code> topic knows it will find steps, that steps will be ordered, and that each step will contain a command. It can generate a numbered checklist, produce accessible alt-text for step numbering, or extract steps for a conversational interface — all without content inspection. These guarantees make DITA valuable at scale in organizations that produce high-volume, multi-channel technical documentation.</p>
+<p>The relationship between DITA types and Horn types is not one-to-one, and understanding that asymmetry is important for using both classification systems correctly. A <code>concept</code> topic in DITA maps cleanly to Horn's <code>concept</code> type: both describe what something is. A <code>task</code> topic in DITA maps to Horn's <code>procedure</code> type at the article level, but a realistic DITA task contains introductory concept paragraphs, prerequisite fact sections, and concluding reference tables alongside its required steps. At the article level the topic is a procedure; at the unit level it is a mix of procedure, concept, and fact. The Structured Markdown model captures both levels of that truth simultaneously, which neither DITA alone nor Horn alone can express.</p>
+<h2 id="how-the-two-systems-map-to-each-other">How the Two Systems Map to Each Other<a class="headerlink" href="#how-the-two-systems-map-to-each-other" title="Permanent link">&para;</a></h2>
+<p>The Structured Markdown model maps the two classification systems at both the article level and the unit level, capturing the rhetorical intent of the content alongside its publication shape. The following table shows the article-level mapping:</p>
+<table>
+<thead>
+<tr>
+<th>Article Schema</th>
+<th>DITA Type</th>
+<th>Horn Information Type</th>
+<th>Characteristic Unit Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>artConcept</code></td>
+<td>concept</td>
+<td>concept</td>
+<td>unitConcept, unitPrinciple</td>
+</tr>
+<tr>
+<td><code>artHowto</code></td>
+<td>howto</td>
+<td>procedure</td>
+<td>unitProcedure, unitPrerequisites</td>
+</tr>
+<tr>
+<td><code>artReference</code></td>
+<td>reference</td>
+<td>fact</td>
+<td>unitReference, unitFact</td>
+</tr>
+<tr>
+<td><code>artTroubleshooting</code></td>
+<td>troubleshooting</td>
+<td>process</td>
+<td>unitTroubleshooting, unitProcedure</td>
+</tr>
+<tr>
+<td><code>artGlossary</code></td>
+<td>glossary</td>
+<td>fact</td>
+<td>unitGlossentry</td>
+</tr>
+<tr>
+<td><code>artGlossentry</code></td>
+<td>glossentry</td>
+<td>fact</td>
+<td>unitGlossentry</td>
+</tr>
+<tr>
+<td><code>artOverview</code></td>
+<td>concept</td>
+<td>concept</td>
+<td>unitConcept, unitIntroduction</td>
+</tr>
+<tr>
+<td><code>artQuickstart</code></td>
+<td>howto</td>
+<td>procedure</td>
+<td>unitProcedure, unitPrerequisites</td>
+</tr>
+<tr>
+<td><code>artTutorial</code></td>
+<td>howto</td>
+<td>procedure</td>
+<td>unitProcedure, unitConcept</td>
+</tr>
+<tr>
+<td><code>artTopic</code></td>
+<td>topic</td>
+<td>mixed</td>
+<td>any</td>
+</tr>
+</tbody>
+</table>
+<p>The "Characteristic Unit Types" column identifies the unit types that appear most often in conforming articles of each type, not an exhaustive or exclusive list. An <code>artHowto</code> article that contains a <code>unitConcept</code> to explain background context is not non-conforming — it is a common and desirable pattern, as long as the article also contains the required <code>unitProcedure</code> units. The article-level <code>informationType: procedure</code> describes the article's primary rhetorical purpose; it does not constrain what individual units may contain.</p>
+<p>The unit level carries <code>informationType</code> independently, which enables the model to express the full rhetorical composition of the document. A <code>artTutorial</code> article carries <code>informationType: procedure</code> at the article level but commonly contains <code>unitConcept</code> units explaining the domain being taught alongside <code>unitProcedure</code> units providing the instructional steps. Each of those units carries its own <code>informationType</code> — <code>concept</code> and <code>procedure</code> respectively — and that per-unit classification is what enables a content analytics pipeline to compute metrics like "what fraction of this tutorial is explanation versus instruction?" without reading the prose.</p>
+<h2 id="information-mixing-at-the-unit-level">Information Mixing at the Unit Level<a class="headerlink" href="#information-mixing-at-the-unit-level" title="Permanent link">&para;</a></h2>
+<p>A key design decision in the Structured Markdown model is that information type mixing is permitted at the unit level, enabling realistic technical documentation patterns that do not fit a pure single-type article. Real technical documentation is almost never a pure instance of any single information type. A production how-to article for a software product typically contains:</p>
+<ul>
+<li>An introductory concept unit explaining what the feature does and why a user would invoke it</li>
+<li>A prerequisites fact unit listing software versions, permissions, and configuration states required before starting</li>
+<li>One or more procedure units containing the numbered steps</li>
+<li>A reference fact unit tabulating configuration parameters, flags, and their default values</li>
+<li>A link unit pointing to related procedures and next steps</li>
+</ul>
+<p>All of these belong within <code>artHowto</code>, because the article-level <code>informationType: procedure</code> describes the article's primary purpose, not the rhetorical type of every unit it contains. This mirrors how technical writers actually structure content: the article is "a how-to" in the sense that its primary value is the sequence of steps that accomplishes a goal, but it provides enough supporting context that the steps can be followed successfully. A model that required every unit in a procedure article to carry <code>informationType: procedure</code> would force technical writers to split naturally unified articles into multiple files, increasing navigation overhead without improving content quality.</p>
+<p>The Structured Markdown model takes a principled stance on this: article-level classification describes the dominant rhetorical purpose; unit-level classification describes the actual rhetorical function of each section. These two levels of description are complementary, and the full picture requires both. A content quality dashboard can surface articles where the dominant information type at the unit level contradicts the article-level claim — a <code>artHowto</code> where eighty percent of the units are <code>unitConcept</code> is probably misclassified or structurally imbalanced — without requiring that every unit conform to the article's type.</p>
+<h2 id="classification-in-the-parser">Classification in the Parser<a class="headerlink" href="#classification-in-the-parser" title="Permanent link">&para;</a></h2>
+<p>The parser infers article type and unit type from signals in the source Markdown rather than requiring authors to annotate every structural element, and that inference strategy is what makes the pattern language lightweight enough to adopt incrementally. Article type inference is driven by YAML front matter. The parser reads the front matter of each Markdown file and looks for fields named <code>articleType</code>, <code>article_type</code>, or <code>type</code>. If any of those fields is present with a value that matches a known article type, the parser applies the corresponding schema. If multiple fields are present with conflicting values, the parser emits a diagnostic and applies the most specific field (<code>articleType</code> takes precedence over <code>type</code>). If no recognized field is present, the article is classified as <code>artUnknown</code> and an SP-041 diagnostic is emitted.</p>
+<p>Unit type inference is driven by the text of H2 headings, using a keyword-matching pass that resolves common heading conventions to known unit types:</p>
+<ul>
+<li>"Introduction" or "Overview" at the unit level → <code>unitIntroduction</code></li>
+<li>"Prerequisites" or "Before you begin" → <code>unitPrerequisites</code></li>
+<li>"Steps", "Procedure", "How to", or headings beginning with "To " → <code>unitProcedure</code></li>
+<li>"Next Steps" or "What's next" → <code>unitLinkNextstep</code></li>
+<li>"Related" or "See also" → <code>unitLinkRelated</code></li>
+<li>"Glossary" → <code>unitGlossary</code></li>
+<li>Headings matching parameter, configuration, or API vocabulary → <code>unitReference</code></li>
+</ul>
+<p>When a heading text matches none of these patterns, the unit is classified as <code>unitUnknown</code> and SP-040 is emitted, identifying the heading text and the article context. Authors can always override both levels of inference by providing explicit front matter fields: <code>articleType</code> overrides article-level inference, and future support for <code>unitType</code> annotations in heading attributes will enable unit-level overrides without changing the heading text.</p>
+<pre class="mermaid"><code>flowchart TD
+    START([Markdown file]) --&gt; FM{Front matter\npresent?}
+
+    FM --&gt;|Yes| AT{articleType\nfield found?}
+    FM --&gt;|No| ARTUNKNOWN[artUnknown\n+ SP-041 diagnostic]
+
+    AT --&gt;|Yes, recognized value| ARTKNOWN[Apply article schema]
+    AT --&gt;|Yes, unrecognized value| ARTUNKNOWN
+    AT --&gt;|No| ARTUNKNOWN
+
+    ARTKNOWN --&gt; H2[Parse H2 headings\nas unit boundaries]
+    ARTUNKNOWN --&gt; H2
+
+    H2 --&gt; KW{Heading text\nmatches keyword?}
+
+    KW --&gt;|Yes, single match| UNITKNOWN[Assign unitType\nfrom keyword map]
+    KW --&gt;|Yes, multiple matches| AMBIG[Ambiguous match\n→ pick highest-priority\nor emit SP-040]
+    KW --&gt;|No match| UNITUNKNOWN[unitUnknown\n+ SP-040 diagnostic]
+
+    UNITKNOWN --&gt; VALIDATE{Schema\nvalidation}
+    AMBIG --&gt; VALIDATE
+    UNITUNKNOWN --&gt; PRESERVE[Preserve content\nin unitUnknown node]
+
+    VALIDATE --&gt;|Pass| READY[ParsedDocument:\nclassified + valid]
+    VALIDATE --&gt;|Fail| DIAGFAIL[ParsedDocument:\nclassified + diagnostics]
+
+    PRESERVE --&gt; DIAGFAIL
+
+    READY --&gt; OUT([Downstream tools:\nDITA / Schema.org / RAG])
+    DIAGFAIL --&gt; FEED([Author feedback\npipeline])</code></pre>
+<p>The flowchart reflects a key invariant: the parser always produces a <code>ParsedDocument</code>, regardless of how many classification decisions fail. Failed classification produces Unknown nodes and diagnostics; successful classification produces known nodes and a validation result. Both paths produce a complete document model that downstream tools can consume, with the Unknown nodes and diagnostics serving as the signal for what requires author attention. This invariant is what makes incremental adoption safe: the first time the parser runs on an existing corpus, it will produce many Unknown nodes and many diagnostics, but it will not fail, and the diagnostic list is the roadmap for conformance work.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

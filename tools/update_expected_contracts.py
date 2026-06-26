@@ -5,7 +5,7 @@ Run with: python tools/update_expected_contracts.py
 WARNING: Only run this when the parser output is known-good.
 """
 from __future__ import annotations
-import json
+
 import sys
 from pathlib import Path
 

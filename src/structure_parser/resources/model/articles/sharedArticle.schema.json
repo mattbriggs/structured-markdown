@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "sharedArticle.schema.json",
+  "title": "Shared article contract",
+  "version": "0.1.0",
+  "description": "Shared constraints for root-level article schemas. An article is one Markdown file or HTML5 page.",
+  "$defs": {
+    "semanticVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "metadataHooks": {
+      "type": "object",
+      "description": "Open metadata hook for source, parser, product, governance, or publishing metadata. Core classification fields stay outside this bag.",
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "array", "object", "null"]
+      }
+    },
+    "sourceProvenance": {
+      "type": "object",
+      "description": "Optional source provenance captured by the parser.",
+      "properties": {
+        "sourcePath": { "type": "string" },
+        "sourceFormat": { "enum": ["markdown", "html5", "unknown"] },
+        "contentHash": { "type": "string" },
+        "startLine": { "type": "integer", "minimum": 1 },
+        "endLine": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "articleBase": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string",
+          "description": "Schema URI or relative schema name used to validate the parsed article.",
+          "format": "uri-reference"
+        },
+        "version": { "$ref": "#/$defs/semanticVersion" },
+        "articleId": { "$ref": "#/$defs/identifier" },
+        "articleType": {
+          "enum": [
+            "topic",
+            "concept",
+            "howto",
+            "reference",
+            "troubleshooting",
+            "glossary",
+            "glossentry",
+            "overview",
+            "quickstart",
+            "tutorial",
+            "unknown"
+          ]
+        },
+        "ditaType": {
+          "enum": ["topic", "concept", "howto", "reference", "troubleshooting", "glossary", "glossentry"]
+        },
+        "informationType": {
+          "enum": ["concept", "procedure", "principle", "process", "fact", "mixed", "unknown"]
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "triageStatus": { "enum": ["known", "unknown", "ambiguous"] },
+        "metadata": { "$ref": "#/$defs/metadataHooks" },
+        "source": { "$ref": "#/$defs/sourceProvenance" },
+        "content": {
+          "type": "array",
+          "items": { "$ref": "units/sharedUnits.schema.json" }
+        }
+      }
+    }
+  }
+}

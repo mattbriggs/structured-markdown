@@ -1,7 +1,7 @@
 """Reference reporter — formats references for human consumption."""
 from __future__ import annotations
+
 from structure_parser.contracts.references import Reference
-from structure_parser.domain.enums import ResolutionState
 
 
 def report_references(references: list[Reference]) -> str:

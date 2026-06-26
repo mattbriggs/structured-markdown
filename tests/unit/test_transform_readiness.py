@@ -1,12 +1,11 @@
 """Tests for transform-readiness evaluators."""
-import pytest
 from structure_parser.contracts.parsed_document import ParsedDocument
 from structure_parser.contracts.structured_markdown import StructuredContent, Unit
-from structure_parser.domain.enums import SourceFormat, ArticleType, UnitType, ReadinessStatus
+from structure_parser.domain.enums import ArticleType, ReadinessStatus, SourceFormat, UnitType
 from structure_parser.readiness.dita import DitaReadinessEvaluator
-from structure_parser.readiness.schema_org import SchemaOrgReadinessEvaluator
-from structure_parser.readiness.rag_ingestion import RagIngestionReadinessEvaluator
 from structure_parser.readiness.evaluator import evaluate_readiness
+from structure_parser.readiness.rag_ingestion import RagIngestionReadinessEvaluator
+from structure_parser.readiness.schema_org import SchemaOrgReadinessEvaluator
 
 
 def _make_doc(title=None, article_type=ArticleType.topic, has_errors=False) -> ParsedDocument:

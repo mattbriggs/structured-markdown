@@ -1,9 +1,11 @@
 """Format adapter protocol and shared types."""
 from __future__ import annotations
+
 from pathlib import Path
 from typing import Protocol
-from structure_parser.contracts.raw import RawParseModel
+
 from structure_parser.contracts.config import ParserConfig
+from structure_parser.contracts.raw import RawParseModel
 
 
 class IFormatAdapter(Protocol):

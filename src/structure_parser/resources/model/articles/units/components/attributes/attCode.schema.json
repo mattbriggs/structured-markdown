@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attCode.schema.json",
+  "title": "Code attribute",
+  "version": "0.1.0",
+  "description": "Inline code span.",
+  "x-markdown-regex": "`[^`]+`",
+  "x-html-element": "code",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attCode" }
+  },
+  "required": ["attType", "markdown"]
+}

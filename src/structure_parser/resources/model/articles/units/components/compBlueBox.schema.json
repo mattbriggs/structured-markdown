@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compBlueBox.schema.json",
+  "title": "Blue box component",
+  "version": "0.1.0",
+  "description": "Block component for a highlighted link or callout region rendered as a blue box.",
+  "x-html-selector": ".blue-box",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compBlueBox" },
+    "content": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "$ref": "compParagraph.schema.json" },
+          { "$ref": "compLink.schema.json" },
+          { "$ref": "attributes/sharedInLineElementProperties.schema.json" }
+        ]
+      }
+    }
+  },
+  "required": ["componentType", "markdown"]
+}

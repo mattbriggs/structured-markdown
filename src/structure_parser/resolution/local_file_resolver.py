@@ -46,7 +46,7 @@ class LocalFileResolver:
 
         # Resolve relative to the source document directory
         base = Path(base_path)
-        if base.is_file():
+        if not base.is_dir():  # treat files and non-existent paths alike
             base = base.parent
 
         target = (base / path_part).resolve()

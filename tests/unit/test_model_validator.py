@@ -1,7 +1,12 @@
 """Tests for the model validator."""
-import pytest
-from structure_parser.contracts.structured_markdown import StructuredContent, Unit, Component
-from structure_parser.domain.enums import ArticleType, UnitType, ComponentType, TriageStatus, InformationType
+from structure_parser.contracts.structured_markdown import Component, StructuredContent, Unit
+from structure_parser.domain.enums import (
+    ArticleType,
+    ComponentType,
+    InformationType,
+    TriageStatus,
+    UnitType,
+)
 from structure_parser.validation.model_validator import validate_model
 
 

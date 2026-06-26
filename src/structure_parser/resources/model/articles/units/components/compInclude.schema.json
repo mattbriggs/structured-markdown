@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compInclude.schema.json",
+  "title": "Include component",
+  "version": "0.1.0",
+  "description": "Block component for include directives or transcluded Markdown.",
+  "x-markdown-regex": "^\\[!INCLUDE\\s*\\[[^\\]]*\\]\\([^)]+\\)\\]",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compInclude" },
+    "target": { "type": "string" }
+  },
+  "required": ["componentType", "target", "markdown"]
+}

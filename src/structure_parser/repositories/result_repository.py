@@ -1,9 +1,11 @@
 """Result repository — saves parse results to disk."""
 from __future__ import annotations
+
 import json
 from pathlib import Path
-from structure_parser.contracts.parsed_document import ParsedDocument
+
 from structure_parser.contracts.parse_run_result import ParseRunResult
+from structure_parser.contracts.parsed_document import ParsedDocument
 
 
 def save_document(doc: ParsedDocument, output_path: Path) -> None:

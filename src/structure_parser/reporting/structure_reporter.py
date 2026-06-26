@@ -1,12 +1,13 @@
 """Structure reporter — formats DocumentStructure for human consumption."""
 from __future__ import annotations
+
 from structure_parser.contracts.structure import DocumentStructure, StructuralNode
 
 
 def report_structure(structure: DocumentStructure) -> str:
     """Render a DocumentStructure as an indented tree."""
     lines: list[str] = [
-        f"Document structure:",
+        "Document structure:",
         f"  Headings: {structure.heading_count}",
         f"  Max depth: {structure.max_depth}",
         f"  Has title: {structure.has_title}",

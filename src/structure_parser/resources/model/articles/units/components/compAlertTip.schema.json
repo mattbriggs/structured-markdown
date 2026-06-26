@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "componentId": "compAlertTip",
+    "title": "Tip Alert",
+    "version": "0.0.1",
+    "description": " Optional information to help a user be more successful.",
+    "markdown": "> [!TIP]\r\n> Optional information to help a user be more successful.",
+    "html": "<div class=\"alert is-success\">\r\n<p class=\"alert-title\"><span class=\"docon docon-lightbulb\" aria-hidden=\"true\"></span> Tip</p>\r\n<p>Optional information to help a user be more successful.</p>\r\n</div>",
+    "regex": "> \\[!TIP\\] > ([A-Za-z]+( [A-Za-z]+)+)\\.",
+    "type": "object",    
+    "properties": {
+        "metadata": {
+            "allOf": [
+                { "$ref": "compMetadata.schema.json" },
+                {
+                    "properties": {
+                        "componentType": {
+                            "enum": ["compAlertTip"]
+                        }
+                    }
+                }
+            ]
+        },        
+        "markdown": {
+            "type": "string",
+            "description": "Text content for the component."
+        }        
+    },
+    "required": ["metadata", "markdown"]
+}

@@ -1,5 +1,6 @@
 """Reference classifier — extracts and classifies links and images from raw nodes."""
 from __future__ import annotations
+
 from structure_parser.contracts.raw import RawNode, RawParseModel
 from structure_parser.contracts.references import Reference
 from structure_parser.domain.enums import ResolutionState

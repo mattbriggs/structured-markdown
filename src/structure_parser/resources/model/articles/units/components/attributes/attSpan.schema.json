@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attSpan.schema.json",
+  "title": "Span attribute",
+  "version": "0.1.0",
+  "description": "Generic inline container.",
+  "x-html-element": "span",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attSpan" },
+    "content": {
+      "type": "array",
+      "items": { "$ref": "sharedInLineElementProperties.schema.json" }
+    }
+  },
+  "required": ["attType", "markdown"]
+}

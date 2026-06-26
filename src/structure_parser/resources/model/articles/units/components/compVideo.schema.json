@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "compVideo.schema.json",
+  "title": "Video component",
+  "version": "0.1.0",
+  "description": "Block component for embedded video references.",
+  "x-html-element": "video | iframe",
+  "type": "object",
+  "allOf": [{ "$ref": "componentShared.schema.json#/$defs/componentBase" }],
+  "properties": {
+    "componentType": { "const": "compVideo" },
+    "target": { "type": "string" },
+    "altText": { "type": "string" }
+  },
+  "required": ["componentType", "target"]
+}

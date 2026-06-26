@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "sharedInLineElementProperties.schema.json",
+  "title": "Shared inline attribute union",
+  "version": "0.1.0",
+  "description": "Inline element union allowed inside text-bearing components.",
+  "oneOf": [
+    { "$ref": "attText.schema.json" },
+    { "$ref": "attLink.schema.json" },
+    { "$ref": "attAnchor.schema.json" },
+    { "$ref": "attBold.schema.json" },
+    { "$ref": "attCode.schema.json" },
+    { "$ref": "attEmphasis.schema.json" },
+    { "$ref": "attImage.schema.json" },
+    { "$ref": "attItalic.schema.json" },
+    { "$ref": "attSpan.schema.json" },
+    { "$ref": "attStrong.schema.json" },
+    { "$ref": "attSub.schema.json" },
+    { "$ref": "attSuper.schema.json" },
+    { "$ref": "attUnknown.schema.json" }
+  ]
+}

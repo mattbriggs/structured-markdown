@@ -1,8 +1,10 @@
 """Metadata extractor — extracts and normalizes front matter and metadata hooks."""
 from __future__ import annotations
+
 from typing import Any
-from structure_parser.contracts.raw import RawParseModel
+
 from structure_parser.contracts.diagnostics import Diagnostic, DiagnosticFactory
+from structure_parser.contracts.raw import RawParseModel
 
 
 def extract_metadata(raw: RawParseModel) -> tuple[dict[str, Any], list[Diagnostic]]:

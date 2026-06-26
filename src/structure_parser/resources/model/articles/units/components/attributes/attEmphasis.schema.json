@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "attEmphasis.schema.json",
+  "title": "Emphasis attribute",
+  "version": "0.1.0",
+  "description": "Inline emphasized text.",
+  "x-markdown-regex": "\\*([^*]+)\\*|_([^_]+)_",
+  "x-html-element": "em",
+  "type": "object",
+  "allOf": [{ "$ref": "attributeShared.schema.json#/$defs/attributeBase" }],
+  "properties": {
+    "attType": { "const": "attEmphasis" }
+  },
+  "required": ["attType", "markdown"]
+}

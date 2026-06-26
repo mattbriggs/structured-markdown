@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "componentShared.schema.json",
+  "title": "Shared component contract",
+  "version": "0.1.0",
+  "description": "Shared fields for block-level Markdown and HTML5 components.",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "metadataHooks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "array", "object", "null"]
+      }
+    },
+    "sourceSpan": {
+      "type": "object",
+      "properties": {
+        "sourcePath": { "type": "string" },
+        "startLine": { "type": "integer", "minimum": 1 },
+        "endLine": { "type": "integer", "minimum": 1 },
+        "queryPath": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "componentBase": {
+      "type": "object",
+      "properties": {
+        "componentType": {
+          "enum": [
+            "compAlert",
+            "compBlockCode",
+            "compBlockQuote",
+            "compBlueBox",
+            "compColumns",
+            "compHeaderH1",
+            "compHeaderH2",
+            "compHeaderH3",
+            "compHeaderH4",
+            "compHeaderH5",
+            "compHeaderH6",
+            "compInclude",
+            "compLink",
+            "compListOrdered",
+            "compListUnordered",
+            "compListItem",
+            "compParagraph",
+            "compTable",
+            "compTableRow",
+            "compTableCell",
+            "compUnknown",
+            "compVideo"
+          ]
+        },
+        "componentId": { "$ref": "#/$defs/identifier" },
+        "markdown": { "type": "string" },
+        "html": { "type": "string" },
+        "text": { "type": "string" },
+        "metadata": { "$ref": "#/$defs/metadataHooks" },
+        "source": { "$ref": "#/$defs/sourceSpan" },
+        "level": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "alertType": {
+          "enum": ["note", "tip", "important", "caution", "warning", "public-preview", "generic"]
+        },
+        "href": { "type": "string" },
+        "target": { "type": "string" },
+        "altText": { "type": "string" },
+        "language": { "type": "string" },
+        "code": { "type": "string" },
+        "count": { "type": "integer", "minimum": 0 },
+        "order": { "type": "integer", "minimum": 1 },
+        "columnCount": { "type": "integer", "minimum": 0 },
+        "rowCount": { "type": "integer", "minimum": 0 },
+        "rowIndex": { "type": "integer", "minimum": 1 },
+        "rowRole": { "enum": ["header", "body", "footer"] },
+        "cellRole": { "enum": ["header", "body"] },
+        "columnIndex": { "type": "integer", "minimum": 1 },
+        "colspan": { "type": "integer", "minimum": 1 },
+        "rowspan": { "type": "integer", "minimum": 1 },
+        "triageStatus": { "enum": ["known", "unknown", "ambiguous"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,1397 @@
+{
+  "$defs": {
+    "ArticleType": {
+      "enum": [
+        "topic",
+        "concept",
+        "howto",
+        "reference",
+        "troubleshooting",
+        "glossary",
+        "glossentry",
+        "overview",
+        "quickstart",
+        "tutorial",
+        "unknown"
+      ],
+      "title": "ArticleType",
+      "type": "string"
+    },
+    "Attribute": {
+      "properties": {
+        "att_type": {
+          "$ref": "#/$defs/AttributeType"
+        },
+        "att_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Att Id"
+        },
+        "markdown": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Markdown"
+        },
+        "html": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Html"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Href"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "alt_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alt Text"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "provenance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceSpan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "content": {
+          "items": {
+            "$ref": "#/$defs/Attribute"
+          },
+          "title": "Content",
+          "type": "array"
+        },
+        "triage_status": {
+          "$ref": "#/$defs/TriageStatus",
+          "default": "known"
+        }
+      },
+      "required": [
+        "att_type"
+      ],
+      "title": "Attribute",
+      "type": "object"
+    },
+    "AttributeType": {
+      "enum": [
+        "attText",
+        "attLink",
+        "attAnchor",
+        "attBold",
+        "attCode",
+        "attEmphasis",
+        "attImage",
+        "attItalic",
+        "attSpan",
+        "attStrong",
+        "attSub",
+        "attSuper",
+        "attUnknown"
+      ],
+      "title": "AttributeType",
+      "type": "string"
+    },
+    "Component": {
+      "properties": {
+        "component_type": {
+          "$ref": "#/$defs/ComponentType"
+        },
+        "component_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Id"
+        },
+        "markdown": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Markdown"
+        },
+        "html": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Html"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "level": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Level"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        },
+        "code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Code"
+        },
+        "alert_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alert Type"
+        },
+        "href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Href"
+        },
+        "alt_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alt Text"
+        },
+        "count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Count"
+        },
+        "order": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Order"
+        },
+        "column_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Column Count"
+        },
+        "row_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Row Count"
+        },
+        "row_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Row Index"
+        },
+        "row_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Row Role"
+        },
+        "cell_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cell Role"
+        },
+        "column_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Column Index"
+        },
+        "colspan": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Colspan"
+        },
+        "rowspan": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rowspan"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceSpan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "content": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Attribute"
+              },
+              {
+                "$ref": "#/$defs/Component"
+              }
+            ]
+          },
+          "title": "Content",
+          "type": "array"
+        },
+        "triage_status": {
+          "$ref": "#/$defs/TriageStatus",
+          "default": "known"
+        }
+      },
+      "required": [
+        "component_type"
+      ],
+      "title": "Component",
+      "type": "object"
+    },
+    "ComponentType": {
+      "enum": [
+        "compAlert",
+        "compBlockCode",
+        "compBlockQuote",
+        "compBlueBox",
+        "compColumns",
+        "compHeaderH1",
+        "compHeaderH2",
+        "compHeaderH3",
+        "compHeaderH4",
+        "compHeaderH5",
+        "compHeaderH6",
+        "compInclude",
+        "compLink",
+        "compListOrdered",
+        "compListUnordered",
+        "compListItem",
+        "compParagraph",
+        "compTable",
+        "compTableRow",
+        "compTableCell",
+        "compUnknown",
+        "compVideo",
+        "compMetadata"
+      ],
+      "title": "ComponentType",
+      "type": "string"
+    },
+    "Diagnostic": {
+      "properties": {
+        "schema_version": {
+          "default": "1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/Severity"
+        },
+        "category": {
+          "$ref": "#/$defs/DiagnosticCategory"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "detail": {
+          "default": "",
+          "title": "Detail",
+          "type": "string"
+        },
+        "remediation": {
+          "default": "",
+          "title": "Remediation",
+          "type": "string"
+        },
+        "provenance_status": {
+          "$ref": "#/$defs/ProvenanceStatus",
+          "default": "unavailable"
+        },
+        "source_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Path"
+        },
+        "start_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Line"
+        },
+        "end_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Line"
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "category",
+        "message"
+      ],
+      "title": "Diagnostic",
+      "type": "object"
+    },
+    "DiagnosticCategory": {
+      "enum": [
+        "parse_error",
+        "metadata_error",
+        "structural_warning",
+        "authoring_violation",
+        "reference_error",
+        "schema_error",
+        "unknown_classification",
+        "transform_readiness",
+        "internal_error"
+      ],
+      "title": "DiagnosticCategory",
+      "type": "string"
+    },
+    "DocumentProvenance": {
+      "properties": {
+        "source_path": {
+          "title": "Source Path",
+          "type": "string"
+        },
+        "source_format": {
+          "$ref": "#/$defs/SourceFormat"
+        },
+        "content_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Hash"
+        },
+        "start_line": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "end_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Line"
+        }
+      },
+      "required": [
+        "source_path",
+        "source_format"
+      ],
+      "title": "DocumentProvenance",
+      "type": "object"
+    },
+    "DocumentStructure": {
+      "properties": {
+        "root": {
+          "$ref": "#/$defs/StructuralNode"
+        },
+        "heading_count": {
+          "default": 0,
+          "title": "Heading Count",
+          "type": "integer"
+        },
+        "max_depth": {
+          "default": 0,
+          "title": "Max Depth",
+          "type": "integer"
+        },
+        "has_title": {
+          "default": false,
+          "title": "Has Title",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "root"
+      ],
+      "title": "DocumentStructure",
+      "type": "object"
+    },
+    "InformationType": {
+      "enum": [
+        "concept",
+        "procedure",
+        "principle",
+        "process",
+        "fact",
+        "mixed",
+        "unknown"
+      ],
+      "title": "InformationType",
+      "type": "string"
+    },
+    "ModelValidationResult": {
+      "properties": {
+        "schema_version": {
+          "default": "1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "schema_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Schema Id"
+        },
+        "valid": {
+          "title": "Valid",
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          },
+          "title": "Diagnostics",
+          "type": "array"
+        },
+        "source_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Path"
+        }
+      },
+      "required": [
+        "valid"
+      ],
+      "title": "ModelValidationResult",
+      "type": "object"
+    },
+    "ProcedureRepresentation": {
+      "enum": [
+        "ordered-list",
+        "code-block",
+        "mixed",
+        "unknown"
+      ],
+      "title": "ProcedureRepresentation",
+      "type": "string"
+    },
+    "ProvenanceStatus": {
+      "enum": [
+        "available",
+        "unavailable",
+        "partial"
+      ],
+      "title": "ProvenanceStatus",
+      "type": "string"
+    },
+    "ReadinessStatus": {
+      "enum": [
+        "ready",
+        "blocked",
+        "degraded",
+        "not_evaluated"
+      ],
+      "title": "ReadinessStatus",
+      "type": "string"
+    },
+    "Reference": {
+      "properties": {
+        "schema_version": {
+          "default": "1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "ref_type": {
+          "title": "Ref Type",
+          "type": "string"
+        },
+        "href": {
+          "title": "Href",
+          "type": "string"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "alt_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Alt Text"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "not_attempted"
+        },
+        "resolved_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolved Path"
+        },
+        "source_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Path"
+        },
+        "start_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Line"
+        },
+        "end_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Line"
+        }
+      },
+      "required": [
+        "ref_type",
+        "href"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ResolutionState": {
+      "enum": [
+        "not_attempted",
+        "resolved",
+        "unresolved",
+        "unsupported"
+      ],
+      "title": "ResolutionState",
+      "type": "string"
+    },
+    "Severity": {
+      "enum": [
+        "error",
+        "warning",
+        "info",
+        "debug"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "SourceFormat": {
+      "enum": [
+        "markdown",
+        "html5",
+        "unknown"
+      ],
+      "title": "SourceFormat",
+      "type": "string"
+    },
+    "SourceSpan": {
+      "properties": {
+        "source_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Path"
+        },
+        "start_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Line"
+        },
+        "end_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Line"
+        },
+        "query_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Path"
+        },
+        "provenance_status": {
+          "$ref": "#/$defs/ProvenanceStatus",
+          "default": "unavailable"
+        }
+      },
+      "title": "SourceSpan",
+      "type": "object"
+    },
+    "StructuralNode": {
+      "properties": {
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "node_type": {
+          "title": "Node Type",
+          "type": "string"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "level": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Level"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "children": {
+          "items": {
+            "$ref": "#/$defs/StructuralNode"
+          },
+          "title": "Children",
+          "type": "array"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceSpan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "triage_status": {
+          "$ref": "#/$defs/TriageStatus",
+          "default": "known"
+        }
+      },
+      "required": [
+        "node_id",
+        "node_type",
+        "path"
+      ],
+      "title": "StructuralNode",
+      "type": "object"
+    },
+    "StructuredContent": {
+      "properties": {
+        "schema_version": {
+          "default": "1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "schema_name": {
+          "default": "artArticle.schema.json",
+          "title": "Schema Name",
+          "type": "string"
+        },
+        "version": {
+          "default": "0.1.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "article_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Article Id"
+        },
+        "article_type": {
+          "$ref": "#/$defs/ArticleType",
+          "default": "unknown"
+        },
+        "dita_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dita Type"
+        },
+        "information_type": {
+          "$ref": "#/$defs/InformationType",
+          "default": "unknown"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "triage_status": {
+          "$ref": "#/$defs/TriageStatus",
+          "default": "unknown"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "source": {
+          "additionalProperties": true,
+          "title": "Source",
+          "type": "object"
+        },
+        "content": {
+          "items": {
+            "$ref": "#/$defs/Unit"
+          },
+          "title": "Content",
+          "type": "array"
+        }
+      },
+      "title": "StructuredContent",
+      "type": "object"
+    },
+    "TargetReadiness": {
+      "properties": {
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/ReadinessStatus"
+        },
+        "prerequisites_met": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Prerequisites Met",
+          "type": "array"
+        },
+        "prerequisites_missing": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Prerequisites Missing",
+          "type": "array"
+        },
+        "diagnostics": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          },
+          "title": "Diagnostics",
+          "type": "array"
+        }
+      },
+      "required": [
+        "target",
+        "status"
+      ],
+      "title": "TargetReadiness",
+      "type": "object"
+    },
+    "TransformReadiness": {
+      "properties": {
+        "schema_version": {
+          "default": "1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Path"
+        },
+        "targets": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/TargetReadiness"
+          },
+          "title": "Targets",
+          "type": "array"
+        }
+      },
+      "title": "TransformReadiness",
+      "type": "object"
+    },
+    "TriageStatus": {
+      "enum": [
+        "known",
+        "unknown",
+        "ambiguous"
+      ],
+      "title": "TriageStatus",
+      "type": "string"
+    },
+    "Unit": {
+      "properties": {
+        "unit_type": {
+          "$ref": "#/$defs/UnitType"
+        },
+        "unit_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit Id"
+        },
+        "information_type": {
+          "$ref": "#/$defs/InformationType",
+          "default": "unknown"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        },
+        "triage_status": {
+          "$ref": "#/$defs/TriageStatus",
+          "default": "known"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceSpan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "procedure_representation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProcedureRepresentation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "term": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Term"
+        },
+        "content": {
+          "items": {
+            "$ref": "#/$defs/Component"
+          },
+          "title": "Content",
+          "type": "array"
+        }
+      },
+      "required": [
+        "unit_type"
+      ],
+      "title": "Unit",
+      "type": "object"
+    },
+    "UnitType": {
+      "enum": [
+        "introduction",
+        "concept",
+        "procedure",
+        "principle",
+        "process",
+        "fact",
+        "reference",
+        "troubleshooting",
+        "glossary",
+        "glossentry",
+        "prerequisites",
+        "link-nextstep",
+        "link-related",
+        "unknown"
+      ],
+      "title": "UnitType",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_path": {
+      "title": "Source Path",
+      "type": "string"
+    },
+    "source_format": {
+      "$ref": "#/$defs/SourceFormat"
+    },
+    "provenance": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DocumentProvenance"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Title"
+    },
+    "structure": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DocumentStructure"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "structured_content": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StructuredContent"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "references": {
+      "items": {
+        "$ref": "#/$defs/Reference"
+      },
+      "title": "References",
+      "type": "array"
+    },
+    "diagnostics": {
+      "items": {
+        "$ref": "#/$defs/Diagnostic"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    },
+    "validation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ModelValidationResult"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "readiness": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TransformReadiness"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "source_path",
+    "source_format"
+  ],
+  "title": "ParsedDocument",
+  "type": "object"
+}
