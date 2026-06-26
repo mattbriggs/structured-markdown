@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#structure-aware-parser" class="md-skip">
+        <a href="#semantic-markdown" class="md-skip">
           Skip to content
         </a>
       
@@ -1833,7 +1833,9 @@
   
 
 
-<h1 id="structure-aware-parser">Structure-Aware Parser<a class="headerlink" href="#structure-aware-parser" title="Permanent link">&para;</a></h1>
+<h1 id="semantic-markdown">Semantic Markdown<a class="headerlink" href="#semantic-markdown" title="Permanent link">&para;</a></h1>
+<p>Structured Markdown is an open semantic layer for Markdown. A parser uses the standard as a semantic contract to parses constrained Markdown into a stable, validated object model with provenance, enabling reliable transformation into downstream systems such as RAG pipelines, JSON-LD, DITA, RSS/Atom, knowledge graphs, static sites, and structured documentation workflows.</p>
+<p>The current project is focusing on a layered Python package that parses Markdown and rendered HTML into a normalized structured content hierarchy for validation, publishing transforms, and RAG ingestion.</p>
 <p><code>structure_parser</code> parses Markdown and HTML into a normalized, classified content model that downstream systems can process without re-reading the source. Plain Markdown is readable and writable by any tool, but it carries no semantic contract: a heading is a heading, a list is a list, and no machine can tell a procedure from a reference section without inspecting the prose. <code>structure_parser</code> closes that gap by reading the source, classifying every block against a defined hierarchy, validating the result against JSON schemas, and returning a versioned Pydantic contract alongside author-facing diagnostics that explain every classification decision.</p>
 <h2 id="the-four-level-hierarchy">The Four-Level Hierarchy<a class="headerlink" href="#the-four-level-hierarchy" title="Permanent link">&para;</a></h2>
 <p><code>structure_parser</code> maps source content to an <strong>Article → Unit → Component → Attribute</strong> hierarchy defined by the JSON schemas in <code>model/</code>.</p>
