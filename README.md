@@ -1,6 +1,8 @@
-# Structured Markdown Parser
+# Structured Markdown
 
-A layered Python package that parses Markdown and rendered HTML into a normalized structured content hierarchy for validation, publishing transforms, and RAG ingestion.
+Structured Markdown is an open semantic layer for Markdown. A parser uses the standard as a semantic contract to parses constrained Markdown into a stable, validated object model with provenance, enabling reliable transformation into downstream systems such as RAG pipelines, JSON-LD, DITA, RSS/Atom, knowledge graphs, static sites, and structured documentation workflows.
+
+The current project is focusing on a layered Python package that parses Markdown and rendered HTML into a normalized structured content hierarchy for validation, publishing transforms, and RAG ingestion.
 
 The parser maps source files into an **Article → Unit → Component → Attribute** hierarchy defined by the JSON schemas in [`model/`](model/). It produces versioned Pydantic contracts, author-facing diagnostics, and transform-readiness reports — with a CLI and a Python API.
 
