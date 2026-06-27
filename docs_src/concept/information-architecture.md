@@ -12,15 +12,19 @@ The unit level carries both classifications as well. A `unitProcedure` carries `
 
 ## Robert Horn's Information Mapping
 
-Robert Horn's information mapping system, developed in the 1960s and 1970s, identifies five fundamental information types that correspond to distinct patterns of human cognition and communication. Each type describes a different cognitive task that the reader performs when engaging with the content:
+Robert Horn's information mapping system identifies information types that correspond to distinct patterns of human cognition and communication. The Structured Markdown design vocabulary uses seven Information Mapping types:
 
 - **Concept**: defines what something is, what it is not, and how its parts relate. A concept unit builds a mental model.
 - **Procedure**: describes a sequence of steps to accomplish a goal. A procedure unit asks the reader to execute actions in order.
 - **Principle**: states a rule, policy, guideline, or design constraint that governs behavior. A principle unit asks the reader to apply a judgment criterion.
 - **Process**: explains how something works over time, through stages or mechanisms that the reader does not directly control. A process unit builds causal understanding.
 - **Fact**: records discrete, lookup-oriented information — values, parameters, identifiers, specifications, compatibility tables. A fact unit asks the reader to retrieve a specific datum.
+- **Structure**: describes parts, relationships, arrangement, or organization. A structure unit asks the reader to understand how pieces fit together.
+- **Classification**: describes groups, classes, categories, or taxonomies. A classification unit asks the reader to sort or recognize related things.
 
-The five types are cognitively distinct in a meaningful sense: a reader processing a concept is constructing and connecting mental nodes; a reader processing a procedure is executing actions and tracking state; a reader processing a fact is matching a query to a stored datum. Mixing types without signaling the transition creates cognitive load because the reader must shift cognitive modes without warning. Horn's core claim is that well-typed information is more scannable, more learnable, and more maintainable because readers and writers alike have shared expectations about what each type contains and how it is organized.
+The current runtime enum implements five Horn-derived values: `concept`, `procedure`, `process`, `principle`, and `fact`. The parser also emits `mixed` and `unknown` as operational states, while `structure` and `classification` remain future model-expansion targets.
+
+The Information Mapping types are cognitively distinct in a meaningful sense: a reader processing a concept is constructing and connecting mental nodes; a reader processing a procedure is executing actions and tracking state; a reader processing a fact is matching a query to a stored datum. Mixing types without signaling the transition creates cognitive load because the reader must shift cognitive modes without warning. Horn's core claim is that well-typed information is more scannable, more learnable, and more maintainable because readers and writers alike have shared expectations about what each type contains and how it is organized.
 
 Horn's system has a practical weakness that the Structured Markdown model must account for: it is a rhetorical classification, not a machine-processable schema. A trained human editor can read a section of prose and determine whether it is explaining what a thing is (concept) or explaining how something works (process) — the distinction is real, but it depends on reading comprehension. A parser cannot make that determination from syntactic signals alone. The Structured Markdown model therefore infers Horn's information types from structural signals — heading text, article type, unit position — rather than content analysis, which means the inference is an approximation that benefits from author cooperation through heading naming conventions.
 
@@ -75,7 +79,11 @@ The Structured Markdown model takes a principled stance on this: article-level c
 
 ## Classification in the Parser
 
-The parser infers article type and unit type from signals in the source Markdown rather than requiring authors to annotate every structural element, and that inference strategy is what makes the pattern language lightweight enough to adopt incrementally. Article type inference is driven by YAML front matter. The parser reads the front matter of each Markdown file and looks for fields named `articleType`, `article_type`, or `type`. If any of those fields is present with a value that matches a known article type, the parser applies the corresponding schema. If multiple fields are present with conflicting values, the parser emits a diagnostic and applies the most specific field (`articleType` takes precedence over `type`). If no recognized field is present, the article is classified as `artUnknown` and an SP-041 diagnostic is emitted.
+The parser infers article type and unit type from source Markdown signals rather than requiring authors to annotate every structural element. Article type inference is currently metadata-first: the parser reads front matter and looks for fields named `articleType`, `article_type`, or `type`.
+
+The current article classifier selects the first recognized metadata value from that key list. If a recognized value maps to a known article type, the parser applies the corresponding schema. If no recognized field is present, the article is classified as `artUnknown` and an SP-041 diagnostic is emitted.
+
+Construction-based article triage is planned design work rather than current behavior. The target design is to infer article type from unit populations when metadata is absent or weak, then reconcile metadata evidence with construction evidence and emit diagnostics for conflicts.
 
 Unit type inference is driven by the text of H2 headings, using a keyword-matching pass that resolves common heading conventions to known unit types:
 
@@ -87,7 +95,9 @@ Unit type inference is driven by the text of H2 headings, using a keyword-matchi
 - "Glossary" → `unitGlossary`
 - Headings matching parameter, configuration, or API vocabulary → `unitReference`
 
-When a heading text matches none of these patterns, the unit is classified as `unitUnknown` and SP-040 is emitted, identifying the heading text and the article context. Authors can always override both levels of inference by providing explicit front matter fields: `articleType` overrides article-level inference, and future support for `unitType` annotations in heading attributes will enable unit-level overrides without changing the heading text.
+When a heading text matches none of these patterns, the parser may still infer a procedure-like unit from ordered lists or code blocks. If no heading or construction signal is strong enough, the unit is classified as `unitUnknown` and SP-040 is emitted.
+
+Authors can currently override article-level inference by providing explicit front matter. Future support for `unitType` annotations in heading attributes would enable unit-level overrides without changing the heading text.
 
 ```mermaid
 flowchart TD
@@ -105,12 +115,12 @@ flowchart TD
 
     H2 --> KW{Heading text\nmatches keyword?}
 
-    KW -->|Yes, single match| UNITKNOWN[Assign unitType\nfrom keyword map]
-    KW -->|Yes, multiple matches| AMBIG[Ambiguous match\n→ pick highest-priority\nor emit SP-040]
+    KW -->|Yes| UNITKNOWN[Assign unitType\nfrom keyword map]
+    KW -->|No heading match,\nbut procedure shape| UNITPROC[Infer procedure-like unit\nfrom ordered lists or code blocks]
     KW -->|No match| UNITUNKNOWN[unitUnknown\n+ SP-040 diagnostic]
 
     UNITKNOWN --> VALIDATE{Schema\nvalidation}
-    AMBIG --> VALIDATE
+    UNITPROC --> VALIDATE
     UNITUNKNOWN --> PRESERVE[Preserve content\nin unitUnknown node]
 
     VALIDATE -->|Pass| READY[ParsedDocument:\nclassified + valid]

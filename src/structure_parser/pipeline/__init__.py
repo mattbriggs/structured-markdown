@@ -10,7 +10,9 @@ def run_pipeline(config: PipelineConfig) -> PipelineRunResult:
 
     :param config: Pipeline configuration.
     :returns: Aggregated pipeline run result.
-    :side effects: Reads source files, writes parsed outputs and a CSV report.
+    :side effects:
+        Reads source files and writes parsed outputs unless dry-run mode is enabled.
+        The CLI command writes the CSV inventory report after this function returns.
     """
     return PipelineOrchestrator().run(config)
 

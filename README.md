@@ -6,6 +6,8 @@ The current project is focusing on a layered Python package that parses Markdown
 
 The parser maps source files into an **Article → Unit → Component → Attribute** hierarchy defined by the JSON schemas in [`model/`](model/). It produces versioned Pydantic contracts, author-facing diagnostics, and transform-readiness reports — with a CLI and a Python API.
 
+The repository pipeline runs that same parser across nested Markdown folders. It discovers source files, preserves relative paths under an output directory, writes parsed JSON files, writes a CSV inventory report, and optionally writes a log file.
+
 ## MVP Scope
 
 | Capability | Status |
@@ -21,6 +23,7 @@ The parser maps source files into an **Article → Unit → Component → Attrib
 | Transform-readiness evaluation (DITA, Schema.org, RAG) | Complete |
 | CLI commands | Complete |
 | Python API | Complete |
+| Nested-folder Markdown pipeline (`pipe`) | Complete |
 | DITA/XML parsing | Deferred (A-004) |
 | Complex conref/keyref resolution | Deferred (A-005) |
 
@@ -58,11 +61,29 @@ Output as JSON:
 structure-parser parse my-article.md --json
 ```
 
+Run the parser across a nested Markdown content repository:
+
+```bash
+structure-parser pipe docs_src --out build/parsed
+```
+
+Write a custom CSV inventory report and optional log:
+
+```bash
+structure-parser pipe docs_src \
+  --out build/parsed \
+  --report build/inventory.csv \
+  --log-file build/pipeline.jsonl \
+  --log-format jsonl
+```
+
 ## Basic Python API Usage
 
 ```python
 from structure_parser import parse_file, parse_files
 from structure_parser.contracts.config import ParserConfig
+from structure_parser.contracts.pipeline import PipelineConfig
+from structure_parser.pipeline import run_pipeline
 
 # Parse a single file (uses default config)
 doc = parse_file("my-article.md")
@@ -86,7 +107,15 @@ for target in doc.readiness.targets:
 # Parse multiple files
 result = parse_files(["article1.md", "article2.md"])
 print(f"Parsed {result.stats.file_count} files in {result.stats.duration_ms:.0f}ms")
+
+# Run the repository pipeline
+pipeline_result = run_pipeline(
+    PipelineConfig(inputs=["docs_src"], output_dir="build/parsed")
+)
+print(f"Discovered {pipeline_result.stats.discovered_count} Markdown files")
 ```
+
+The `run_pipeline()` helper writes parsed JSON outputs and returns a `PipelineRunResult`. The CLI `pipe` command writes the CSV inventory report; Python callers can use `CsvInventoryReporter` when they need the same report.
 
 Configuration:
 
@@ -175,6 +204,7 @@ ParsedDocument (contracts/parsed_document.py)
       │
       ├── CLI (cli.py)         → human text / JSON
       ├── API (api.py)         → Pydantic models
+      ├── Pipeline (pipeline/) → parsed files / CSV inventory
       └── Debug Inspector      → structured reports
 ```
 
@@ -188,6 +218,7 @@ ParsedDocument (contracts/parsed_document.py)
 | `validation/` | `StructuredContent` | `ModelValidationResult` |
 | `readiness/` | `ParsedDocument` | `TransformReadiness` |
 | `api.py` | File path + config | `ParsedDocument` / `ParseRunResult` |
+| `pipeline/` | Files or folders + `PipelineConfig` | `PipelineRunResult` / parsed JSON / CSV |
 
 ## Model Directory
 

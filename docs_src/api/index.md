@@ -7,6 +7,7 @@ The public API surface is small by design. Import the two entry-point functions 
 ```python
 from structure_parser import parse_file, parse_files
 from structure_parser.contracts.config import ParserConfig
+from structure_parser.contracts.pipeline import PipelineConfig, PipelineRunResult
 from structure_parser.contracts.parsed_document import ParsedDocument
 from structure_parser.contracts.parse_run_result import ParseRunResult, ParseStats
 from structure_parser.contracts.structured_markdown import StructuredContent, Unit, Component, Attribute
@@ -19,6 +20,8 @@ from structure_parser.domain.enums import (
     Severity, SourceFormat, ArticleType, UnitType, ComponentType, AttributeType,
     InformationType, TriageStatus, ReadinessStatus, ResolutionState, ProvenanceStatus
 )
+from structure_parser.pipeline import run_pipeline
+from structure_parser.pipeline.reporting import CsvInventoryReporter
 ```
 
 Everything else is internal. Do not import from `structure_parser.adapters`, `structure_parser.application`, `structure_parser.enrichment`, or `structure_parser.structured_markdown` directly; those namespaces are private and may change without notice.
@@ -97,6 +100,77 @@ if not result.success:
         if doc.has_errors:
             print(f"  {doc.source_path}: {doc.error_count} error(s)")
 ```
+
+## run_pipeline()
+
+`run_pipeline()` processes a Markdown content repository and returns a `PipelineRunResult`.
+
+```python
+def run_pipeline(config: PipelineConfig) -> PipelineRunResult:
+```
+
+**Parameters**
+
+| Parameter | Type | Description |
+|---|---|---|
+| `config` | `PipelineConfig` | Repository pipeline configuration, including inputs, output directory, include/exclude patterns, dry-run behavior, and parser configuration. |
+
+**Returns** `PipelineRunResult` — always returns a run result with file-level statuses, run diagnostics, and aggregate statistics.
+
+**Side effects** include reading source files and writing parsed JSON outputs unless `dry_run=True`. The function does not write the CSV inventory report; the CLI `pipe` command writes the report after orchestration, and Python callers can use `CsvInventoryReporter` when they need the same report.
+
+**Example**
+
+```python
+from pathlib import Path
+
+from structure_parser.contracts.pipeline import PipelineConfig
+from structure_parser.pipeline import run_pipeline
+from structure_parser.pipeline.reporting import CsvInventoryReporter
+
+config = PipelineConfig(
+    inputs=[Path("docs_src")],
+    output_dir=Path("build/parsed"),
+)
+
+result = run_pipeline(config)
+CsvInventoryReporter().write(result, config.effective_report_path())
+
+print(f"Discovered: {result.stats.discovered_count}")
+print(f"Parsed: {result.stats.parsed_count}")
+print(f"Failed: {result.stats.failed_count}")
+```
+
+## PipelineConfig
+
+`PipelineConfig` is the public configuration model for repository-scale Markdown processing.
+
+| Field | Type | Default | Effect |
+|---|---|---|---|
+| `inputs` | `list[Path]` | required | Source files or folders to process. |
+| `output_dir` | `Path` | required | Directory for parsed JSON outputs. |
+| `report_path` | `Path \| None` | `None` | CSV report path. Defaults to `output_dir / "pipeline-inventory.csv"`. |
+| `include_patterns` | `list[str]` | `["*.md", "*.markdown"]` | File include patterns. |
+| `exclude_patterns` | `list[str]` | `[]` | Relative path exclude patterns. |
+| `log_file` | `Path \| None` | `None` | Optional log file path for the CLI command. |
+| `log_format` | `str` | `"text"` | Log file format: `text` or `jsonl`. |
+| `strict` | `bool` | `False` | Treat warnings as failures for CLI exit-code purposes. |
+| `dry_run` | `bool` | `False` | Discover files and calculate targets without writing parsed JSON outputs. |
+| `parser_config` | `ParserConfig` | default parser config | Parser configuration applied to each source file. |
+
+## PipelineRunResult
+
+`PipelineRunResult` is the operational output of a repository pipeline run.
+
+| Field | Type | Description |
+|---|---|---|
+| `schema_version` | `str` | Pipeline result contract version. |
+| `run_id` | `str` | Unique identifier for one pipeline invocation. |
+| `files` | `list[PipelineFileResult]` | One result for each discovered source file. |
+| `run_diagnostics` | `list[Diagnostic]` | Run-level pipeline diagnostics, such as missing input or unsafe output overlap. |
+| `stats` | `PipelineRunStats` | Aggregate counts and elapsed time. |
+
+`PipelineRunResult` describes repository execution state. It references parser diagnostic codes in file results but does not redefine article, unit, component, attribute, or information-type semantics.
 
 ## ParserConfig
 

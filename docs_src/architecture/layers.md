@@ -1,6 +1,8 @@
 # Layer Reference
 
-The pipeline is divided into five layers, each with a bounded responsibility and a typed contract at its boundary. Understanding what each layer receives, what it produces, and what diagnostics it emits is the starting point for extending, debugging, or replacing any part of the system.
+The parser flow is divided into five content-processing layers, each with a bounded responsibility and a typed contract at its boundary. Understanding what each layer receives, what it produces, and what diagnostics it emits is the starting point for extending, debugging, or replacing any part of the parser.
+
+The repository pipeline is a separate operational layer above the parser flow. It discovers Markdown files in folders, calls the parser for each file, writes parsed JSON output, and supports CSV inventory reporting through the CLI command.
 
 ## Adapters Layer
 
@@ -31,11 +33,11 @@ The Enrichment layer receives a `RawParseModel` and produces the metadata, headi
 
 The Classification layer receives the `RawParseModel` and the metadata extracted in the enrichment stage, then produces a `StructuredContent` object. It is responsible for imposing the Structured Markdown content model on the flat node list. Three components work in sequence:
 
-**Classifier** (`classifier.py`): Splits the `RawNode` list at H2 heading boundaries, treating each H2 and the nodes that follow it as a `Unit`. The classifier infers the `UnitType` from the heading title text using keyword matching (for example, a heading containing "Prerequisites" maps to `unitPrerequisites`). The overall article type is inferred from document-level metadata or the H1 title. If the article type cannot be determined, the classifier emits SP-041 (article type undetermined).
+**Classifier** (`classifier.py`): Splits the `RawNode` list at H2 heading boundaries, treating each H2 and the nodes that follow it as a `Unit`. The classifier infers the `UnitType` from the heading title text using keyword matching and can infer procedure-like units from ordered lists or code blocks when headings are not specific. The overall article type is currently inferred from document-level metadata keys such as `articleType`, `article_type`, or `type`. If the article type cannot be determined, the classifier emits SP-041 (article type undetermined).
 
-**Component mapper** (`component_mapper.py`): Iterates over each block-level `RawNode` within a unit and maps it to a `ComponentType`. A fenced code block becomes `compCodeBlock`; an unordered list becomes `compBulletList`; a paragraph becomes `compParagraph`. Nodes that match no known component type are mapped to `compUnknown` and emit SP-040 (content classified as unknown, informational).
+**Component mapper** (`component_mapper.py`): Iterates over each block-level `RawNode` within a unit and maps it to a `ComponentType`. A fenced code block becomes `compBlockCode`; an unordered list becomes `compListUnordered`; an ordered list becomes `compListOrdered`; a paragraph becomes `compParagraph`. Nodes that match no known component type are mapped to `compUnknown` and emit SP-040 (content classified as unknown, informational).
 
-**Attribute mapper** (`attribute_mapper.py`): Iterates over inline `RawNode` objects within each component and maps them to `AttributeType` values. A bold inline becomes `attEmphasisStrong`; an inline code span becomes `attCodeInline`. Unrecognized inline types are mapped to `attUnknown` and emit SP-040.
+**Attribute mapper** (`attribute_mapper.py`): Iterates over inline `RawNode` objects within each component and maps them to `AttributeType` values. Bold inline content becomes `attBold` or `attStrong`; italic or emphasized content becomes `attItalic` or `attEmphasis`; an inline code span becomes `attCode`. Unrecognized inline types are mapped to `attUnknown` and emit SP-040.
 
 Unknown content is never discarded. The `artUnknown`, `unitUnknown`, `compUnknown`, and `attUnknown` sentinel values preserve all content in the output so that downstream systems can inspect or report on unclassified material rather than silently losing it.
 
@@ -63,3 +65,63 @@ Three evaluators run independently:
 - **RagIngestionReadinessEvaluator**: Checks that the document has a title, that the `StructuredContent` contains at least one `Unit`, and that no SP-001, SP-002, or SP-003 parse errors are present. Parse errors block RAG ingestion because the content cannot be trusted to be complete.
 
 All three evaluators emit SP-060 diagnostics (informational) that describe the readiness outcome, making it possible to surface readiness results through the standard diagnostic reporting pipeline alongside authoring and structural issues.
+
+## Repository Pipeline Layer
+
+The Repository Pipeline layer receives a `PipelineConfig` and produces a `PipelineRunResult`. Its responsibility is operational orchestration across many Markdown files, not content classification.
+
+The discovery stage (`pipeline/discovery.py`) receives file and folder inputs and returns sorted `DiscoveredSource` records. It uses include and exclude patterns, emits `PIPE-001` for missing input paths, and emits `PIPE-004` when no Markdown files are discovered.
+
+The output stage (`pipeline/output.py`) receives each parser-owned `ParsedDocument` and a target path. It preserves the source relative path, appends `.json` to the Markdown file name, writes UTF-8 JSON, and returns `PIPE-005` when output writing fails.
+
+The orchestration stage (`pipeline/orchestrator.py`) coordinates discovery, duplicate-target checks, unsafe-overlap checks, calls to `parse_one`, output writing, and aggregate statistics. It converts unexpected file-level exceptions to `PIPE-099` file results so that one failed file does not stop the entire run.
+
+The reporting stage (`pipeline/reporting.py`) writes the CSV inventory report from `PipelineRunResult`. The CLI command writes the report after orchestration completes; the lower-level `run_pipeline()` Python helper returns the result and leaves report writing to callers.
+
+```mermaid
+classDiagram
+    class PipelineConfig {
+        +inputs: list[Path]
+        +output_dir: Path
+        +report_path: Path
+        +include_patterns: list[str]
+        +exclude_patterns: list[str]
+        +strict: bool
+        +dry_run: bool
+    }
+    class DiscoveredSource {
+        +source_root: Path
+        +source_path: Path
+        +relative_path: Path
+        +source_format: SourceFormat
+    }
+    class PipelineFileResult {
+        +source: DiscoveredSource
+        +target_path: Path
+        +status: PipelineFileStatus
+        +parser_codes: list[str]
+        +pipeline_code: str
+        +error_count: int
+        +warning_count: int
+    }
+    class PipelineRunResult {
+        +run_id: str
+        +files: list[PipelineFileResult]
+        +run_diagnostics: list[Diagnostic]
+        +stats: PipelineRunStats
+    }
+    class PipelineRunStats {
+        +discovered_count: int
+        +parsed_count: int
+        +failed_count: int
+        +skipped_count: int
+        +error_count: int
+        +warning_count: int
+    }
+
+    PipelineRunResult "1" --> "0..*" PipelineFileResult : files
+    PipelineRunResult "1" --> "1" PipelineRunStats : stats
+    PipelineFileResult "1" --> "1" DiscoveredSource : source
+```
+
+The pipeline class diagram shows that repository-scale state is separate from parser content state. `PipelineFileResult` references parser diagnostic codes but does not redefine article, unit, component, or attribute semantics.

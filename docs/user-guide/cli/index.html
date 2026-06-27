@@ -1098,6 +1098,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pipe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#validate-markdown" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1864,7 +1875,8 @@
 
 <h1 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h1>
 <p>The <code>structure-parser</code> CLI exposes commands for parsing, validating, and inspecting Markdown and HTML documents from the terminal. The entry point is the <code>structure-parser</code> executable installed by <code>pip install structure-parser</code>.</p>
-<p><strong>Global flag:</strong> <code>--debug</code> is available on every command. It enables verbose structured logging to stderr, including pipeline stage timing, classifier decisions, and schema resolution paths. Use it when a parse result is unexpected and you need to trace the cause.</p>
+<p><strong>Global flag:</strong> <code>--debug</code> is available on every command. It enables verbose structured logging to stderr, including parser stage timing, classifier decisions, schema resolution paths, and repository pipeline events. Use it when a parse result is unexpected and you need to trace the cause.</p>
+<p>The <code>pipe</code> command is the repository-scale entry point. It discovers nested Markdown files, runs the parser once per file, writes parsed JSON outputs, writes a CSV inventory report, and optionally writes a log file.</p>
 <p><strong>Exit codes:</strong></p>
 <table>
 <thead>
@@ -1935,10 +1947,85 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>structure-parser<span class="w"> </span>parse<span class="w"> </span>docs/deploy-agent.md<span class="w"> </span>--json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.diagnostics[].code&#39;</span>
 </code></pre></div>
 <hr />
+<h2 id="pipe">pipe<a class="headerlink" href="#pipe" title="Permanent link">&para;</a></h2>
+<p><code>pipe</code> processes a nested Markdown content repository. It discovers Markdown files from file or folder inputs, preserves relative paths under the output directory, writes one parsed JSON file per source file, and writes a CSV inventory report for the run.</p>
+<p><strong>Syntax:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>structure-parser pipe INPUT... --out OUTPUT_DIR [--report REPORT_CSV] [--include PATTERN] [--exclude PATTERN] [--log-file LOG_FILE] [--log-format text|jsonl] [--strict] [--dry-run] [--debug]
+</code></pre></div>
+<p><strong>Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--out OUTPUT_DIR</code></td>
+<td>Required directory for parsed JSON outputs and the default CSV report.</td>
+</tr>
+<tr>
+<td><code>--report REPORT_CSV</code></td>
+<td>Optional CSV report path. Defaults to <code>&lt;OUTPUT_DIR&gt;/pipeline-inventory.csv</code>.</td>
+</tr>
+<tr>
+<td><code>--include PATTERN</code></td>
+<td>Include pattern for source files. Repeatable. Defaults to <code>*.md</code> and <code>*.markdown</code>.</td>
+</tr>
+<tr>
+<td><code>--exclude PATTERN</code></td>
+<td>Exclude pattern for relative source paths. Repeatable.</td>
+</tr>
+<tr>
+<td><code>--log-file LOG_FILE</code></td>
+<td>Optional log file path. No log file is written unless this flag is supplied.</td>
+</tr>
+<tr>
+<td><code>--log-format text\|jsonl</code></td>
+<td>Optional log format. Defaults to <code>text</code>.</td>
+</tr>
+<tr>
+<td><code>--strict</code></td>
+<td>Exit with code 1 when warnings are present.</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td>Discover files and write the CSV report without writing parsed JSON outputs.</td>
+</tr>
+<tr>
+<td><code>--debug</code></td>
+<td>Enable debug logging.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example — parse a content repository:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>structure-parser<span class="w"> </span>pipe<span class="w"> </span>docs_src<span class="w"> </span>--out<span class="w"> </span>build/parsed
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Pipeline parsed 4 Markdown file(s) in 128ms
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  Parsed: 4  Failed: 0  Skipped: 0
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  Errors: 0  Warnings: 0
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  Output: build/parsed
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  Report: build/parsed/pipeline-inventory.csv
+</code></pre></div>
+<p><strong>Example — write a custom report and log:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>structure-parser<span class="w"> </span>pipe<span class="w"> </span>docs_src<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>--out<span class="w"> </span>build/parsed<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>--report<span class="w"> </span>build/inventory.csv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span>--log-file<span class="w"> </span>build/pipeline.jsonl<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span>--log-format<span class="w"> </span>jsonl
+</code></pre></div>
+<p>The CSV inventory contains one row per discovered source file. The current columns are <code>run_id</code>, <code>source_root</code>, <code>source_path</code>, <code>relative_path</code>, <code>target_path</code>, <code>status</code>, <code>parser_codes</code>, <code>pipeline_code</code>, <code>error_count</code>, <code>warning_count</code>, and <code>duration_ms</code>.</p>
+<p><strong>Example — dry run:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>structure-parser<span class="w"> </span>pipe<span class="w"> </span>docs_src<span class="w"> </span>--out<span class="w"> </span>build/parsed<span class="w"> </span>--dry-run
+</code></pre></div>
+<p>The dry-run mode writes the CSV inventory report but skips parsed JSON output files. Use dry-run mode to verify discovery, include patterns, exclude patterns, and target paths before generating parsed content.</p>
+<hr />
 <h2 id="validate-markdown">validate-markdown<a class="headerlink" href="#validate-markdown" title="Permanent link">&para;</a></h2>
 <p><code>validate-markdown</code> parses each file and compares the resulting <code>StructuredContent</code> against a JSON schema from the bundled authoring model. It reports pass or fail for each file with the diagnostics that caused failures.</p>
 <p><strong>Syntax:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>structure-parser validate-markdown PATH... [--schema ID] [--strict] [--debug]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>structure-parser validate-markdown PATH... [--schema ID] [--strict] [--debug]
 </code></pre></div>
 <p><strong>Flags:</strong></p>
 <table>
@@ -1964,82 +2051,82 @@
 </tbody>
 </table>
 <p><strong>Example — advisory mode (default):</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>structure-parser<span class="w"> </span>validate-markdown<span class="w"> </span>docs/deploy-agent.md<span class="w"> </span>--schema<span class="w"> </span>artHowto.schema.json
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>structure-parser<span class="w"> </span>validate-markdown<span class="w"> </span>docs/deploy-agent.md<span class="w"> </span>--schema<span class="w"> </span>artHowto.schema.json
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>PASS  docs/deploy-agent.md
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Summary: 1 file, 0 warnings, 0 errors
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>PASS  docs/deploy-agent.md
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Summary: 1 file, 0 warnings, 0 errors
 </code></pre></div>
 <p><strong>Example — strict mode with failures:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>structure-parser<span class="w"> </span>validate-markdown<span class="w"> </span>docs/**/*.md<span class="w"> </span>--schema<span class="w"> </span>artHowto.schema.json<span class="w"> </span>--strict
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>structure-parser<span class="w"> </span>validate-markdown<span class="w"> </span>docs/**/*.md<span class="w"> </span>--schema<span class="w"> </span>artHowto.schema.json<span class="w"> </span>--strict
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>PASS  docs/deploy-agent.md
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>FAIL  docs/overview.md
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  [SP-041] warning  Article type could not be determined
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>                    Remediation: Add articleType metadata or conform to a known article pattern.
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>  [SP-030] warning  Schema validation failed: required unit type &#39;unitProcedure&#39; is missing
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>                    Remediation: Review the authoring model and fix reported violations.
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>FAIL  docs/intro.md
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  [SP-020] warning  Missing document title (H1)
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>                    Remediation: Add an H1 heading as the first content element.
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>Summary: 3 files, 3 warnings, 0 errors
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>Exit code: 1 (strict mode — warnings treated as errors)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>PASS  docs/deploy-agent.md
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>FAIL  docs/overview.md
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>  [SP-041] warning  Article type could not be determined
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>                    Remediation: Add articleType metadata or conform to a known article pattern.
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>  [SP-030] warning  Schema validation failed: required unit type &#39;unitProcedure&#39; is missing
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>                    Remediation: Review the authoring model and fix reported violations.
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>FAIL  docs/intro.md
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>  [SP-020] warning  Missing document title (H1)
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>                    Remediation: Add an H1 heading as the first content element.
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>Summary: 3 files, 3 warnings, 0 errors
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>Exit code: 1 (strict mode — warnings treated as errors)
 </code></pre></div>
 <p>In advisory mode, warnings are reported but exit code 0 is returned. In strict mode, any warning produces exit code 1. Use strict mode in CI gates; use advisory mode for local authoring checks.</p>
 <hr />
 <h2 id="inspect-structure">inspect-structure<a class="headerlink" href="#inspect-structure" title="Permanent link">&para;</a></h2>
 <p><code>inspect-structure</code> displays the heading tree of a parsed document. It shows every heading (H1 through H6) in document order, indented to reflect nesting depth. This command is the fastest way to confirm heading level consistency before running validation.</p>
 <p><strong>Syntax:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>structure-parser inspect-structure PATH [--debug]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>structure-parser inspect-structure PATH [--debug]
 </code></pre></div>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>structure-parser<span class="w"> </span>inspect-structure<span class="w"> </span>docs/deploy-agent.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>structure-parser<span class="w"> </span>inspect-structure<span class="w"> </span>docs/deploy-agent.md
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Heading structure: docs/deploy-agent.md
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>H1  Deploy the Agent
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>  H2  Prerequisites
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  H2  Install the package
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    H3  Verify the installation
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  H2  Configure the agent
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>  H2  Next steps
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Heading structure: docs/deploy-agent.md
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>H1  Deploy the Agent
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>  H2  Prerequisites
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>  H2  Install the package
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    H3  Verify the installation
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>  H2  Configure the agent
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>  H2  Next steps
 </code></pre></div>
 <p>A heading level skip — for example, an H3 appearing directly under an H1 — appears visually as an unexpected indentation jump. The SP-021 diagnostic that follows identifies the exact line. Use <code>inspect-structure</code> before <code>validate-markdown</code> to catch heading hierarchy problems quickly.</p>
 <hr />
 <h2 id="inspect-model">inspect-model<a class="headerlink" href="#inspect-model" title="Permanent link">&para;</a></h2>
 <p><code>inspect-model</code> displays the full <code>Article → Unit → Component</code> classification for a parsed document. It shows the article type, DITA type, triage status, and for each unit, its <code>unit_type</code>, <code>information_type</code>, and title. Unknown types are labeled <code>[unknown]</code>.</p>
 <p><strong>Syntax:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>structure-parser inspect-model PATH [--debug]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>structure-parser inspect-model PATH [--debug]
 </code></pre></div>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>structure-parser<span class="w"> </span>inspect-model<span class="w"> </span>docs/deploy-agent.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>structure-parser<span class="w"> </span>inspect-model<span class="w"> </span>docs/deploy-agent.md
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Article: docs/deploy-agent.md
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  article_type : howto
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  dita_type    : task
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  title        : Deploy the Agent
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  triage_status: known
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>Units:
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>  [1] unit_type=prerequisites  info_type=fact         title=&quot;Prerequisites&quot;
-<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>  [2] unit_type=procedure      info_type=procedure    title=&quot;Install the package&quot;
-<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>       components: compHeaderH2, compListOrdered(5 items), compParagraph
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  [3] unit_type=procedure      info_type=procedure    title=&quot;Configure the agent&quot;
-<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>       components: compHeaderH2, compListOrdered(3 items), compBlockCode
-<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>  [4] unit_type=link-nextstep  info_type=unknown      title=&quot;Next steps&quot;
-<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>       components: compHeaderH2, compListUnordered(2 items)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Article: docs/deploy-agent.md
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  article_type : howto
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>  dita_type    : task
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>  title        : Deploy the Agent
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  triage_status: known
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>Units:
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>  [1] unit_type=prerequisites  info_type=fact         title=&quot;Prerequisites&quot;
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>  [2] unit_type=procedure      info_type=procedure    title=&quot;Install the package&quot;
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>       components: compHeaderH2, compListOrdered(5 items), compParagraph
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>  [3] unit_type=procedure      info_type=procedure    title=&quot;Configure the agent&quot;
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>       components: compHeaderH2, compListOrdered(3 items), compBlockCode
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>  [4] unit_type=link-nextstep  info_type=unknown      title=&quot;Next steps&quot;
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>       components: compHeaderH2, compListUnordered(2 items)
 </code></pre></div>
 <p>Use this command to understand how the parser classified your content, to verify that a procedure was recognized as <code>unit_type=procedure</code>, and to identify units labeled <code>[unknown]</code> that may need structural correction.</p>
 <hr />
 <h2 id="inspect-references">inspect-references<a class="headerlink" href="#inspect-references" title="Permanent link">&para;</a></h2>
 <p><code>inspect-references</code> lists every link and image reference found in a parsed document, along with the href and its resolution state.</p>
 <p><strong>Syntax:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>structure-parser inspect-references PATH [--debug]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>structure-parser inspect-references PATH [--debug]
 </code></pre></div>
 <p><strong>Resolution states:</strong></p>
 <table>
@@ -2069,104 +2156,104 @@
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>structure-parser<span class="w"> </span>inspect-references<span class="w"> </span>docs/deploy-agent.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>structure-parser<span class="w"> </span>inspect-references<span class="w"> </span>docs/deploy-agent.md
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>References: docs/deploy-agent.md
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  [link]  ./install.md                      not_attempted
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>  [link]  ./configure.md                    not_attempted
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  [link]  https://example.com/docs          not_attempted
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>  [image] ./images/architecture-diagram.png not_attempted
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>References: docs/deploy-agent.md
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>  [link]  ./install.md                      not_attempted
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>  [link]  ./configure.md                    not_attempted
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>  [link]  https://example.com/docs          not_attempted
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>  [image] ./images/architecture-diagram.png not_attempted
 </code></pre></div>
 <p>To resolve local <code>./</code> references, enable <code>resolve_local_references</code> in a <code>ParserConfig</code> or run the parser with a config that sets it to <code>True</code>. When local resolution is enabled, files that do not exist on disk appear as <code>unresolved</code> and produce SP-050 diagnostics.</p>
 <hr />
 <h2 id="inspect-diagnostics">inspect-diagnostics<a class="headerlink" href="#inspect-diagnostics" title="Permanent link">&para;</a></h2>
 <p><code>inspect-diagnostics</code> displays all diagnostics for a parsed document, grouped by severity in descending order: errors first, then warnings, then info, then debug. Each entry shows the SP-NNN code, the message, an optional source line, and the remediation text.</p>
 <p><strong>Syntax:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>structure-parser inspect-diagnostics PATH [--debug]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>structure-parser inspect-diagnostics PATH [--debug]
 </code></pre></div>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>structure-parser<span class="w"> </span>inspect-diagnostics<span class="w"> </span>docs/overview.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>structure-parser<span class="w"> </span>inspect-diagnostics<span class="w"> </span>docs/overview.md
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Diagnostics for docs/overview.md
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>WARNINGS (2)
-<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>  SP-041  Article type could not be determined
-<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>          Remediation: Add articleType metadata or conform to a known article pattern.
-<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  SP-021  Heading level skipped: 1 to 3  [line 18]
-<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>          Remediation: Do not skip heading levels.
-<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
-<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>INFO (1)
-<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>  SP-011  Front matter absent
-<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>          Remediation: Add a YAML front matter block with at least a title field.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Diagnostics for docs/overview.md
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>WARNINGS (2)
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>  SP-041  Article type could not be determined
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>          Remediation: Add articleType metadata or conform to a known article pattern.
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>  SP-021  Heading level skipped: 1 to 3  [line 18]
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>          Remediation: Do not skip heading levels.
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>INFO (1)
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>  SP-011  Front matter absent
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>          Remediation: Add a YAML front matter block with at least a title field.
 </code></pre></div>
 <p>This is the most actionable command for authors during drafting. It surfaces all issues in a single view, ordered so the most severe problems appear first. Each remediation message explains exactly what to change.</p>
 <hr />
 <h2 id="transform-readiness">transform-readiness<a class="headerlink" href="#transform-readiness" title="Permanent link">&para;</a></h2>
 <p><code>transform-readiness</code> evaluates whether a parsed document satisfies the prerequisites for one or more output transformation targets. It reports a status of <code>ready</code>, <code>degraded</code>, or <code>blocked</code> for each target, listing which prerequisites are met and which are missing.</p>
 <p><strong>Syntax:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>structure-parser transform-readiness PATH [--target TARGET] [--debug]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>structure-parser transform-readiness PATH [--target TARGET] [--debug]
 </code></pre></div>
 <p>The <code>--target</code> flag is repeatable. Supported values are <code>dita</code>, <code>schema-org</code>, and <code>rag-ingestion</code>. When no <code>--target</code> is specified, all three targets are evaluated.</p>
 <p><strong>Example — single target:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>structure-parser<span class="w"> </span>transform-readiness<span class="w"> </span>docs/deploy-agent.md<span class="w"> </span>--target<span class="w"> </span>dita
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>structure-parser<span class="w"> </span>transform-readiness<span class="w"> </span>docs/deploy-agent.md<span class="w"> </span>--target<span class="w"> </span>dita
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Transform readiness: docs/deploy-agent.md
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>dita
-<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>  status: ready
-<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>  prerequisites met:
-<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>    - title present
-<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>    - article type known (howto)
-<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>    - dita type mapped (task)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Transform readiness: docs/deploy-agent.md
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>dita
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>  status: ready
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>  prerequisites met:
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>    - title present
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>    - article type known (howto)
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>    - dita type mapped (task)
 </code></pre></div>
 <p><strong>Example — all targets:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>structure-parser<span class="w"> </span>transform-readiness<span class="w"> </span>docs/overview.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>structure-parser<span class="w"> </span>transform-readiness<span class="w"> </span>docs/overview.md
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Transform readiness: docs/overview.md
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>dita
-<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>  status: blocked
-<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>  prerequisites met:
-<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    - title present
-<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>  prerequisites missing:
-<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>    - article type unknown (SP-041)
-<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
-<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>schema-org
-<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>  status: degraded
-<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>  prerequisites met:
-<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>    - title present
-<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>  prerequisites missing:
-<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>    - description metadata absent (non-blocking)
-<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>
-<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>rag-ingestion
-<a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a>  status: degraded
-<a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>  prerequisites met:
-<a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>    - title present
-<a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>    - no parse errors
-<a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>  prerequisites missing:
-<a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a>    - 3 of 4 units are unclassified (chunking boundaries unreliable)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Transform readiness: docs/overview.md
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>dita
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>  status: blocked
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>  prerequisites met:
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>    - title present
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>  prerequisites missing:
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>    - article type unknown (SP-041)
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>schema-org
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>  status: degraded
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>  prerequisites met:
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>    - title present
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a>  prerequisites missing:
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a>    - description metadata absent (non-blocking)
+<a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a>
+<a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a>rag-ingestion
+<a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a>  status: degraded
+<a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a>  prerequisites met:
+<a id="__codelineno-31-20" name="__codelineno-31-20" href="#__codelineno-31-20"></a>    - title present
+<a id="__codelineno-31-21" name="__codelineno-31-21" href="#__codelineno-31-21"></a>    - no parse errors
+<a id="__codelineno-31-22" name="__codelineno-31-22" href="#__codelineno-31-22"></a>  prerequisites missing:
+<a id="__codelineno-31-23" name="__codelineno-31-23" href="#__codelineno-31-23"></a>    - 3 of 4 units are unclassified (chunking boundaries unreliable)
 </code></pre></div>
 <hr />
 <h2 id="validate-contract">validate-contract<a class="headerlink" href="#validate-contract" title="Permanent link">&para;</a></h2>
 <p><code>validate-contract</code> runs fixture files against the expected contract behavior defined in the test suite. It is primarily a developer tool for verifying that a fixture produces the expected parse output after a code change.</p>
 <p><strong>Syntax:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>structure-parser validate-contract PATH... [--debug]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>structure-parser validate-contract PATH... [--debug]
 </code></pre></div>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>structure-parser<span class="w"> </span>validate-contract<span class="w"> </span>tests/fixtures/howto-basic.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>structure-parser<span class="w"> </span>validate-contract<span class="w"> </span>tests/fixtures/howto-basic.md
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>PASS  tests/fixtures/howto-basic.md
-<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>  contract: artHowto.schema.json
-<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>  expected: valid
-<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>  actual  : valid
-<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>
-<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>Summary: 1 fixture, 1 passed, 0 failed
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>PASS  tests/fixtures/howto-basic.md
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>  contract: artHowto.schema.json
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>  expected: valid
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>  actual  : valid
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>Summary: 1 fixture, 1 passed, 0 failed
 </code></pre></div>
 <p>Fixture files declare their expected behavior through front matter annotations that the contract validator reads. When an actual parse result diverges from the expected contract, the command reports the mismatch and exits with code 1.</p>
 

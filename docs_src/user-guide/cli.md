@@ -2,7 +2,9 @@
 
 The `structure-parser` CLI exposes commands for parsing, validating, and inspecting Markdown and HTML documents from the terminal. The entry point is the `structure-parser` executable installed by `pip install structure-parser`.
 
-**Global flag:** `--debug` is available on every command. It enables verbose structured logging to stderr, including pipeline stage timing, classifier decisions, and schema resolution paths. Use it when a parse result is unexpected and you need to trace the cause.
+**Global flag:** `--debug` is available on every command. It enables verbose structured logging to stderr, including parser stage timing, classifier decisions, schema resolution paths, and repository pipeline events. Use it when a parse result is unexpected and you need to trace the cause.
+
+The `pipe` command is the repository-scale entry point. It discovers nested Markdown files, runs the parser once per file, writes parsed JSON outputs, writes a CSV inventory report, and optionally writes a log file.
 
 **Exit codes:**
 
@@ -60,6 +62,68 @@ The `--json` flag emits the complete `ParsedDocument` contract, including `struc
 ```bash
 structure-parser parse docs/deploy-agent.md --json | jq '.diagnostics[].code'
 ```
+
+---
+
+## pipe
+
+`pipe` processes a nested Markdown content repository. It discovers Markdown files from file or folder inputs, preserves relative paths under the output directory, writes one parsed JSON file per source file, and writes a CSV inventory report for the run.
+
+**Syntax:**
+
+```
+structure-parser pipe INPUT... --out OUTPUT_DIR [--report REPORT_CSV] [--include PATTERN] [--exclude PATTERN] [--log-file LOG_FILE] [--log-format text|jsonl] [--strict] [--dry-run] [--debug]
+```
+
+**Flags:**
+
+| Flag | Effect |
+|------|--------|
+| `--out OUTPUT_DIR` | Required directory for parsed JSON outputs and the default CSV report. |
+| `--report REPORT_CSV` | Optional CSV report path. Defaults to `<OUTPUT_DIR>/pipeline-inventory.csv`. |
+| `--include PATTERN` | Include pattern for source files. Repeatable. Defaults to `*.md` and `*.markdown`. |
+| `--exclude PATTERN` | Exclude pattern for relative source paths. Repeatable. |
+| `--log-file LOG_FILE` | Optional log file path. No log file is written unless this flag is supplied. |
+| `--log-format text\|jsonl` | Optional log format. Defaults to `text`. |
+| `--strict` | Exit with code 1 when warnings are present. |
+| `--dry-run` | Discover files and write the CSV report without writing parsed JSON outputs. |
+| `--debug` | Enable debug logging. |
+
+**Example — parse a content repository:**
+
+```bash
+structure-parser pipe docs_src --out build/parsed
+```
+
+Output:
+
+```text
+Pipeline parsed 4 Markdown file(s) in 128ms
+  Parsed: 4  Failed: 0  Skipped: 0
+  Errors: 0  Warnings: 0
+  Output: build/parsed
+  Report: build/parsed/pipeline-inventory.csv
+```
+
+**Example — write a custom report and log:**
+
+```bash
+structure-parser pipe docs_src \
+  --out build/parsed \
+  --report build/inventory.csv \
+  --log-file build/pipeline.jsonl \
+  --log-format jsonl
+```
+
+The CSV inventory contains one row per discovered source file. The current columns are `run_id`, `source_root`, `source_path`, `relative_path`, `target_path`, `status`, `parser_codes`, `pipeline_code`, `error_count`, `warning_count`, and `duration_ms`.
+
+**Example — dry run:**
+
+```bash
+structure-parser pipe docs_src --out build/parsed --dry-run
+```
+
+The dry-run mode writes the CSV inventory report but skips parsed JSON output files. Use dry-run mode to verify discovery, include patterns, exclude patterns, and target paths before generating parsed content.
 
 ---
 

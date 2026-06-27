@@ -4,6 +4,8 @@ Structured Markdown is an open semantic layer for Markdown. A parser uses the st
 
 The current project is focusing on a layered Python package that parses Markdown and rendered HTML into a normalized structured content hierarchy for validation, publishing transforms, and RAG ingestion.
 
+The repository pipeline extends the file parser to nested Markdown content repositories. It discovers Markdown files, calls the parser once per file, writes parsed JSON outputs, writes a CSV inventory report, and optionally writes a log file.
+
 `structure_parser` parses Markdown and HTML into a normalized, classified content model that downstream systems can process without re-reading the source. Plain Markdown is readable and writable by any tool, but it carries no semantic contract: a heading is a heading, a list is a list, and no machine can tell a procedure from a reference section without inspecting the prose. `structure_parser` closes that gap by reading the source, classifying every block against a defined hierarchy, validating the result against JSON schemas, and returning a versioned Pydantic contract alongside author-facing diagnostics that explain every classification decision.
 
 ## The Four-Level Hierarchy
@@ -25,11 +27,15 @@ This hierarchy enables machine-processable output that carries structural guaran
 
 - `concept` — an explanation of what something is
 - `procedure` — a sequence of steps to accomplish a goal
-- `principle` — a rule or guideline governing behavior
 - `process` — a description of how a system operates
+- `principle` — a rule or guideline governing behavior
 - `fact` — a datum or reference item
+- `structure` — a description of parts, relationships, or organization
+- `classification` — a grouping or taxonomy of related things
 - `mixed` — units of more than one type (applied at the article level when units disagree)
 - `unknown` — content that could not be classified
+
+The current runtime enum implements `concept`, `procedure`, `process`, `principle`, and `fact`, with `mixed` and `unknown` as parser states. The `structure` and `classification` types are reserved model-expansion targets for future schema work.
 
 **DITA 1.3 topic types** classify the document's publishing intent: `topic`, `concept`, `howto`, `reference`, `troubleshooting`, `glossary`, `glossentry`. These map from the article's `articleType` front matter field and drive which schema in `model/articles/` is used for validation.
 
@@ -92,8 +98,9 @@ if doc.has_errors:
 | Local file reference resolution | Complete |
 | Author-facing diagnostics (stable SP-NNN codes) | Complete |
 | Transform-readiness evaluation (DITA, Schema.org, RAG) | Complete |
-| CLI (8 subcommands) | Complete |
-| Python API (`parse_file`, `parse_files`) | Complete |
+| CLI (9 subcommands, including `pipe`) | Complete |
+| Python API (`parse_file`, `parse_files`, `run_pipeline`) | Complete |
+| Repository pipeline for nested Markdown folders | Complete |
 | DITA/XML parsing | Deferred (A-004) |
 | Complex conref/keyref resolution | Deferred (A-005) |
 
@@ -104,7 +111,7 @@ if doc.has_errors:
 - [Background: Parsing Approaches](concept/parsing-approaches.md) — AST, BNF, and schema mapping compared
 - [Background: Comparison with Similar Tools](concept/comparison.md) — DITA, Pandoc, Vale, Markdoc, and more
 - [Architecture Overview](architecture/overview.md) — layer contracts and data flow
-- [User Guide: CLI Reference](user-guide/cli.md) — all eight subcommands with options
+- [User Guide: CLI Reference](user-guide/cli.md) — all nine subcommands with options
 - [User Guide: Diagnostics](architecture/diagnostics.md) — SP-NNN codes and remediation
 - [Model Reference](schemas/structured-markdown-v1.md) — Article → Unit → Component → Attribute schemas
 - [API Reference](api/index.md) — `parse_file`, `parse_files`, `ParsedDocument`, `ParserConfig`

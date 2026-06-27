@@ -972,10 +972,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#data-transformation-pipeline" class="md-nav__link">
+  <a href="#data-transformation-flow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Transformation Pipeline
+        Data Transformation Flow
       
     </span>
   </a>
@@ -1797,8 +1797,8 @@
 
 
 <h1 id="data-flow-diagrams">Data Flow Diagrams<a class="headerlink" href="#data-flow-diagrams" title="Permanent link">&para;</a></h1>
-<p>The two diagrams on this page show the pipeline from a data perspective rather than a component perspective. The first traces how a single Markdown source file is progressively transformed into narrower, more specific contract types. The second shows exactly where in the pipeline each group of SP-NNN diagnostic codes can be emitted.</p>
-<h2 id="data-transformation-pipeline">Data Transformation Pipeline<a class="headerlink" href="#data-transformation-pipeline" title="Permanent link">&para;</a></h2>
+<p>The two diagrams on this page show the parser flow from a data perspective rather than a component perspective. The first traces how a single Markdown source file is progressively transformed into narrower, more specific contract types. The second shows exactly where in the parser flow each group of SP-NNN diagnostic codes can be emitted.</p>
+<h2 id="data-transformation-flow">Data Transformation Flow<a class="headerlink" href="#data-transformation-flow" title="Permanent link">&para;</a></h2>
 <p>Each arrow in the diagram below represents a layer boundary. The label on each arrow names the contract type that crosses the boundary — the output of the layer on the left and the input of the layer on the right. Reading the diagram left to right traces the full lifecycle of a document from raw bytes to a caller-ready <code>ParsedDocument</code>.</p>
 <pre class="mermaid"><code>flowchart LR
     SRC["Source File\n(.md / .html)"]
@@ -1831,9 +1831,9 @@
     CLS --&gt;|"StructuredContent"| VAL
     VAL --&gt;|"ModelValidationResult"| RDY
     RDY --&gt;|"TransformReadiness"| OUT</code></pre>
-<p>The <code>RawParseModel</code> is the widest contract in the pipeline — it carries every token in source order with no interpretation applied. Each subsequent layer narrows and enriches the representation: the enrichment layer adds meaning to the flat node list; the classification layer imposes the Structured Markdown type hierarchy; the validation layer adds a pass/fail judgment against a schema; the readiness layer adds a downstream-transformation judgment. The orchestrator is the only component that sees all five outputs simultaneously and is responsible for assembling them into the final <code>ParsedDocument</code>.</p>
+<p>The <code>RawParseModel</code> is the widest contract in the parser flow — it carries every token in source order with no interpretation applied. Each subsequent layer narrows and enriches the representation: the enrichment layer adds meaning to the flat node list; the classification layer imposes the Structured Markdown type hierarchy; the validation layer adds a pass/fail judgment against a schema; the readiness layer adds a downstream-transformation judgment. The orchestrator is the only component that sees all five outputs simultaneously and is responsible for assembling them into the final <code>ParsedDocument</code>.</p>
 <h2 id="diagnostic-emission-points">Diagnostic Emission Points<a class="headerlink" href="#diagnostic-emission-points" title="Permanent link">&para;</a></h2>
-<p>Diagnostics are emitted throughout the pipeline, not only in the validation layer. The diagram below shows which SP-NNN code groups can be emitted at each stage, so that when you see a particular code in a <code>ParsedDocument</code>, you know which layer produced it and can narrow your investigation accordingly.</p>
+<p>Diagnostics are emitted throughout the parser flow, not only in the validation layer. The diagram below shows which SP-NNN code groups can be emitted at each stage, so that when you see a particular code in a <code>ParsedDocument</code>, you know which layer produced it and can narrow your investigation accordingly.</p>
 <pre class="mermaid"><code>flowchart TD
     A["Source File"] --&gt; B
 

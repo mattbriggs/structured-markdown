@@ -60,7 +60,11 @@ Each article and each unit carries two independent classification fields.
 
 **ditaType** maps the content to a DITA 1.3 specialization type: `topic`, `concept`, `task` (rendered as `howto`), `reference`, `troubleshooting`, `glossary`, or `glossentry`. This dimension captures the structural intent of the content and enables downstream toolchains that consume DITA-aligned metadata.
 
-**informationType** maps the content to a Horn information type: `concept`, `procedure`, `fact`, `process`, or `principle`. The Horn classification is orthogonal to DITA — it captures the rhetorical purpose of the content independently of its structural form. Together, the two dimensions let classifiers and validators cross-check consistency: a `ditaType: reference` article is expected to carry `informationType: fact`, and a mismatch signals a classification error.
+**informationType** maps the content to a Robert Horn Information Mapping type. The full taxonomy used for design work is `concept`, `procedure`, `process`, `principle`, `fact`, `structure`, and `classification`.
+
+The current runtime enum implements the Horn-derived values `concept`, `procedure`, `process`, `principle`, and `fact`. It also provides `mixed` for article-level aggregation and `unknown` for content that cannot be classified. The `structure` and `classification` values remain model-expansion candidates until their schema and parser behavior are implemented.
+
+The Horn classification is orthogonal to DITA. It captures the rhetorical purpose of the content independently of its structural publishing form, which lets classifiers and validators cross-check consistency.
 
 ## Schema Directory Structure
 

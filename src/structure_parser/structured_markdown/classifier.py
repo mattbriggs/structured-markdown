@@ -172,7 +172,7 @@ def classify(
         source_dict["contentHash"] = raw.content_hash
 
     content = StructuredContent(
-        schema=schema_id,
+        schema_name=schema_id,
         article_id=article_id,
         article_type=article_type,
         dita_type=dita_type,

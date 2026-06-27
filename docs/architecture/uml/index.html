@@ -976,6 +976,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#repository-pipeline-sequence-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Pipeline Sequence Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-pipeline-class-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Pipeline Class Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1808,7 +1830,7 @@
 
 
 <h1 id="uml-system-model">UML System Model<a class="headerlink" href="#uml-system-model" title="Permanent link">&para;</a></h1>
-<p>The three diagrams on this page provide a complete structural and behavioral picture of <code>structure_parser</code> at different levels of abstraction. The component diagram shows subsystem boundaries and dependencies. The sequence diagram shows the runtime message flow for a single file parse. The class diagram shows the contract object graph that carries data between subsystems.</p>
+<p>The diagrams on this page provide a structural and behavioral picture of <code>structure_parser</code> at different levels of abstraction. The component diagram shows subsystem boundaries and dependencies, the sequence diagrams show runtime message flows, and the class diagrams show the contract object graphs that carry data between subsystems.</p>
 <h2 id="component-diagram">Component Diagram<a class="headerlink" href="#component-diagram" title="Permanent link">&para;</a></h2>
 <p>The component diagram below shows the major subsystems of <code>structure_parser</code> and the dependencies between them. The CLI and Python API are the two entry points; both delegate immediately to the Orchestrator, which coordinates all other subsystems. The Orchestrator never calls adapters, enrichment steps, or validators directly — it goes through the registry and pipeline objects that own those responsibilities.</p>
 <pre class="mermaid"><code>graph LR
@@ -1863,6 +1885,13 @@
         MR["ModelReporter"]
     end
 
+    subgraph "Repository Pipeline"
+        PORCH["PipelineOrchestrator"]
+        DISC["MarkdownDiscoveryService"]
+        OUT["ParsedDocumentWriter"]
+        CSV["CsvInventoryReporter"]
+    end
+
     CLI --&gt; ORCH
     API --&gt; ORCH
     ORCH --&gt; REG
@@ -1874,6 +1903,11 @@
     ORCH --&gt; DR
     ORCH --&gt; STR
     ORCH --&gt; MR
+    CLI --&gt; PORCH
+    PORCH --&gt; DISC
+    PORCH --&gt; ORCH
+    PORCH --&gt; OUT
+    CLI --&gt; CSV
     REG --&gt; MD
     REG --&gt; HTML
     SE --&gt; ME
@@ -1886,7 +1920,8 @@
     RE --&gt; DITA
     RE --&gt; SORG
     RE --&gt; RAG</code></pre>
-<p>The Repositories subsystem (<code>SourceRepository</code>, <code>SchemaRepository</code>) handles all file I/O. Adapters receive source bytes from <code>SourceRepository</code> rather than reading files directly, which keeps adapters testable with in-memory strings. <code>SchemaRepository</code> pre-loads all JSON schemas at startup and hands the pre-built schema store to <code>SchemaValidator</code>, eliminating repeated file reads during batch processing. The Reporting subsystem formats <code>ParsedDocument</code> fields for terminal output; it has no access to the pipeline and depends only on the contracts.</p>
+<p>The Repositories subsystem (<code>SourceRepository</code>, <code>SchemaRepository</code>) handles parser file I/O. Adapters receive source bytes from <code>SourceRepository</code> rather than reading files directly, which keeps adapters testable with in-memory strings. <code>SchemaRepository</code> pre-loads all JSON schemas at startup and hands the pre-built schema store to <code>SchemaValidator</code>, eliminating repeated file reads during batch processing.</p>
+<p>The Repository Pipeline subsystem handles repository-scale operations. It discovers Markdown files, delegates each file to the parser orchestrator, writes parsed JSON output, and writes the CSV inventory report through the CLI command.</p>
 <h2 id="sequence-diagram">Sequence Diagram<a class="headerlink" href="#sequence-diagram" title="Permanent link">&para;</a></h2>
 <p>The sequence diagram below shows the complete message flow for a call to <code>parse_file("my-article.md")</code> through the Python API. Each vertical lifeline represents one object; each arrow represents one method call or return value.</p>
 <pre class="mermaid"><code>sequenceDiagram
@@ -1929,7 +1964,7 @@
     Orchestrator--&gt;&gt;Caller: ParsedDocument</code></pre>
 <p>The orchestrator is the only component that sees all five layer outputs simultaneously. It assembles them into a single <code>ParsedDocument</code> at the end, merging all diagnostics from every layer into <code>ParsedDocument.diagnostics</code>. This assembly step is the only place in the codebase where cross-layer data is combined; every other component operates on its own input contract in isolation.</p>
 <h2 id="class-diagram">Class Diagram<a class="headerlink" href="#class-diagram" title="Permanent link">&para;</a></h2>
-<p>The class diagram below shows the contract object graph. It is the authoritative picture of how <code>ParsedDocument</code> — the pipeline's primary output — relates to every other contract type. Cardinalities on association lines indicate how many instances of the target type a source instance may carry.</p>
+<p>The class diagram below shows the parser contract object graph. It is the authoritative picture of how <code>ParsedDocument</code> — the parser's primary output — relates to every other contract type. Cardinalities on association lines indicate how many instances of the target type a source instance may carry.</p>
 <pre class="mermaid"><code>classDiagram
     class ParsedDocument {
         +schema_version: str
@@ -2047,6 +2082,89 @@
     ParseRunResult "1" --&gt; "0..*" ParsedDocument : documents
     ParseRunResult "1" --&gt; "1" ParseStats : stats</code></pre>
 <p>The class diagram reveals a key structural property of the design: <code>ParsedDocument</code> is the single root of the entire output graph. There is no other way for a caller to obtain a <code>StructuredContent</code>, <code>TransformReadiness</code>, or <code>ModelValidationResult</code> except through a <code>ParsedDocument</code>. This means callers always have full context available — they never hold a validation result without the document it came from, and they never hold a readiness assessment without the diagnostics that explain it.</p>
+<h2 id="repository-pipeline-sequence-diagram">Repository Pipeline Sequence Diagram<a class="headerlink" href="#repository-pipeline-sequence-diagram" title="Permanent link">&para;</a></h2>
+<p>The repository pipeline sequence diagram shows the runtime message flow for <code>structure-parser pipe</code>. The CLI command owns CSV report writing, while <code>PipelineOrchestrator</code> owns discovery, parser calls, JSON output writing, and run statistics.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    actor User
+    participant CLI as cmd_pipe
+    participant Cmd as PipelineCommand
+    participant Orch as PipelineOrchestrator
+    participant Disc as MarkdownDiscoveryService
+    participant Parser as parse_one
+    participant Writer as ParsedDocumentWriter
+    participant CSV as CsvInventoryReporter
+
+    User-&gt;&gt;CLI: structure-parser pipe INPUT --out OUTPUT
+    CLI-&gt;&gt;Cmd: run(PipelineConfig)
+    Cmd-&gt;&gt;Orch: run(config)
+    Orch-&gt;&gt;Disc: discover(config)
+    Disc--&gt;&gt;Orch: DiscoveredSource[] + diagnostics
+    loop each discovered source
+        Orch-&gt;&gt;Parser: parse_one(source_path, parser_config)
+        Parser--&gt;&gt;Orch: ParsedDocument
+        Orch-&gt;&gt;Writer: write(document, target_path, dry_run)
+        Writer--&gt;&gt;Orch: PIPE-005 or success
+    end
+    Orch--&gt;&gt;Cmd: PipelineRunResult
+    Cmd-&gt;&gt;CSV: write(result, report_path)
+    CSV--&gt;&gt;Cmd: PIPE-003 or success
+    Cmd--&gt;&gt;CLI: summary text + exit code</code></pre>
+<p>The pipeline sequence makes the boundary with the parser explicit. The parser decides article, unit, component, attribute, and information types; the pipeline only schedules files and preserves those parser results.</p>
+<h2 id="repository-pipeline-class-diagram">Repository Pipeline Class Diagram<a class="headerlink" href="#repository-pipeline-class-diagram" title="Permanent link">&para;</a></h2>
+<p>The repository pipeline class diagram shows the operational contracts added for folder-scale processing. These contracts describe run state and file routing rather than structured content semantics.</p>
+<pre class="mermaid"><code>classDiagram
+    class PipelineConfig {
+        +inputs: list[Path]
+        +output_dir: Path
+        +report_path: Path
+        +include_patterns: list[str]
+        +exclude_patterns: list[str]
+        +log_file: Path
+        +log_format: str
+        +strict: bool
+        +dry_run: bool
+    }
+
+    class DiscoveredSource {
+        +source_root: Path
+        +source_path: Path
+        +relative_path: Path
+        +source_format: SourceFormat
+    }
+
+    class PipelineFileResult {
+        +source: DiscoveredSource
+        +target_path: Path
+        +status: PipelineFileStatus
+        +parser_codes: list[str]
+        +pipeline_code: str
+        +error_count: int
+        +warning_count: int
+        +duration_ms: float
+    }
+
+    class PipelineRunStats {
+        +discovered_count: int
+        +parsed_count: int
+        +failed_count: int
+        +skipped_count: int
+        +error_count: int
+        +warning_count: int
+        +duration_ms: float
+    }
+
+    class PipelineRunResult {
+        +schema_version: str
+        +run_id: str
+        +files: list[PipelineFileResult]
+        +run_diagnostics: list[Diagnostic]
+        +stats: PipelineRunStats
+    }
+
+    PipelineRunResult "1" --&gt; "0..*" PipelineFileResult : files
+    PipelineRunResult "1" --&gt; "1" PipelineRunStats : stats
+    PipelineFileResult "1" --&gt; "1" DiscoveredSource : source</code></pre>
+<p>The pipeline class diagram shows why pipeline contracts should remain operational. The graph references parser diagnostics but does not include <code>Article</code>, <code>Unit</code>, <code>Component</code>, or <code>Attribute</code> classes because those belong to the parser/model contract graph.</p>
 
 
 

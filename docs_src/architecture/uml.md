@@ -1,6 +1,6 @@
 # UML System Model
 
-The three diagrams on this page provide a complete structural and behavioral picture of `structure_parser` at different levels of abstraction. The component diagram shows subsystem boundaries and dependencies. The sequence diagram shows the runtime message flow for a single file parse. The class diagram shows the contract object graph that carries data between subsystems.
+The diagrams on this page provide a structural and behavioral picture of `structure_parser` at different levels of abstraction. The component diagram shows subsystem boundaries and dependencies, the sequence diagrams show runtime message flows, and the class diagrams show the contract object graphs that carry data between subsystems.
 
 ## Component Diagram
 
@@ -59,6 +59,13 @@ graph LR
         MR["ModelReporter"]
     end
 
+    subgraph "Repository Pipeline"
+        PORCH["PipelineOrchestrator"]
+        DISC["MarkdownDiscoveryService"]
+        OUT["ParsedDocumentWriter"]
+        CSV["CsvInventoryReporter"]
+    end
+
     CLI --> ORCH
     API --> ORCH
     ORCH --> REG
@@ -70,6 +77,11 @@ graph LR
     ORCH --> DR
     ORCH --> STR
     ORCH --> MR
+    CLI --> PORCH
+    PORCH --> DISC
+    PORCH --> ORCH
+    PORCH --> OUT
+    CLI --> CSV
     REG --> MD
     REG --> HTML
     SE --> ME
@@ -84,7 +96,9 @@ graph LR
     RE --> RAG
 ```
 
-The Repositories subsystem (`SourceRepository`, `SchemaRepository`) handles all file I/O. Adapters receive source bytes from `SourceRepository` rather than reading files directly, which keeps adapters testable with in-memory strings. `SchemaRepository` pre-loads all JSON schemas at startup and hands the pre-built schema store to `SchemaValidator`, eliminating repeated file reads during batch processing. The Reporting subsystem formats `ParsedDocument` fields for terminal output; it has no access to the pipeline and depends only on the contracts.
+The Repositories subsystem (`SourceRepository`, `SchemaRepository`) handles parser file I/O. Adapters receive source bytes from `SourceRepository` rather than reading files directly, which keeps adapters testable with in-memory strings. `SchemaRepository` pre-loads all JSON schemas at startup and hands the pre-built schema store to `SchemaValidator`, eliminating repeated file reads during batch processing.
+
+The Repository Pipeline subsystem handles repository-scale operations. It discovers Markdown files, delegates each file to the parser orchestrator, writes parsed JSON output, and writes the CSV inventory report through the CLI command.
 
 ## Sequence Diagram
 
@@ -135,7 +149,7 @@ The orchestrator is the only component that sees all five layer outputs simultan
 
 ## Class Diagram
 
-The class diagram below shows the contract object graph. It is the authoritative picture of how `ParsedDocument` — the pipeline's primary output — relates to every other contract type. Cardinalities on association lines indicate how many instances of the target type a source instance may carry.
+The class diagram below shows the parser contract object graph. It is the authoritative picture of how `ParsedDocument` — the parser's primary output — relates to every other contract type. Cardinalities on association lines indicate how many instances of the target type a source instance may carry.
 
 ```mermaid
 classDiagram
@@ -257,3 +271,98 @@ classDiagram
 ```
 
 The class diagram reveals a key structural property of the design: `ParsedDocument` is the single root of the entire output graph. There is no other way for a caller to obtain a `StructuredContent`, `TransformReadiness`, or `ModelValidationResult` except through a `ParsedDocument`. This means callers always have full context available — they never hold a validation result without the document it came from, and they never hold a readiness assessment without the diagnostics that explain it.
+
+## Repository Pipeline Sequence Diagram
+
+The repository pipeline sequence diagram shows the runtime message flow for `structure-parser pipe`. The CLI command owns CSV report writing, while `PipelineOrchestrator` owns discovery, parser calls, JSON output writing, and run statistics.
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant CLI as cmd_pipe
+    participant Cmd as PipelineCommand
+    participant Orch as PipelineOrchestrator
+    participant Disc as MarkdownDiscoveryService
+    participant Parser as parse_one
+    participant Writer as ParsedDocumentWriter
+    participant CSV as CsvInventoryReporter
+
+    User->>CLI: structure-parser pipe INPUT --out OUTPUT
+    CLI->>Cmd: run(PipelineConfig)
+    Cmd->>Orch: run(config)
+    Orch->>Disc: discover(config)
+    Disc-->>Orch: DiscoveredSource[] + diagnostics
+    loop each discovered source
+        Orch->>Parser: parse_one(source_path, parser_config)
+        Parser-->>Orch: ParsedDocument
+        Orch->>Writer: write(document, target_path, dry_run)
+        Writer-->>Orch: PIPE-005 or success
+    end
+    Orch-->>Cmd: PipelineRunResult
+    Cmd->>CSV: write(result, report_path)
+    CSV-->>Cmd: PIPE-003 or success
+    Cmd-->>CLI: summary text + exit code
+```
+
+The pipeline sequence makes the boundary with the parser explicit. The parser decides article, unit, component, attribute, and information types; the pipeline only schedules files and preserves those parser results.
+
+## Repository Pipeline Class Diagram
+
+The repository pipeline class diagram shows the operational contracts added for folder-scale processing. These contracts describe run state and file routing rather than structured content semantics.
+
+```mermaid
+classDiagram
+    class PipelineConfig {
+        +inputs: list[Path]
+        +output_dir: Path
+        +report_path: Path
+        +include_patterns: list[str]
+        +exclude_patterns: list[str]
+        +log_file: Path
+        +log_format: str
+        +strict: bool
+        +dry_run: bool
+    }
+
+    class DiscoveredSource {
+        +source_root: Path
+        +source_path: Path
+        +relative_path: Path
+        +source_format: SourceFormat
+    }
+
+    class PipelineFileResult {
+        +source: DiscoveredSource
+        +target_path: Path
+        +status: PipelineFileStatus
+        +parser_codes: list[str]
+        +pipeline_code: str
+        +error_count: int
+        +warning_count: int
+        +duration_ms: float
+    }
+
+    class PipelineRunStats {
+        +discovered_count: int
+        +parsed_count: int
+        +failed_count: int
+        +skipped_count: int
+        +error_count: int
+        +warning_count: int
+        +duration_ms: float
+    }
+
+    class PipelineRunResult {
+        +schema_version: str
+        +run_id: str
+        +files: list[PipelineFileResult]
+        +run_diagnostics: list[Diagnostic]
+        +stats: PipelineRunStats
+    }
+
+    PipelineRunResult "1" --> "0..*" PipelineFileResult : files
+    PipelineRunResult "1" --> "1" PipelineRunStats : stats
+    PipelineFileResult "1" --> "1" DiscoveredSource : source
+```
+
+The pipeline class diagram shows why pipeline contracts should remain operational. The graph references parser diagnostics but does not include `Article`, `Unit`, `Component`, or `Attribute` classes because those belong to the parser/model contract graph.

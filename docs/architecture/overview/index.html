@@ -804,10 +804,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-the-pipeline-does" class="md-nav__link">
+  <a href="#what-the-parser-flow-does" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What the Pipeline Does
+        What the Parser Flow Does
       
     </span>
   </a>
@@ -819,6 +819,17 @@
     <span class="md-ellipsis">
       
         The Five Layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-repository-pipeline-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the Repository Pipeline Does
       
     </span>
   </a>
@@ -848,10 +859,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pipeline-flowchart" class="md-nav__link">
+  <a href="#parser-flowchart" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pipeline Flowchart
+        Parser Flowchart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-pipeline-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Pipeline Sequence
       
     </span>
   </a>
@@ -1830,11 +1852,14 @@
 
 
 <h1 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h1>
-<p>The <code>structure_parser</code> pipeline transforms source documents — Markdown, HTML, or future formats — into a single, normalized output: a <code>ParsedDocument</code> that carries extracted metadata, a heading tree, structured content units, a reference inventory, schema validation results, transform readiness assessments, and a complete list of diagnostic messages. Every stage of that transformation is discrete, testable, and bound by a versioned Pydantic contract at each layer boundary.</p>
-<h2 id="what-the-pipeline-does">What the Pipeline Does<a class="headerlink" href="#what-the-pipeline-does" title="Permanent link">&para;</a></h2>
-<p>The pipeline accepts a file path and a <code>ParserConfig</code>, then routes the source bytes through five successive layers before returning a <code>ParsedDocument</code> to the caller. Each layer narrows the representation: raw bytes become typed tokens, tokens become a structured document tree, the tree is classified into semantic units, those units are validated against JSON schemas, and the final document is assessed for readiness to transform into downstream formats. No layer reaches backward into a previous layer's internals; communication happens entirely through the shared contracts in <code>src/structure_parser/contracts/</code>.</p>
+<p>The parser flow transforms one source document into a single normalized output. A <code>ParsedDocument</code> carries extracted metadata, a heading tree, structured content units, a reference inventory, schema validation results, transform readiness assessments, and a complete list of diagnostic messages.</p>
+<p>The repository pipeline wraps the parser flow for content repositories. It discovers Markdown files in nested folders, calls the parser once per file, writes parsed JSON files, writes a CSV inventory report through the CLI command, and optionally writes a log file.</p>
+<h2 id="what-the-parser-flow-does">What the Parser Flow Does<a class="headerlink" href="#what-the-parser-flow-does" title="Permanent link">&para;</a></h2>
+<p>The parser flow accepts a file path and a <code>ParserConfig</code>. It routes source bytes through five successive layers before returning a <code>ParsedDocument</code> to the caller.</p>
+<p>Each parser layer narrows the representation. Raw bytes become typed tokens, tokens become a structured document tree, the tree is classified into semantic units, those units are validated against JSON schemas, and the final document is assessed for readiness to transform into downstream formats.</p>
+<p>No parser layer reaches backward into a previous layer's internals. Communication happens through the shared contracts in <code>src/structure_parser/contracts/</code>.</p>
 <h2 id="the-five-layers">The Five Layers<a class="headerlink" href="#the-five-layers" title="Permanent link">&para;</a></h2>
-<p>The pipeline is organized into five layers, each with a single responsibility:</p>
+<p>The parser flow is organized into five layers, each with a single responsibility:</p>
 <ul>
 <li><strong>Adapters</strong> parse source bytes into a <code>RawParseModel</code> — a flat, ordered list of <code>RawNode</code> objects plus any front matter.</li>
 <li><strong>Enrichment</strong> reads the <code>RawParseModel</code> and populates metadata, the heading tree, and the reference inventory on a partial <code>ParsedDocument</code>.</li>
@@ -1842,11 +1867,16 @@
 <li><strong>Validation</strong> serializes the <code>StructuredContent</code> and runs it against JSON schemas from <code>model/articles/</code>, returning a <code>ModelValidationResult</code>.</li>
 <li><strong>Readiness</strong> evaluates the enriched <code>ParsedDocument</code> against three downstream targets — DITA, Schema.org, and RAG ingestion — returning a <code>TransformReadiness</code> with per-target status and reasons.</li>
 </ul>
+<h2 id="what-the-repository-pipeline-does">What the Repository Pipeline Does<a class="headerlink" href="#what-the-repository-pipeline-does" title="Permanent link">&para;</a></h2>
+<p>The repository pipeline is an operational layer above the parser flow. It uses <code>PipelineConfig</code> to discover Markdown files, calculate output paths, call the parser, write parsed outputs, and aggregate file-level statuses into <code>PipelineRunResult</code>.</p>
+<p>The repository pipeline does not classify article types. Article type, unit type, component type, attribute type, and information type remain parser and model responsibilities.</p>
+<p>The CLI <code>pipe</code> command adds CSV reporting on top of <code>PipelineOrchestrator</code>. The Python <code>run_pipeline()</code> helper currently returns a <code>PipelineRunResult</code> and writes parsed JSON outputs, while callers that need a CSV report can use <code>CsvInventoryReporter</code>.</p>
 <h2 id="contract-based-design">Contract-Based Design<a class="headerlink" href="#contract-based-design" title="Permanent link">&para;</a></h2>
 <p>Every layer boundary is a typed, immutable Pydantic model. This design means that any layer can be replaced, rewritten, or tested in isolation as long as it honours its input and output contracts. There are no shared mutable objects crossing layer boundaries; instead, each layer receives a contract instance, reads from it, and produces a new contract instance. The contracts live in <code>src/structure_parser/contracts/</code> and each carries a <code>schema_version</code> field so that breaking changes force an explicit version bump rather than silent drift.</p>
 <h2 id="cli-and-api-share-the-same-orchestrator">CLI and API Share the Same Orchestrator<a class="headerlink" href="#cli-and-api-share-the-same-orchestrator" title="Permanent link">&para;</a></h2>
-<p>Both the command-line interface and the Python API delegate to the same <code>orchestrator.py</code> in the <code>application/</code> layer. The eight CLI commands implemented in <code>commands.py</code> are thin wrappers: they parse arguments, construct a <code>ParserConfig</code>, call the orchestrator, and format the result for terminal output. A caller using the Python API calls the same orchestrator methods directly. This means every improvement to the pipeline — whether a new enrichment step or a new readiness evaluator — is immediately available to both interfaces without duplication.</p>
-<h2 id="pipeline-flowchart">Pipeline Flowchart<a class="headerlink" href="#pipeline-flowchart" title="Permanent link">&para;</a></h2>
+<p>Both the command-line interface and the Python API delegate to shared application logic. The nine CLI commands implemented in <code>commands.py</code> are thin wrappers: they parse arguments, construct configuration models, call parser or pipeline services, and format the result for terminal output.</p>
+<p>A caller using the Python API calls the same parser orchestrator or repository pipeline services directly. This means every improvement to parser layers or repository pipeline orchestration is available to both interfaces without duplicating parsing behavior.</p>
+<h2 id="parser-flowchart">Parser Flowchart<a class="headerlink" href="#parser-flowchart" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TD
     A["Source file\n(.md / .html)"] --&gt; B["Adapter Layer\nMarkdown · HTML"]
     B --&gt;|RawParseModel| C["Enrichment Layer\nMetadata · Structure · References"]
@@ -1860,6 +1890,32 @@
     style A fill:#f5f5f5,stroke:#999
     style G fill:#d4edda,stroke:#28a745</code></pre>
 <p>The orchestrator assembles the <code>ParsedDocument</code> from the outputs of every layer and attaches all diagnostics emitted along the way. A caller that receives a <code>ParsedDocument</code> therefore has a single object that answers every question about the source file: what it contains, whether it is valid, where it has authoring gaps, and whether it is ready for downstream transformation.</p>
+<h2 id="repository-pipeline-sequence">Repository Pipeline Sequence<a class="headerlink" href="#repository-pipeline-sequence" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    actor User
+    participant CLI as CLI pipe command
+    participant Cmd as PipelineCommand
+    participant Orch as PipelineOrchestrator
+    participant Disc as MarkdownDiscoveryService
+    participant Parser as parse_one
+    participant Writer as ParsedDocumentWriter
+    participant Report as CsvInventoryReporter
+
+    User-&gt;&gt;CLI: structure-parser pipe docs_src --out build/parsed
+    CLI-&gt;&gt;Cmd: run(PipelineConfig)
+    Cmd-&gt;&gt;Orch: run(config)
+    Orch-&gt;&gt;Disc: discover(config)
+    Disc--&gt;&gt;Orch: DiscoveredSource[]
+    loop each Markdown source
+        Orch-&gt;&gt;Parser: parse_one(source_path, parser_config)
+        Parser--&gt;&gt;Orch: ParsedDocument
+        Orch-&gt;&gt;Writer: write(document, target_path)
+    end
+    Orch--&gt;&gt;Cmd: PipelineRunResult
+    Cmd-&gt;&gt;Report: write(result, report_path)
+    Report--&gt;&gt;Cmd: PIPE-003 or success
+    Cmd--&gt;&gt;CLI: summary text and exit code</code></pre>
+<p>The sequence diagram shows that repository processing is separate from content classification. The pipeline owns discovery, output, report writing, and run status, while <code>parse_one</code> owns the article model produced for each file.</p>
 
 
 

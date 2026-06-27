@@ -915,6 +915,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pipelineconfig-and-pipelinerunresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PipelineConfig and PipelineRunResult
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#documentprovenance-and-sourcespan" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1863,7 +1874,8 @@
 
 
 <h1 id="contracts">Contracts<a class="headerlink" href="#contracts" title="Permanent link">&para;</a></h1>
-<p>Every layer boundary in the <code>structure_parser</code> pipeline is defined by a versioned, immutable Pydantic model. This design means any layer can be replaced or tested in isolation as long as it accepts the same input contract and returns the same output contract — the caller never needs to know which implementation is behind the interface. All contracts live in <code>src/structure_parser/contracts/</code> and each carries a <code>schema_version</code> field; breaking changes require a version bump rather than silent drift.</p>
+<p>Every parser layer boundary in <code>structure_parser</code> is defined by a versioned Pydantic model. This design means any layer can be replaced or tested in isolation as long as it accepts the same input contract and returns the same output contract — the caller never needs to know which implementation is behind the interface.</p>
+<p>Repository pipeline contracts are operational Pydantic models. They describe discovery, target paths, file statuses, run diagnostics, and aggregate statistics without redefining article, unit, component, or attribute semantics.</p>
 <h2 id="parserconfig">ParserConfig<a class="headerlink" href="#parserconfig" title="Permanent link">&para;</a></h2>
 <p><code>ParserConfig</code> is the configuration contract. It is a frozen Pydantic model constructed once per run and passed through to every layer that needs it. Its fields are:</p>
 <table>
@@ -1983,7 +1995,7 @@
 </table>
 <p>Line numbers are <code>None</code> when the adapter cannot determine them, which the provenance system records as <code>partial</code> or <code>unavailable</code> status.</p>
 <h2 id="parseddocument">ParsedDocument<a class="headerlink" href="#parseddocument" title="Permanent link">&para;</a></h2>
-<p><code>ParsedDocument</code> is the primary output contract of the entire pipeline. It is the object returned to every caller — CLI commands, API consumers, and test assertions alike. Its fields are:</p>
+<p><code>ParsedDocument</code> is the primary output contract of the parser flow. It is the object returned by single-file parser commands, API consumers, and parser test assertions. Its fields are:</p>
 <table>
 <thead>
 <tr>
@@ -2072,6 +2084,10 @@
 <li><code>stats</code> — a <code>ParseStats</code> object</li>
 </ul>
 <p><code>ParseStats</code> summarizes the run with counts: <code>total_files</code>, <code>success_count</code>, <code>error_count</code>, <code>warning_count</code>, and <code>elapsed_seconds</code>. The computed property <code>success</code> on <code>ParseRunResult</code> is <code>True</code> only if no document in the run has <code>has_errors == True</code> and <code>run_diagnostics</code> contains no errors.</p>
+<h2 id="pipelineconfig-and-pipelinerunresult">PipelineConfig and PipelineRunResult<a class="headerlink" href="#pipelineconfig-and-pipelinerunresult" title="Permanent link">&para;</a></h2>
+<p><code>PipelineConfig</code> is the repository pipeline configuration contract. It contains file or folder inputs, an output directory, optional report and log paths, include and exclude patterns, strict-mode behavior, dry-run behavior, and the <code>ParserConfig</code> applied to each discovered source.</p>
+<p><code>PipelineRunResult</code> is the repository pipeline result contract. It contains a <code>run_id</code>, one <code>PipelineFileResult</code> per discovered file, run-level diagnostics, and <code>PipelineRunStats</code>.</p>
+<p><code>PipelineFileResult</code> is the bridge between repository operations and parser diagnostics. It records the discovered source, target path, status, parser diagnostic codes, pipeline error code, error count, warning count, and file-level duration.</p>
 <h2 id="documentprovenance-and-sourcespan">DocumentProvenance and SourceSpan<a class="headerlink" href="#documentprovenance-and-sourcespan" title="Permanent link">&para;</a></h2>
 <p>These two contracts carry origin tracking information at different granularities. <code>DocumentProvenance</code> is attached to the <code>ParsedDocument</code> and records the SHA-256 <code>content_hash</code> of the source bytes, the <code>parse_timestamp</code> in ISO 8601 format, the <code>adapter_version</code> string, and the <code>schema_version</code>. <code>SourceSpan</code> is attached to individual <code>Unit</code>, <code>Component</code>, and <code>Attribute</code> objects and records the <code>source_path</code>, <code>start_line</code>, <code>end_line</code>, and a <code>provenance_status</code> value (<code>available</code>, <code>partial</code>, or <code>unavailable</code>).</p>
 <h2 id="schema-versioning">Schema Versioning<a class="headerlink" href="#schema-versioning" title="Permanent link">&para;</a></h2>
