@@ -12,11 +12,13 @@ from structure_parser.application.commands import (
     InspectReferencesCommand,
     InspectStructureCommand,
     ParseCommand,
+    PipelineCommand,
     TransformReadinessCommand,
     ValidateContractCommand,
     ValidateMarkdownCommand,
 )
 from structure_parser.contracts.config import ParserConfig
+from structure_parser.contracts.pipeline import PipelineConfig
 from structure_parser.logging_config import configure_logging
 
 app = typer.Typer(
@@ -131,6 +133,49 @@ def cmd_validate_contract(
 ) -> None:
     """Validate fixture files against expected contract behavior."""
     text, exit_code = ValidateContractCommand().run(paths, _config(debug))
+    typer.echo(text)
+    raise typer.Exit(exit_code)
+
+
+@app.command("pipe")
+def cmd_pipe(
+    inputs: Annotated[list[Path], typer.Argument(help="Files or folders to process.")],
+    output_dir: Annotated[Path, typer.Option("--out", help="Parsed output directory.")],
+    report_path: Annotated[
+        Path | None, typer.Option("--report", help="CSV report path.")
+    ] = None,
+    include_patterns: Annotated[
+        list[str] | None, typer.Option("--include", help="Include pattern (repeatable).")
+    ] = None,
+    exclude_patterns: Annotated[
+        list[str] | None, typer.Option("--exclude", help="Exclude pattern (repeatable).")
+    ] = None,
+    log_file: Annotated[
+        Path | None, typer.Option("--log-file", help="Write structured log to this path.")
+    ] = None,
+    log_format: Annotated[
+        str, typer.Option("--log-format", help="Log format: text or jsonl.")
+    ] = "text",
+    strict: _StrictOption = False,
+    debug: _DebugOption = False,
+    dry_run: Annotated[
+        bool, typer.Option("--dry-run", help="Write the CSV report without parsed output files.")
+    ] = False,
+) -> None:
+    """Parse a nested Markdown content repository into files and a CSV inventory."""
+    cfg = PipelineConfig(
+        inputs=inputs,
+        output_dir=output_dir,
+        report_path=report_path,
+        include_patterns=include_patterns or ["*.md", "*.markdown"],
+        exclude_patterns=exclude_patterns or [],
+        log_file=log_file,
+        log_format=log_format,
+        strict=strict,
+        dry_run=dry_run,
+        parser_config=_config(debug),
+    )
+    text, exit_code = PipelineCommand().run(cfg)
     typer.echo(text)
     raise typer.Exit(exit_code)
 

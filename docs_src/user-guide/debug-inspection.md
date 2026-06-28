@@ -132,7 +132,7 @@ INFO (1)
           Remediation: Add a YAML front matter block with at least a title field.
 ```
 
-Read the output from top to bottom and address items in that order. Fixing SP-011 (add front matter) and SP-020 (add H1) often resolves SP-041 (unknown article type) as a downstream consequence, because the parser uses `articleType` from front matter and the H1 to classify the article.
+Read the output from top to bottom and address items in that order. Fixing SP-011 (add front matter), SP-020 (add H1), and SP-040 (unknown units) often resolves SP-041 (unknown article type) as a downstream consequence, because the parser uses explicit `articleType` metadata first and construction-based unit populations when metadata is absent or unsupported.
 
 Use `inspect-diagnostics` immediately after making structural changes to confirm that each fix removes its corresponding diagnostic.
 

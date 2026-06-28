@@ -624,6 +624,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concept/comparison/" class="md-nav__link">
         
   
@@ -1899,7 +1955,9 @@
 <h2 id="two-classification-dimensions">Two Classification Dimensions<a class="headerlink" href="#two-classification-dimensions" title="Permanent link">&para;</a></h2>
 <p>Each article and each unit carries two independent classification fields.</p>
 <p><strong>ditaType</strong> maps the content to a DITA 1.3 specialization type: <code>topic</code>, <code>concept</code>, <code>task</code> (rendered as <code>howto</code>), <code>reference</code>, <code>troubleshooting</code>, <code>glossary</code>, or <code>glossentry</code>. This dimension captures the structural intent of the content and enables downstream toolchains that consume DITA-aligned metadata.</p>
-<p><strong>informationType</strong> maps the content to a Horn information type: <code>concept</code>, <code>procedure</code>, <code>fact</code>, <code>process</code>, or <code>principle</code>. The Horn classification is orthogonal to DITA — it captures the rhetorical purpose of the content independently of its structural form. Together, the two dimensions let classifiers and validators cross-check consistency: a <code>ditaType: reference</code> article is expected to carry <code>informationType: fact</code>, and a mismatch signals a classification error.</p>
+<p><strong>informationType</strong> maps the content to a Robert Horn Information Mapping type. The full taxonomy used for design work is <code>concept</code>, <code>procedure</code>, <code>process</code>, <code>principle</code>, <code>fact</code>, <code>structure</code>, and <code>classification</code>.</p>
+<p>The current runtime enum implements the Horn-derived values <code>concept</code>, <code>procedure</code>, <code>process</code>, <code>principle</code>, and <code>fact</code>. It also provides <code>mixed</code> for article-level aggregation and <code>unknown</code> for content that cannot be classified. The <code>structure</code> and <code>classification</code> values remain model-expansion candidates until their schema and parser behavior are implemented.</p>
+<p>The Horn classification is orthogonal to DITA. It captures the rhetorical purpose of the content independently of its structural publishing form, which lets classifiers and validators cross-check consistency.</p>
 <h2 id="schema-directory-structure">Schema Directory Structure<a class="headerlink" href="#schema-directory-structure" title="Permanent link">&para;</a></h2>
 <p>The model schemas are organized in a directory hierarchy that mirrors the content hierarchy.</p>
 <table>

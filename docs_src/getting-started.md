@@ -76,7 +76,7 @@ install-widget.md
   readiness:    DITA=ready  Schema.org=ready  RAG=ready
 ```
 
-Each field tells you something specific. `article_type: howto` confirms that the parser read the `articleType: howto` front matter field and mapped it to the `howto` article type. `units: 4` means the parser found four H2 sections — Introduction, Prerequisites, Steps, and Next Steps — and classified each as a typed unit. `diagnostics: 0 errors, 0 warnings` means the content conforms to the Structured Markdown pattern language. `readiness` summarizes the transform-readiness evaluation for three downstream targets: DITA XML output, Schema.org structured data, and RAG ingestion chunk boundaries.
+Each field tells you something specific. `article_type: howto` confirms that the parser selected the how-to article type, either from recognized front matter or from construction evidence such as a procedure unit. `units: 4` means the parser found four H2 sections — Introduction, Prerequisites, Steps, and Next Steps — and classified each as a typed unit. `diagnostics: 0 errors, 0 warnings` means the content conforms to the Structured Markdown pattern language. `readiness` summarizes the transform-readiness evaluation for three downstream targets: DITA XML output, Schema.org structured data, and RAG ingestion chunk boundaries.
 
 ## Inspecting the Model
 

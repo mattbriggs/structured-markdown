@@ -14,7 +14,7 @@ The JSON schemas in `model/` are the ground truth for classification rules. Each
 
 The hierarchy has four levels — Article, Unit, Component, and Attribute — each with a defined scope and a direct mapping from Markdown constructs. The levels move from the file level down to the inline level, matching the natural nesting of Markdown document structure.
 
-An Article corresponds to one Markdown file or one HTML page. It carries article-level metadata — `articleType`, `ditaType`, `informationType`, and `title` — and contains an ordered sequence of Units. The article type governs which unit types are permitted and which are required; a `concept` article schema permits `unitConcept` and `unitPrinciple` units but does not require procedure or reference units. Front matter fields drive article-level classification, with the parser reading `articleType`, `article_type`, or `type` to determine the article schema to apply.
+An Article corresponds to one Markdown file or one HTML page. It carries article-level metadata — `articleType`, `ditaType`, `informationType`, and `title` — and contains an ordered sequence of Units. The article type governs which unit types are permitted and which are required; a `concept` article schema permits `unitConcept` and `unitPrinciple` units but does not require procedure or reference units. Front matter fields provide the strongest article-level classification signal, with the parser reading `articleType`, `article_type`, or `type` before falling back to construction-based triage from the classified unit population.
 
 A Unit corresponds to a logical section of the article, typically bounded by an H2 heading and extending to the next H2 heading or the end of the document. It carries a `unitType` and `informationType`, and contains an ordered sequence of Components. Unit type is inferred primarily from the text of the H2 heading: "Prerequisites" maps to `unitPrerequisites`, "Next Steps" maps to `unitLinkNextstep`, headings containing "step" or "procedure" map to `unitProcedure`. Units are the primary rhetorical containers — they correspond to Robert Horn's information types — and their boundaries are the chunk boundaries used when the document is ingested for retrieval-augmented generation.
 
@@ -76,7 +76,7 @@ Each article type has a dedicated JSON schema that constrains which unit types a
 | `topic` | topic | mixed | any known unit |
 | `unknown` | (none) | unknown | (no constraint) |
 
-The `topic` article type is the most permissive: it accepts any known unit type without requiring any particular unit, making it suitable for content that combines multiple information types without fitting a single rhetorical purpose. The `unknown` article type places no constraint at all and is the fallback when the parser cannot infer or locate an `articleType` declaration in front matter. An article classified as `unknown` can still be fully parsed — all its units, components, and attributes are classified normally — but the article-level semantic contract is absent, which downstream transformation tools must account for.
+The `topic` article type is the most permissive known type: it accepts any known unit type without requiring any particular unit, making it suitable for content that combines multiple information types without fitting a single rhetorical purpose. The `unknown` article type places no constraint at all and is the fallback when the parser can neither read a known article type from metadata nor infer one from the unit population. An article classified as `unknown` can still be fully parsed — all its units, components, and attributes are classified normally — but the article-level semantic contract is absent, which downstream transformation tools must account for.
 
 The schema files in `model/` encode these constraints as JSON Schema documents, which means they are both human-readable specifications and machine-executable validation rules. The parser loads the schema corresponding to the inferred article type and runs a Pydantic-based validation pass on the classified content. Validation results — pass, fail, or pass-with-warnings — appear in the `ParsedDocument.validation_result` field.
 
@@ -94,13 +94,13 @@ When classification fails, the model preserves content under Unknown types rathe
 
 A document with five H2 sections where one section heading matches no known unit-type keyword produces a `ParsedDocument` with four classified units and one `unitUnknown` — not a parsing failure. All of the components within the unclassified unit are still parsed and attached to the `unitUnknown` node. The `unitUnknown` node carries a diagnostic reference to SP-040, which reports what heading text was encountered and why it did not match any known pattern. The author can read the diagnostic, rename the heading to a recognized pattern, and reparse to obtain a classified unit.
 
-This fallback design makes the parser safe to run on any Markdown file, including files that make no attempt to conform to the pattern language. A repository of ad-hoc Markdown notes, blog posts, or scratch files can be passed to the parser without error. The output will contain mostly `artUnknown` articles with `unitUnknown` units, and the diagnostic list will be long, but no content will be lost and no process will fail. This property matters for incremental adoption: teams can run the parser across an existing corpus, inspect the diagnostic output to understand how far the content is from the pattern language, and prioritize conformance work without committing to a big-bang migration.
+This fallback design makes the parser safe to run on any Markdown file, including files that make no attempt to conform to the pattern language. A repository of ad-hoc Markdown notes, blog posts, or scratch files can be passed to the parser without error. The output may contain inferred `topic` articles when the file has recognizable section patterns, or `artUnknown` articles with `unitUnknown` units when the file provides too little signal, but no content will be lost and no process will fail. This property matters for incremental adoption: teams can run the parser across an existing corpus, inspect the diagnostic output to understand how far the content is from the pattern language, and prioritize conformance work without committing to a big-bang migration.
 
 ```mermaid
 stateDiagram-v2
     [*] --> Parsing
 
-    Parsing --> Known : heading or front matter\nmatches known pattern
+    Parsing --> Known : metadata, heading, or\nconstruction matches pattern
     Parsing --> Ambiguous : multiple patterns match\nor confidence below threshold
     Parsing --> Unknown : no pattern matches
 
@@ -116,7 +116,7 @@ stateDiagram-v2
     DiagnosticEmitted --> [*]
 ```
 
-The state diagram reflects the triage logic at each classification decision point. Content moves to Known when the parser finds a confident match, to Ambiguous when multiple interpretations are possible or the signal is weak, and to Unknown when no interpretation succeeds. Ambiguous content can be resolved by the author providing an explicit front matter override — setting `articleType` directly bypasses inference for article classification, and future heading-level overrides can similarly resolve unit ambiguity. Unknown content with an emitted diagnostic is a stable terminal state: the content is preserved, the uncertainty is named, and the author has the information needed to decide whether to correct the source.
+The state diagram reflects the triage logic at each classification decision point. Content moves to Known when the parser finds a confident match in metadata, heading conventions, body construction, or unit populations; it moves to Ambiguous when multiple interpretations are possible or the signal is weak; and it moves to Unknown when no interpretation succeeds. Ambiguous article content can be resolved by the author providing an explicit front matter override, while future heading-level overrides can similarly resolve unit ambiguity. Unknown content with an emitted diagnostic is a stable terminal state: the content is preserved, the uncertainty is named, and the author has the information needed to decide whether to correct the source.
 
 ## What the Parser Produces
 

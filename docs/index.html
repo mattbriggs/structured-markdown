@@ -735,6 +735,62 @@
   
   
     <li class="md-nav__item">
+      <a href="concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="concept/comparison/" class="md-nav__link">
         
   
@@ -1836,6 +1892,7 @@
 <h1 id="semantic-markdown">Semantic Markdown<a class="headerlink" href="#semantic-markdown" title="Permanent link">&para;</a></h1>
 <p>Structured Markdown is an open semantic layer for Markdown. A parser uses the standard as a semantic contract to parses constrained Markdown into a stable, validated object model with provenance, enabling reliable transformation into downstream systems such as RAG pipelines, JSON-LD, DITA, RSS/Atom, knowledge graphs, static sites, and structured documentation workflows.</p>
 <p>The current project is focusing on a layered Python package that parses Markdown and rendered HTML into a normalized structured content hierarchy for validation, publishing transforms, and RAG ingestion.</p>
+<p>The repository pipeline extends the file parser to nested Markdown content repositories. It discovers Markdown files, calls the parser once per file, writes parsed JSON outputs, writes a CSV inventory report, and optionally writes a log file.</p>
 <p><code>structure_parser</code> parses Markdown and HTML into a normalized, classified content model that downstream systems can process without re-reading the source. Plain Markdown is readable and writable by any tool, but it carries no semantic contract: a heading is a heading, a list is a list, and no machine can tell a procedure from a reference section without inspecting the prose. <code>structure_parser</code> closes that gap by reading the source, classifying every block against a defined hierarchy, validating the result against JSON schemas, and returning a versioned Pydantic contract alongside author-facing diagnostics that explain every classification decision.</p>
 <h2 id="the-four-level-hierarchy">The Four-Level Hierarchy<a class="headerlink" href="#the-four-level-hierarchy" title="Permanent link">&para;</a></h2>
 <p><code>structure_parser</code> maps source content to an <strong>Article → Unit → Component → Attribute</strong> hierarchy defined by the JSON schemas in <code>model/</code>.</p>
@@ -1852,13 +1909,16 @@
 <ul>
 <li><code>concept</code> — an explanation of what something is</li>
 <li><code>procedure</code> — a sequence of steps to accomplish a goal</li>
-<li><code>principle</code> — a rule or guideline governing behavior</li>
 <li><code>process</code> — a description of how a system operates</li>
+<li><code>principle</code> — a rule or guideline governing behavior</li>
 <li><code>fact</code> — a datum or reference item</li>
+<li><code>structure</code> — a description of parts, relationships, or organization</li>
+<li><code>classification</code> — a grouping or taxonomy of related things</li>
 <li><code>mixed</code> — units of more than one type (applied at the article level when units disagree)</li>
 <li><code>unknown</code> — content that could not be classified</li>
 </ul>
-<p><strong>DITA 1.3 topic types</strong> classify the document's publishing intent: <code>topic</code>, <code>concept</code>, <code>howto</code>, <code>reference</code>, <code>troubleshooting</code>, <code>glossary</code>, <code>glossentry</code>. These map from the article's <code>articleType</code> front matter field and drive which schema in <code>model/articles/</code> is used for validation.</p>
+<p>The current runtime enum implements <code>concept</code>, <code>procedure</code>, <code>process</code>, <code>principle</code>, and <code>fact</code>, with <code>mixed</code> and <code>unknown</code> as parser states. The <code>structure</code> and <code>classification</code> types are reserved model-expansion targets for future schema work.</p>
+<p><strong>DITA-inspired topic types</strong> classify the document's publishing intent: <code>topic</code>, <code>concept</code>, <code>howto</code>, <code>reference</code>, <code>troubleshooting</code>, <code>glossary</code>, <code>glossentry</code>. The parser selects this article type from recognized front matter first and then from construction-based triage when metadata is absent or unsupported. The selected article type drives which schema in <code>model/articles/</code> is used for validation.</p>
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <p>Install the package:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>structure-parser
@@ -1940,11 +2000,15 @@
 <td>Complete</td>
 </tr>
 <tr>
-<td>CLI (8 subcommands)</td>
+<td>CLI (9 subcommands, including <code>pipe</code>)</td>
 <td>Complete</td>
 </tr>
 <tr>
-<td>Python API (<code>parse_file</code>, <code>parse_files</code>)</td>
+<td>Python API (<code>parse_file</code>, <code>parse_files</code>, <code>run_pipeline</code>)</td>
+<td>Complete</td>
+</tr>
+<tr>
+<td>Repository pipeline for nested Markdown folders</td>
 <td>Complete</td>
 </tr>
 <tr>
@@ -1964,7 +2028,7 @@
 <li><a href="concept/parsing-approaches/">Background: Parsing Approaches</a> — AST, BNF, and schema mapping compared</li>
 <li><a href="concept/comparison/">Background: Comparison with Similar Tools</a> — DITA, Pandoc, Vale, Markdoc, and more</li>
 <li><a href="architecture/overview/">Architecture Overview</a> — layer contracts and data flow</li>
-<li><a href="user-guide/cli/">User Guide: CLI Reference</a> — all eight subcommands with options</li>
+<li><a href="user-guide/cli/">User Guide: CLI Reference</a> — all nine subcommands with options</li>
 <li><a href="architecture/diagnostics/">User Guide: Diagnostics</a> — SP-NNN codes and remediation</li>
 <li><a href="schemas/structured-markdown-v1/">Model Reference</a> — Article → Unit → Component → Attribute schemas</li>
 <li><a href="api/">API Reference</a> — <code>parse_file</code>, <code>parse_files</code>, <code>ParsedDocument</code>, <code>ParserConfig</code></li>

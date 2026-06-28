@@ -624,6 +624,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../concept/comparison/" class="md-nav__link">
         
   
@@ -1660,6 +1716,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#run_pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_pipeline()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipelineconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PipelineConfig
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipelinerunresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PipelineRunResult
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#parserconfig" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1895,18 +1984,21 @@
 <p>The public API surface is small by design. Import the two entry-point functions directly from the package root, and import contract models from their individual modules:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_file</span><span class="p">,</span> <span class="n">parse_files</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParserConfig</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.parsed_document</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParsedDocument</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.parse_run_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParseRunResult</span><span class="p">,</span> <span class="n">ParseStats</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.structured_markdown</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructuredContent</span><span class="p">,</span> <span class="n">Unit</span><span class="p">,</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Attribute</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Diagnostic</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.references</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reference</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelValidationResult</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.transform_readiness</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformReadiness</span><span class="p">,</span> <span class="n">TargetReadiness</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.provenance</span><span class="w"> </span><span class="kn">import</span> <span class="n">DocumentProvenance</span><span class="p">,</span> <span class="n">SourceSpan</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.domain.enums</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">Severity</span><span class="p">,</span> <span class="n">SourceFormat</span><span class="p">,</span> <span class="n">ArticleType</span><span class="p">,</span> <span class="n">UnitType</span><span class="p">,</span> <span class="n">ComponentType</span><span class="p">,</span> <span class="n">AttributeType</span><span class="p">,</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">InformationType</span><span class="p">,</span> <span class="n">TriageStatus</span><span class="p">,</span> <span class="n">ReadinessStatus</span><span class="p">,</span> <span class="n">ResolutionState</span><span class="p">,</span> <span class="n">ProvenanceStatus</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">PipelineConfig</span><span class="p">,</span> <span class="n">PipelineRunResult</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.parsed_document</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParsedDocument</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.parse_run_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParseRunResult</span><span class="p">,</span> <span class="n">ParseStats</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.structured_markdown</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructuredContent</span><span class="p">,</span> <span class="n">Unit</span><span class="p">,</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Attribute</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Diagnostic</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.references</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reference</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelValidationResult</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.transform_readiness</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformReadiness</span><span class="p">,</span> <span class="n">TargetReadiness</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.provenance</span><span class="w"> </span><span class="kn">import</span> <span class="n">DocumentProvenance</span><span class="p">,</span> <span class="n">SourceSpan</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.domain.enums</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">Severity</span><span class="p">,</span> <span class="n">SourceFormat</span><span class="p">,</span> <span class="n">ArticleType</span><span class="p">,</span> <span class="n">UnitType</span><span class="p">,</span> <span class="n">ComponentType</span><span class="p">,</span> <span class="n">AttributeType</span><span class="p">,</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">InformationType</span><span class="p">,</span> <span class="n">TriageStatus</span><span class="p">,</span> <span class="n">ReadinessStatus</span><span class="p">,</span> <span class="n">ResolutionState</span><span class="p">,</span> <span class="n">ProvenanceStatus</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_pipeline</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.pipeline.reporting</span><span class="w"> </span><span class="kn">import</span> <span class="n">CsvInventoryReporter</span>
 </code></pre></div>
 <p>Everything else is internal. Do not import from <code>structure_parser.adapters</code>, <code>structure_parser.application</code>, <code>structure_parser.enrichment</code>, or <code>structure_parser.structured_markdown</code> directly; those namespaces are private and may change without notice.</p>
 <h2 id="parse_file">parse_file()<a class="headerlink" href="#parse_file" title="Permanent link">&para;</a></h2>
@@ -1996,6 +2088,161 @@
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">has_errors</span><span class="p">:</span>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">doc</span><span class="o">.</span><span class="n">source_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">doc</span><span class="o">.</span><span class="n">error_count</span><span class="si">}</span><span class="s2"> error(s)&quot;</span><span class="p">)</span>
 </code></pre></div>
+<h2 id="run_pipeline">run_pipeline()<a class="headerlink" href="#run_pipeline" title="Permanent link">&para;</a></h2>
+<p><code>run_pipeline()</code> processes a Markdown content repository and returns a <code>PipelineRunResult</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">run_pipeline</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">PipelineConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PipelineRunResult</span><span class="p">:</span>
+</code></pre></div>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>config</code></td>
+<td><code>PipelineConfig</code></td>
+<td>Repository pipeline configuration, including inputs, output directory, include/exclude patterns, dry-run behavior, and parser configuration.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong> <code>PipelineRunResult</code> — always returns a run result with file-level statuses, run diagnostics, and aggregate statistics.</p>
+<p><strong>Side effects</strong> include reading source files and writing parsed JSON outputs unless <code>dry_run=True</code>. The function does not write the CSV inventory report; the CLI <code>pipe</code> command writes the report after orchestration, and Python callers can use <code>CsvInventoryReporter</code> when they need the same report.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">PipelineConfig</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_pipeline</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.pipeline.reporting</span><span class="w"> </span><span class="kn">import</span> <span class="n">CsvInventoryReporter</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">config</span> <span class="o">=</span> <span class="n">PipelineConfig</span><span class="p">(</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;docs_src&quot;</span><span class="p">)],</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="n">output_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;build/parsed&quot;</span><span class="p">),</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">result</span> <span class="o">=</span> <span class="n">run_pipeline</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">CsvInventoryReporter</span><span class="p">()</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">effective_report_path</span><span class="p">())</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Discovered: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">discovered_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parsed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">parsed_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">failed_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="pipelineconfig">PipelineConfig<a class="headerlink" href="#pipelineconfig" title="Permanent link">&para;</a></h2>
+<p><code>PipelineConfig</code> is the public configuration model for repository-scale Markdown processing.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inputs</code></td>
+<td><code>list[Path]</code></td>
+<td>required</td>
+<td>Source files or folders to process.</td>
+</tr>
+<tr>
+<td><code>output_dir</code></td>
+<td><code>Path</code></td>
+<td>required</td>
+<td>Directory for parsed JSON outputs.</td>
+</tr>
+<tr>
+<td><code>report_path</code></td>
+<td><code>Path \| None</code></td>
+<td><code>None</code></td>
+<td>CSV report path. Defaults to <code>output_dir / "pipeline-inventory.csv"</code>.</td>
+</tr>
+<tr>
+<td><code>include_patterns</code></td>
+<td><code>list[str]</code></td>
+<td><code>["*.md", "*.markdown"]</code></td>
+<td>File include patterns.</td>
+</tr>
+<tr>
+<td><code>exclude_patterns</code></td>
+<td><code>list[str]</code></td>
+<td><code>[]</code></td>
+<td>Relative path exclude patterns.</td>
+</tr>
+<tr>
+<td><code>log_file</code></td>
+<td><code>Path \| None</code></td>
+<td><code>None</code></td>
+<td>Optional log file path for the CLI command.</td>
+</tr>
+<tr>
+<td><code>log_format</code></td>
+<td><code>str</code></td>
+<td><code>"text"</code></td>
+<td>Log file format: <code>text</code> or <code>jsonl</code>.</td>
+</tr>
+<tr>
+<td><code>strict</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+<td>Treat warnings as failures for CLI exit-code purposes.</td>
+</tr>
+<tr>
+<td><code>dry_run</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+<td>Discover files and calculate targets without writing parsed JSON outputs.</td>
+</tr>
+<tr>
+<td><code>parser_config</code></td>
+<td><code>ParserConfig</code></td>
+<td>default parser config</td>
+<td>Parser configuration applied to each source file.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pipelinerunresult">PipelineRunResult<a class="headerlink" href="#pipelinerunresult" title="Permanent link">&para;</a></h2>
+<p><code>PipelineRunResult</code> is the operational output of a repository pipeline run.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schema_version</code></td>
+<td><code>str</code></td>
+<td>Pipeline result contract version.</td>
+</tr>
+<tr>
+<td><code>run_id</code></td>
+<td><code>str</code></td>
+<td>Unique identifier for one pipeline invocation.</td>
+</tr>
+<tr>
+<td><code>files</code></td>
+<td><code>list[PipelineFileResult]</code></td>
+<td>One result for each discovered source file.</td>
+</tr>
+<tr>
+<td><code>run_diagnostics</code></td>
+<td><code>list[Diagnostic]</code></td>
+<td>Run-level pipeline diagnostics, such as missing input or unsafe output overlap.</td>
+</tr>
+<tr>
+<td><code>stats</code></td>
+<td><code>PipelineRunStats</code></td>
+<td>Aggregate counts and elapsed time.</td>
+</tr>
+</tbody>
+</table>
+<p><code>PipelineRunResult</code> describes repository execution state. It references parser diagnostic codes in file results but does not redefine article, unit, component, attribute, or information-type semantics.</p>
 <h2 id="parserconfig">ParserConfig<a class="headerlink" href="#parserconfig" title="Permanent link">&para;</a></h2>
 <p>A frozen Pydantic model. All fields are keyword-only and all have defaults; you never need to supply all of them.</p>
 <table>
@@ -2059,7 +2306,7 @@
 </tbody>
 </table>
 <p>Because <code>ParserConfig</code> is frozen, you cannot mutate it after construction. Create a new instance to adjust settings:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">strict_config</span> <span class="o">=</span> <span class="n">ParserConfig</span><span class="p">(</span><span class="n">validation_mode</span><span class="o">=</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="n">resolve_local_references</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">strict_config</span> <span class="o">=</span> <span class="n">ParserConfig</span><span class="p">(</span><span class="n">validation_mode</span><span class="o">=</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="n">resolve_local_references</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="parseddocument">ParsedDocument<a class="headerlink" href="#parseddocument" title="Permanent link">&para;</a></h2>
 <p>The primary output of <code>parse_file()</code>. All fields are optional except <code>source_path</code> and <code>source_format</code>.</p>
@@ -2205,12 +2452,12 @@
 </tbody>
 </table>
 <p><strong>Iterating units and components</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;guide.md&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">structured_content</span><span class="p">:</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">structured_content</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unit: </span><span class="si">{</span><span class="n">unit</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2"> — </span><span class="si">{</span><span class="n">unit</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">unit</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">comp</span><span class="o">.</span><span class="n">component_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">comp</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">comp</span><span class="o">.</span><span class="n">markdown</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">!r:</span><span class="s2">.60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;guide.md&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">structured_content</span><span class="p">:</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">structured_content</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unit: </span><span class="si">{</span><span class="n">unit</span><span class="o">.</span><span class="n">unit_type</span><span class="si">}</span><span class="s2"> — </span><span class="si">{</span><span class="n">unit</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">unit</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">comp</span><span class="o">.</span><span class="n">component_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">comp</span><span class="o">.</span><span class="n">text</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">comp</span><span class="o">.</span><span class="n">markdown</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">!r:</span><span class="s2">.60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Component</strong> carries different fields depending on <code>component_type</code>. The fields <code>markdown</code>, <code>html</code>, and <code>text</code> hold the rendered or raw content for most block types. For tables, <code>row_count</code>, <code>column_count</code>, <code>row_role</code>, and <code>cell_role</code> are set on the relevant row and cell components. For code blocks, <code>language</code> and <code>code</code> are set.</p>
 <p><strong>Attribute</strong> represents inline markup within a component: <code>att_type</code> distinguishes <code>attText</code>, <code>attBold</code>, <code>attItalic</code>, <code>attCode</code>, <code>attLink</code>, <code>attImage</code>, and so on. The <code>href</code> field is set on links; <code>source</code> and <code>alt_text</code> are set on images.</p>
@@ -2273,8 +2520,8 @@
 </tbody>
 </table>
 <p><strong>Filtering by severity</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">diagnostics</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">]</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">warnings</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">diagnostics</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;warning&quot;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">diagnostics</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">]</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">warnings</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">diagnostics</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;warning&quot;</span><span class="p">]</span>
 </code></pre></div>
 <h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
 <p>A <code>Reference</code> records every link and image found in the document.</p>
@@ -2325,11 +2572,11 @@
 </tbody>
 </table>
 <p><strong>Finding unresolved references</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">config</span> <span class="o">=</span> <span class="n">ParserConfig</span><span class="p">(</span><span class="n">resolve_local_references</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;guide.md&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">broken</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">references</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;unresolved&quot;</span><span class="p">]</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">broken</span><span class="p">:</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">ref</span><span class="o">.</span><span class="n">start_line</span><span class="si">}</span><span class="s2">: broken link → </span><span class="si">{</span><span class="n">ref</span><span class="o">.</span><span class="n">href</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">config</span> <span class="o">=</span> <span class="n">ParserConfig</span><span class="p">(</span><span class="n">resolve_local_references</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;guide.md&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">broken</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">references</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;unresolved&quot;</span><span class="p">]</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">broken</span><span class="p">:</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Line </span><span class="si">{</span><span class="n">ref</span><span class="o">.</span><span class="n">start_line</span><span class="si">}</span><span class="s2">: broken link → </span><span class="si">{</span><span class="n">ref</span><span class="o">.</span><span class="n">href</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="modelvalidationresult">ModelValidationResult<a class="headerlink" href="#modelvalidationresult" title="Permanent link">&para;</a></h2>
 <p><code>ModelValidationResult</code> records the outcome of JSON Schema validation applied to the classified content.</p>
@@ -2364,10 +2611,10 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">valid</span><span class="p">:</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Schema: </span><span class="si">{</span><span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">schema_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">:</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">detail</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">valid</span><span class="p">:</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Schema: </span><span class="si">{</span><span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">schema_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">:</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">detail</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="transformreadiness-and-targetreadiness">TransformReadiness and TargetReadiness<a class="headerlink" href="#transformreadiness-and-targetreadiness" title="Permanent link">&para;</a></h2>
 <p><code>TransformReadiness</code> holds one <code>TargetReadiness</code> entry per evaluated downstream target.</p>
@@ -2420,37 +2667,37 @@
 </tbody>
 </table>
 <p><strong>Checking DITA readiness</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">readiness</span><span class="p">:</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">readiness</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>        <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;dita&quot;</span> <span class="ow">and</span> <span class="n">target</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;blocked&quot;</span><span class="p">:</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DITA export blocked:&quot;</span><span class="p">)</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>            <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">reasons</span><span class="p">:</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">readiness</span><span class="p">:</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">readiness</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>        <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;dita&quot;</span> <span class="ow">and</span> <span class="n">target</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;blocked&quot;</span><span class="p">:</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DITA export blocked:&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>            <span class="k">for</span> <span class="n">reason</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">reasons</span><span class="p">:</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">&para;</a></h2>
 <p><strong>Parse a file and check for errors</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_file</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;article.md&quot;</span><span class="p">)</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">has_errors</span><span class="p">:</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">:</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">] line </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">start_line</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_file</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;article.md&quot;</span><span class="p">)</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">has_errors</span><span class="p">:</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">:</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">] line </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">start_line</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Parse multiple files and get statistics</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_files</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">parse_files</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;content/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.md&quot;</span><span class="p">)))</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">file_count</span><span class="si">}</span><span class="s2"> files, </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">error_count</span><span class="si">}</span><span class="s2"> errors, &quot;</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">warning_count</span><span class="si">}</span><span class="s2"> warnings, </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">duration_ms</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ms&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_files</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">parse_files</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;content/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.md&quot;</span><span class="p">)))</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">file_count</span><span class="si">}</span><span class="s2"> files, </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">error_count</span><span class="si">}</span><span class="s2"> errors, &quot;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">warning_count</span><span class="si">}</span><span class="s2"> warnings, </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">duration_ms</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ms&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Use strict validation mode</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_file</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParserConfig</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;article.md&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">ParserConfig</span><span class="p">(</span><span class="n">validation_mode</span><span class="o">=</span><span class="s2">&quot;strict&quot;</span><span class="p">))</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="k">assert</span> <span class="ow">not</span> <span class="n">doc</span><span class="o">.</span><span class="n">has_errors</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">doc</span><span class="o">.</span><span class="n">error_count</span><span class="si">}</span><span class="s2"> schema error(s) found&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_file</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParserConfig</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;article.md&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">ParserConfig</span><span class="p">(</span><span class="n">validation_mode</span><span class="o">=</span><span class="s2">&quot;strict&quot;</span><span class="p">))</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">assert</span> <span class="ow">not</span> <span class="n">doc</span><span class="o">.</span><span class="n">has_errors</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">doc</span><span class="o">.</span><span class="n">error_count</span><span class="si">}</span><span class="s2"> schema error(s) found&quot;</span>
 </code></pre></div>
 
 

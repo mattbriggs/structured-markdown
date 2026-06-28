@@ -624,6 +624,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concept/comparison/" class="md-nav__link">
         
   
@@ -1974,9 +2030,9 @@
 <p>The SP-030 <code>detail</code> field names the specific constraint that failed. In the example above, <code>artHowto.schema.json</code> requires at least one <code>unitProcedure</code>, and none was found. That maps directly to the "Install the package" section needing to use an ordered list (which the parser recognizes as a procedure).</p>
 <hr />
 <h2 id="common-validation-failures-and-fixes">Common Validation Failures and Fixes<a class="headerlink" href="#common-validation-failures-and-fixes" title="Permanent link">&para;</a></h2>
-<p><strong>SP-041 — Article type not declared</strong></p>
-<p>The parser could not determine the article type from the content structure, and no <code>articleType</code> field is present in the front matter.</p>
-<p>Fix: Add <code>articleType: howto</code> (or the appropriate type) to the YAML front matter block.</p>
+<p><strong>SP-041 — Article type not determined</strong></p>
+<p>The parser could not determine the article type from recognized metadata or from the content structure.</p>
+<p>Fix: Add <code>articleType: howto</code> (or the appropriate type) to the YAML front matter block, or revise the H2 sections so their unit types match a known article pattern.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nn">---</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">articleType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">howto</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Article</span>

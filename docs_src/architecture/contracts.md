@@ -1,6 +1,8 @@
 # Contracts
 
-Every layer boundary in the `structure_parser` pipeline is defined by a versioned, immutable Pydantic model. This design means any layer can be replaced or tested in isolation as long as it accepts the same input contract and returns the same output contract — the caller never needs to know which implementation is behind the interface. All contracts live in `src/structure_parser/contracts/` and each carries a `schema_version` field; breaking changes require a version bump rather than silent drift.
+Every parser layer boundary in `structure_parser` is defined by a versioned Pydantic model. This design means any layer can be replaced or tested in isolation as long as it accepts the same input contract and returns the same output contract — the caller never needs to know which implementation is behind the interface.
+
+Repository pipeline contracts are operational Pydantic models. They describe discovery, target paths, file statuses, run diagnostics, and aggregate statistics without redefining article, unit, component, or attribute semantics.
 
 ## ParserConfig
 
@@ -40,7 +42,7 @@ Line numbers are `None` when the adapter cannot determine them, which the proven
 
 ## ParsedDocument
 
-`ParsedDocument` is the primary output contract of the entire pipeline. It is the object returned to every caller — CLI commands, API consumers, and test assertions alike. Its fields are:
+`ParsedDocument` is the primary output contract of the parser flow. It is the object returned by single-file parser commands, API consumers, and parser test assertions. Its fields are:
 
 | Field | Type | Meaning |
 |---|---|---|
@@ -78,6 +80,14 @@ Unknown content at any level uses sentinel type values — `artUnknown`, `unitUn
 - `stats` — a `ParseStats` object
 
 `ParseStats` summarizes the run with counts: `total_files`, `success_count`, `error_count`, `warning_count`, and `elapsed_seconds`. The computed property `success` on `ParseRunResult` is `True` only if no document in the run has `has_errors == True` and `run_diagnostics` contains no errors.
+
+## PipelineConfig and PipelineRunResult
+
+`PipelineConfig` is the repository pipeline configuration contract. It contains file or folder inputs, an output directory, optional report and log paths, include and exclude patterns, strict-mode behavior, dry-run behavior, and the `ParserConfig` applied to each discovered source.
+
+`PipelineRunResult` is the repository pipeline result contract. It contains a `run_id`, one `PipelineFileResult` per discovered file, run-level diagnostics, and `PipelineRunStats`.
+
+`PipelineFileResult` is the bridge between repository operations and parser diagnostics. It records the discovered source, target path, status, parser diagnostic codes, pipeline error code, error count, warning count, and file-level duration.
 
 ## DocumentProvenance and SourceSpan
 

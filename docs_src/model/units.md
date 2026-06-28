@@ -2,9 +2,11 @@
 
 A unit is the logical section of an article. Each unit begins at an H2 heading and ends where the next H2 heading begins (or at the end of the document). The unit contains an ordered array of components — the block-level elements that follow its heading. A unit's `unitType` field encodes its rhetorical function: what the section is for. Its `informationType` field encodes its Horn classification: the kind of knowledge the section conveys. Together, these two fields give downstream tools a typed, machine-readable signal about the purpose of every section in a document.
 
+The Information Mapping design vocabulary includes seven Horn information types. The full design set is `concept`, `procedure`, `process`, `principle`, `fact`, `structure`, and `classification`; the current runtime enum implements `concept`, `procedure`, `process`, `principle`, and `fact`, plus `mixed` and `unknown` parser states.
+
 ## Unit Type Inference
 
-The parser infers unit type from the text of the H2 heading using keyword matching. The heading is normalized to lowercase and matched against a keyword table. When a heading matches multiple keywords, the most specific match wins; when no heading matches, the unit receives type `unitUnknown`. The inference is deterministic and author-controllable: authors who use conventional heading text get automatic classification; authors who need a specific unit type for an unconventional heading can override inference with an explicit `unitType` annotation in the unit's metadata.
+The parser infers unit type from the text of the H2 heading using keyword matching. The heading is normalized to lowercase and matched against a keyword table. When a heading matches multiple keywords, the most specific match wins; when no heading matches, the parser inspects construction evidence such as ordered lists or code-only sections before falling back to `unitUnknown`. The inference is deterministic and author-controllable through heading conventions; future `unitType` annotations would add an explicit unit-level override without changing heading text.
 
 ## Unit Type Reference
 
@@ -24,6 +26,8 @@ The parser infers unit type from the text of the H2 heading using keyword matchi
 | link-nextstep | (varies) | Next Steps, What's next | Navigation to follow-on content |
 | link-related | (varies) | Related, See also | Navigation to related content |
 | unknown | unknown | (any unmatched heading) | Fallback |
+
+The `structure` and `classification` information types are reserved for future model expansion. A structure unit would describe parts and relationships, while a classification unit would describe groups, classes, or taxonomies.
 
 ## Individual Unit Types
 

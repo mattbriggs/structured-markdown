@@ -10,6 +10,37 @@ from structure_parser.validation.schema_validator import validate_against_schema
 from structure_parser.validation.validation_profiles import get_profile
 
 
+def validate_against_declared_schema(
+    content: StructuredContent,
+    model_dir: Path | None = None,
+) -> ModelValidationResult:
+    """Validate StructuredContent against the article schema it declares.
+
+    Unlike :func:`validate_model`, this ignores profile-level rules (required
+    metadata fields, allowed article types) and validates only the JSON shape
+    against the specific schema named in ``content.schema_name``.  This is the
+    primary entry point for JSON schema round-trip contract tests.
+
+    :param content:
+        The structured content produced by the parser for one document.
+    :param model_dir:
+        Override the default model schema directory.
+    :returns:
+        A :class:`ModelValidationResult` with ``valid=True`` or a list of
+        diagnostics describing each JSON Schema violation.
+    :side effects:
+        Reads schema files from disk on first call per model directory.
+    """
+    source_path = content.source.get("sourcePath") if content.source else None
+    data = _to_schema_dict(content)
+    return validate_against_schema(
+        data=data,
+        schema_id=content.schema_name,
+        model_dir=model_dir,
+        source_path=source_path,
+    )
+
+
 def validate_model(
     content: StructuredContent,
     profile_name: str = "default",
@@ -108,7 +139,7 @@ def _to_schema_dict(content: StructuredContent) -> dict:
         units.append(u_dict)
 
     result: dict = {
-        "schema": content.schema,
+        "schema": content.schema_name,
         "version": content.version,
         "articleType": content.article_type.value,
         "informationType": content.information_type.value,
