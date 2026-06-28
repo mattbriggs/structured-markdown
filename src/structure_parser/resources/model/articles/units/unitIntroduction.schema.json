@@ -3,7 +3,7 @@
   "$id": "unitIntroduction.schema.json",
   "title": "Introduction unit",
   "version": "0.1.0",
-  "description": "Opening chunk for a Markdown file or HTML5 page. It normally contains the H1 and orientation text.",
+  "description": "Opening orientation chunk. When parsed from a preamble it normally contains the H1 and orientation text; when parsed from a named section it contains paragraphs and lists.",
   "type": "object",
   "allOf": [{ "$ref": "unitShared.schema.json#/$defs/unitBase" }],
   "properties": {
@@ -15,12 +15,16 @@
       "items": {
         "oneOf": [
           { "$ref": "components/compHeaderH1.schema.json" },
+          { "$ref": "components/compHeaderH2.schema.json" },
+          { "$ref": "components/compHeaderH3.schema.json" },
           { "$ref": "components/compParagraph.schema.json" },
           { "$ref": "components/compListUnordered.schema.json" },
+          { "$ref": "components/compAlert.schema.json" },
+          { "$ref": "components/compBlockCode.schema.json" },
+          { "$ref": "components/compTable.schema.json" },
           { "$ref": "components/compUnknown.schema.json" }
         ]
-      },
-      "contains": { "$ref": "components/compHeaderH1.schema.json" }
+      }
     }
   },
   "required": ["unitType", "unitId", "informationType", "content"]

@@ -97,9 +97,47 @@ _UNIT_TITLE_MAP: dict[str, UnitType] = {
     "glossary": UnitType.glossary,
     "troubleshoot": UnitType.troubleshooting,
     "troubleshooting": UnitType.troubleshooting,
+    # Catalog / gallery / example sections — reference content
+    "examples": UnitType.reference,
+    "example": UnitType.reference,
+    "samples": UnitType.reference,
+    "sample": UnitType.reference,
+    "templates": UnitType.reference,
+    "template": UnitType.reference,
+    "gallery": UnitType.reference,
+    "catalog": UnitType.reference,
+    "resources": UnitType.reference,
+    # Principle / guidance sections
+    "guidance": UnitType.principle,
+    "design consideration": UnitType.principle,
+    "design principle": UnitType.principle,
+    "recommendation": UnitType.principle,
+    "recommendations": UnitType.principle,
+    "notes": UnitType.principle,
+    "note": UnitType.principle,
+    # Reference / fact sections — generic patterns common across API/developer docs
+    "supported": UnitType.reference,
+    "feature": UnitType.reference,
+    "features": UnitType.reference,
+    "functions": UnitType.reference,
+    "function": UnitType.reference,
+    "methods": UnitType.reference,
+    "method": UnitType.reference,
+    "endpoints": UnitType.reference,
+    "endpoint": UnitType.reference,
+    "errors": UnitType.reference,
+    "error code": UnitType.reference,
+    "error codes": UnitType.reference,
+    "return value": UnitType.reference,
+    "return values": UnitType.reference,
+    "types": UnitType.reference,
+    "attributes": UnitType.reference,
+    "properties": UnitType.reference,
+    "fields": UnitType.reference,
+    "syntax": UnitType.reference,
 }
 
-# Unit type → InformationType
+# Unit type → InformationType (must match the informationType const in each unit schema)
 _UNIT_INFO_TYPE: dict[UnitType, InformationType] = {
     UnitType.introduction: InformationType.concept,
     UnitType.concept: InformationType.concept,
@@ -109,12 +147,22 @@ _UNIT_INFO_TYPE: dict[UnitType, InformationType] = {
     UnitType.fact: InformationType.fact,
     UnitType.reference: InformationType.fact,
     UnitType.troubleshooting: InformationType.process,
-    UnitType.prerequisites: InformationType.concept,
-    UnitType.link_nextstep: InformationType.concept,
-    UnitType.link_related: InformationType.concept,
+    UnitType.prerequisites: InformationType.fact,
+    UnitType.link_nextstep: InformationType.fact,
+    UnitType.link_related: InformationType.fact,
     UnitType.glossary: InformationType.fact,
     UnitType.glossentry: InformationType.fact,
     UnitType.unknown: InformationType.unknown,
+}
+
+# Article type → canonical article-level InformationType (matches informationType const in each article schema)
+_ARTICLE_CANONICAL_INFO_TYPE: dict[ArticleType, InformationType] = {
+    ArticleType.howto: InformationType.procedure,
+    ArticleType.concept: InformationType.concept,
+    ArticleType.reference: InformationType.fact,
+    ArticleType.troubleshooting: InformationType.process,
+    ArticleType.glossary: InformationType.fact,
+    ArticleType.glossentry: InformationType.fact,
 }
 
 # Metadata value → ArticleType (shared by all metadata key lookups)
@@ -221,6 +269,7 @@ _ARTICLE_SIGNATURES: dict[ArticleType, ArticleSignature] = {
         required_any=frozenset({UnitType.reference, UnitType.fact}),
         supporting=frozenset({UnitType.introduction, UnitType.link_related}),
         neutral=frozenset({UnitType.link_nextstep}),
+        conflicting=frozenset({UnitType.concept, UnitType.principle, UnitType.process}),
         excluded=frozenset({UnitType.procedure, UnitType.troubleshooting}),
     ),
     ArticleType.troubleshooting: ArticleSignature(
@@ -303,7 +352,9 @@ def classify(
         diags.append(DiagnosticFactory.unknown_article_type(source_path=source_path))
 
     dita_type = _DITA_TYPE_MAP.get(article_type, "topic")
-    info_type = _infer_article_info_type(units)
+    # Canonical article-level informationType matches the article schema's const constraint.
+    # For topic/overview/quickstart/tutorial/unknown, derive from unit mix instead.
+    info_type = _ARTICLE_CANONICAL_INFO_TYPE.get(article_type) or _infer_article_info_type(units)
     triage = TriageStatus.known if article_type != ArticleType.unknown else TriageStatus.unknown
     schema_id = _SCHEMA_MAP.get(article_type, "artArticle.schema.json")
 
@@ -353,14 +404,24 @@ def _split_into_sections(
             current_heading = node
             current_nodes = []
         elif node.node_type == "heading" and (node.level or 1) == 1:
-            # H1 is the article title — skip it from section body content
-            continue
+            if current_heading is None:
+                # H1 in the preamble (before any H2) becomes a compHeaderH1 in the
+                # introduction unit so the unit validates against unitIntroduction.schema.json.
+                current_nodes.append(node)
+            # H1 inside a named H2 section is unusual — skip it.
         else:
             current_nodes.append(node)
 
     # Flush the last section
     if current_nodes or current_heading is not None:
         sections.append((current_nodes, current_heading))
+
+    # Drop preamble sections that contain only heading nodes — a bare H1 with no
+    # body text provides no unit content and would become a spurious unknown unit.
+    sections = [
+        (ns, h) for (ns, h) in sections
+        if h is not None or any(n.node_type != "heading" for n in ns)
+    ]
 
     return sections
 
@@ -439,9 +500,17 @@ def _score_article_type(
     Applies per-type minimum score and a global minimum margin. Falls back to
     ``topic`` when known units exist but no specialised type wins by margin,
     or ``unknown`` when there is insufficient evidence to classify at all.
+
+    Required units are weighted by instance count so that procedure-dominant
+    documents score higher than documents with only a single procedure unit.
     """
     unit_types = [u.unit_type for u in units]
     known_types = {t for t in unit_types if t != UnitType.unknown}
+    # Count instances per type for evidence weighting (procedure dominance)
+    unit_counts: dict[UnitType, int] = {}
+    for t in unit_types:
+        if t != UnitType.unknown:
+            unit_counts[t] = unit_counts.get(t, 0) + 1
 
     scores: dict[ArticleType, _ArticleCandidateScore] = {}
 
@@ -462,7 +531,10 @@ def _score_article_type(
         if meta_evidence.candidate_type == article_type:
             score += meta_evidence.weight
 
-        score += sig.required_weight * len(known_types & sig.required_any)
+        # Use instance count for required units so procedure-dominant documents
+        # score higher than documents with a single procedure unit.
+        required_count = sum(unit_counts.get(t, 0) for t in sig.required_any)
+        score += sig.required_weight * required_count
         score += sig.supporting_weight * len(supporting_hit)
         score += sig.neutral_weight * len(known_types & sig.neutral)
         score += sig.conflict_weight * len(conflicting_hit)
@@ -560,20 +632,49 @@ def _build_unit(
     unit_type = _infer_unit_type(heading, {})
     proc_repr: ProcedureRepresentation | None = None
 
-    if unit_type == UnitType.unknown:
-        has_ordered_list = any(n.node_type == "list" and n.tag == "ol" for n in nodes)
-        has_code_block = any(n.node_type == "code_block" for n in nodes)
-        has_paragraphs = any(n.node_type == "paragraph" for n in nodes)
+    has_ordered_list = any(n.node_type == "list" and n.tag == "ol" for n in nodes)
+    has_code_block = any(n.node_type == "code_block" for n in nodes)
+    has_paragraphs = any(n.node_type == "paragraph" for n in nodes)
+    has_h1 = any(n.node_type == "heading" and (n.level or 1) == 1 for n in nodes)
 
-        if heading is None and has_paragraphs and not has_ordered_list:
-            # Pre-H2 preamble with introductory paragraphs — classify as introduction
+    if unit_type == UnitType.unknown:
+        if heading is None and has_h1 and has_paragraphs and not has_ordered_list:
+            # Pre-H2 preamble with H1 and introductory paragraphs — introduction unit.
+            # H1 must be present so the unit validates against unitIntroduction.schema.json.
             unit_type = UnitType.introduction
         elif has_ordered_list:
             unit_type = UnitType.procedure
             proc_repr = ProcedureRepresentation.ordered_list
-        elif has_code_block and not has_paragraphs:
-            unit_type = UnitType.procedure
-            proc_repr = ProcedureRepresentation.code_block
+        elif has_code_block:
+            # Code-block procedure when code uses a shell/command language, or when the
+            # section has only code blocks and no explanatory paragraphs.  Sections with
+            # paragraphs and non-shell code blocks (JSON, YAML, HTML examples) are left
+            # unknown so the article-level schema can match them as reference/fact.
+            _shell_langs = frozenset({"bash", "sh", "shell", "zsh", "powershell", "ps1", "cmd", "bat"})
+            has_shell_code = any(
+                n.node_type == "code_block" and (n.attrs.get("language", "") or "").lower() in _shell_langs
+                for n in nodes
+            )
+            if has_shell_code:
+                unit_type = UnitType.procedure
+                proc_repr = (
+                    ProcedureRepresentation.mixed if has_paragraphs else ProcedureRepresentation.code_block
+                )
+            elif not has_paragraphs:
+                unit_type = UnitType.procedure
+                proc_repr = ProcedureRepresentation.code_block
+
+    # Infer procedureRepresentation for procedure units classified by heading keyword
+    # but not yet assigned a representation from construction evidence.
+    if unit_type == UnitType.procedure and proc_repr is None:
+        if has_ordered_list:
+            proc_repr = ProcedureRepresentation.ordered_list
+        elif has_code_block:
+            proc_repr = (
+                ProcedureRepresentation.mixed if has_paragraphs else ProcedureRepresentation.code_block
+            )
+        else:
+            proc_repr = ProcedureRepresentation.unknown
 
     if unit_type == UnitType.unknown:
         diags.append(

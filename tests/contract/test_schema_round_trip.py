@@ -44,20 +44,10 @@ _CLEAN_FIXTURES: list[Path] = [
     _FIXTURE_ROOT / "content_repo" / "reference" / "api.md",
 ]
 
-# All current fixtures have classification gaps: the parser emits unitType:unknown
-# for sections it cannot fully classify, and article schemas reject unknown unit
-# types.  Additionally, informationType is derived from unit mix rather than from
-# the declared article type (e.g. howto gets "mixed" instead of "procedure").
-# Both issues are resolved by the article triage implementation (tech note §12).
-# Remove fixtures from this set as triage is completed for each article type.
-_KNOWN_SCHEMA_GAPS: set[str] = {
-    "clean.md",       # informationType: mixed; unresolved procedure units
-    "complex.md",     # informationType: concept; unknown unit types in reference
-    "install.md",     # informationType: mixed; unresolved procedure units
-    "configure.md",   # informationType: mixed; unresolved procedure units
-    "index.md",       # unitType: unknown for Key-Concepts section
-    "api.md",         # unitType: unknown for Config/API/Error sections
-}
+# Fixtures with known schema gaps that are not yet resolved.
+# As of b2 implementation: serializer alignment, informationType canonical values,
+# and generic unit patterns have been implemented — all clean fixtures should now pass.
+_KNOWN_SCHEMA_GAPS: set[str] = set()
 
 
 def _fixture_id(p: Path) -> str:
