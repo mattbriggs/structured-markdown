@@ -624,6 +624,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concept/comparison/" class="md-nav__link">
         
   
@@ -1860,7 +1916,7 @@
 <p><code>semantic_enricher.py</code> calls all four stages in order and merges their diagnostics into a single list before handing control back to the orchestrator.</p>
 <h2 id="classification-layer">Classification Layer<a class="headerlink" href="#classification-layer" title="Permanent link">&para;</a></h2>
 <p>The Classification layer receives the <code>RawParseModel</code> and the metadata extracted in the enrichment stage, then produces a <code>StructuredContent</code> object. It is responsible for imposing the Structured Markdown content model on the flat node list. Three components work in sequence:</p>
-<p><strong>Classifier</strong> (<code>classifier.py</code>): Splits the <code>RawNode</code> list at H2 heading boundaries, treating each H2 and the nodes that follow it as a <code>Unit</code>. The classifier infers the <code>UnitType</code> from the heading title text using keyword matching and can infer procedure-like units from ordered lists or code blocks when headings are not specific. The overall article type is currently inferred from document-level metadata keys such as <code>articleType</code>, <code>article_type</code>, or <code>type</code>. If the article type cannot be determined, the classifier emits SP-041 (article type undetermined).</p>
+<p><strong>Classifier</strong> (<code>classifier.py</code>): Splits the <code>RawNode</code> list at H2 heading boundaries, treating each H2 and the nodes that follow it as a <code>Unit</code>. The classifier infers the <code>UnitType</code> from the heading title text using keyword matching and can infer procedure-like units from ordered lists or code blocks when headings are not specific. The overall article type is selected from document-level metadata keys such as <code>articleType</code>, <code>article_type</code>, or <code>type</code> when a recognized value is present. If metadata is absent or unsupported, the classifier scores the unit-type population against runtime article signatures and chooses the closest known article type, falls back to <code>topic</code> for mixed known units, or emits SP-041 when no article type can be determined.</p>
 <p><strong>Component mapper</strong> (<code>component_mapper.py</code>): Iterates over each block-level <code>RawNode</code> within a unit and maps it to a <code>ComponentType</code>. A fenced code block becomes <code>compBlockCode</code>; an unordered list becomes <code>compListUnordered</code>; an ordered list becomes <code>compListOrdered</code>; a paragraph becomes <code>compParagraph</code>. Nodes that match no known component type are mapped to <code>compUnknown</code> and emit SP-040 (content classified as unknown, informational).</p>
 <p><strong>Attribute mapper</strong> (<code>attribute_mapper.py</code>): Iterates over inline <code>RawNode</code> objects within each component and maps them to <code>AttributeType</code> values. Bold inline content becomes <code>attBold</code> or <code>attStrong</code>; italic or emphasized content becomes <code>attItalic</code> or <code>attEmphasis</code>; an inline code span becomes <code>attCode</code>. Unrecognized inline types are mapped to <code>attUnknown</code> and emit SP-040.</p>
 <p>Unknown content is never discarded. The <code>artUnknown</code>, <code>unitUnknown</code>, <code>compUnknown</code>, and <code>attUnknown</code> sentinel values preserve all content in the output so that downstream systems can inspect or report on unclassified material rather than silently losing it.</p>

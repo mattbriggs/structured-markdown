@@ -79,11 +79,11 @@ The Structured Markdown model takes a principled stance on this: article-level c
 
 ## Classification in the Parser
 
-The parser infers article type and unit type from source Markdown signals rather than requiring authors to annotate every structural element. Article type inference is currently metadata-first: the parser reads front matter and looks for fields named `articleType`, `article_type`, or `type`.
+The parser infers article type and unit type from source Markdown signals rather than requiring authors to annotate every structural element. Article type inference is metadata-first and construction-aware: the parser checks front matter for `articleType`, `article_type`, or `type`, then falls back to unit populations when metadata is absent or unsupported.
 
-The current article classifier selects the first recognized metadata value from that key list. If a recognized value maps to a known article type, the parser applies the corresponding schema. If no recognized field is present, the article is classified as `artUnknown` and an SP-041 diagnostic is emitted.
+The current article classifier selects the first recognized metadata value from that key list when it maps to a known article type. Metadata is treated as the strongest article-level signal because it is an explicit author declaration.
 
-Construction-based article triage is planned design work rather than current behavior. The target design is to infer article type from unit populations when metadata is absent or weak, then reconcile metadata evidence with construction evidence and emit diagnostics for conflicts.
+Construction-based article triage is the active fallback when metadata does not identify a known article type. The classifier first builds units, assigns each unit a `unitType`, and scores the resulting unit-type set against article signatures. A document with procedure units can classify as `howto`, a document with reference or fact units can classify as `reference`, and a document with mixed known units that do not fit a specialized signature falls back to `topic`. Only documents with no useful metadata signal and no useful construction signal remain `artUnknown` and receive SP-041.
 
 Unit type inference is driven by the text of H2 headings, using a keyword-matching pass that resolves common heading conventions to known unit types:
 
@@ -104,14 +104,13 @@ flowchart TD
     START([Markdown file]) --> FM{Front matter\npresent?}
 
     FM -->|Yes| AT{articleType\nfield found?}
-    FM -->|No| ARTUNKNOWN[artUnknown\n+ SP-041 diagnostic]
+    FM -->|No| H2[Parse H2 headings\nas unit boundaries]
 
     AT -->|Yes, recognized value| ARTKNOWN[Apply article schema]
-    AT -->|Yes, unrecognized value| ARTUNKNOWN
-    AT -->|No| ARTUNKNOWN
+    AT -->|Yes, unrecognized value| H2
+    AT -->|No| H2
 
     ARTKNOWN --> H2[Parse H2 headings\nas unit boundaries]
-    ARTUNKNOWN --> H2
 
     H2 --> KW{Heading text\nmatches keyword?}
 
@@ -119,9 +118,18 @@ flowchart TD
     KW -->|No heading match,\nbut procedure shape| UNITPROC[Infer procedure-like unit\nfrom ordered lists or code blocks]
     KW -->|No match| UNITUNKNOWN[unitUnknown\n+ SP-040 diagnostic]
 
-    UNITKNOWN --> VALIDATE{Schema\nvalidation}
-    UNITPROC --> VALIDATE
+    UNITKNOWN --> ARTINFER{Article known\nfrom metadata?}
+    UNITPROC --> ARTINFER
     UNITUNKNOWN --> PRESERVE[Preserve content\nin unitUnknown node]
+
+    ARTINFER -->|Yes| VALIDATE{Schema\nvalidation}
+    ARTINFER -->|No, signature matches| ARTCONSTRUCT[Assign articleType\nfrom unit population]
+    ARTINFER -->|No, mixed known units| ARTTOPIC[Assign topic]
+    ARTINFER -->|No useful signal| ARTUNKNOWN[artUnknown\n+ SP-041 diagnostic]
+
+    ARTCONSTRUCT --> VALIDATE
+    ARTTOPIC --> VALIDATE
+    ARTUNKNOWN --> VALIDATE
 
     VALIDATE -->|Pass| READY[ParsedDocument:\nclassified + valid]
     VALIDATE -->|Fail| DIAGFAIL[ParsedDocument:\nclassified + diagnostics]

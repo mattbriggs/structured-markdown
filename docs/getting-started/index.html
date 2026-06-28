@@ -748,6 +748,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../concept/comparison/" class="md-nav__link">
         
   
@@ -1904,7 +1960,7 @@
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  diagnostics:  0 errors, 0 warnings
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  readiness:    DITA=ready  Schema.org=ready  RAG=ready
 </code></pre></div>
-<p>Each field tells you something specific. <code>article_type: howto</code> confirms that the parser read the <code>articleType: howto</code> front matter field and mapped it to the <code>howto</code> article type. <code>units: 4</code> means the parser found four H2 sections — Introduction, Prerequisites, Steps, and Next Steps — and classified each as a typed unit. <code>diagnostics: 0 errors, 0 warnings</code> means the content conforms to the Structured Markdown pattern language. <code>readiness</code> summarizes the transform-readiness evaluation for three downstream targets: DITA XML output, Schema.org structured data, and RAG ingestion chunk boundaries.</p>
+<p>Each field tells you something specific. <code>article_type: howto</code> confirms that the parser selected the how-to article type, either from recognized front matter or from construction evidence such as a procedure unit. <code>units: 4</code> means the parser found four H2 sections — Introduction, Prerequisites, Steps, and Next Steps — and classified each as a typed unit. <code>diagnostics: 0 errors, 0 warnings</code> means the content conforms to the Structured Markdown pattern language. <code>readiness</code> summarizes the transform-readiness evaluation for three downstream targets: DITA XML output, Schema.org structured data, and RAG ingestion chunk boundaries.</p>
 <h2 id="inspecting-the-model">Inspecting the Model<a class="headerlink" href="#inspecting-the-model" title="Permanent link">&para;</a></h2>
 <p>Four <code>inspect-*</code> commands let you examine different aspects of a parsed document.</p>
 <p><code>inspect-model</code> shows the full Article → Unit → Component classification:</p>

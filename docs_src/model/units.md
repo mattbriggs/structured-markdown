@@ -6,7 +6,7 @@ The Information Mapping design vocabulary includes seven Horn information types.
 
 ## Unit Type Inference
 
-The parser infers unit type from the text of the H2 heading using keyword matching. The heading is normalized to lowercase and matched against a keyword table. When a heading matches multiple keywords, the most specific match wins; when no heading matches, the unit receives type `unitUnknown`. The inference is deterministic and author-controllable: authors who use conventional heading text get automatic classification; authors who need a specific unit type for an unconventional heading can override inference with an explicit `unitType` annotation in the unit's metadata.
+The parser infers unit type from the text of the H2 heading using keyword matching. The heading is normalized to lowercase and matched against a keyword table. When a heading matches multiple keywords, the most specific match wins; when no heading matches, the parser inspects construction evidence such as ordered lists or code-only sections before falling back to `unitUnknown`. The inference is deterministic and author-controllable through heading conventions; future `unitType` annotations would add an explicit unit-level override without changing heading text.
 
 ## Unit Type Reference
 

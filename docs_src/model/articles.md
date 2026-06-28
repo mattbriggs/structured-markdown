@@ -20,7 +20,7 @@ An article schema defines the top-level contract for one Markdown file or one HT
 
 ## Sample Front Matter
 
-The following front matter block illustrates the minimum required fields for a howto article. The parser reads these fields to select the correct article schema before classifying the body content.
+The following front matter block illustrates the explicit declaration for a howto article. The parser reads these fields first to select the article schema; when they are absent or unsupported, it falls back to the constructed unit population and can still infer a howto article from procedure-oriented sections.
 
 ```yaml
 ---

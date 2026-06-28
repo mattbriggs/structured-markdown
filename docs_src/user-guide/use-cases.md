@@ -8,7 +8,7 @@
 
 A documentation engineering team maintains a large Markdown repository and publishes content through an automated pipeline. Authors submit pull requests, and the pipeline converts approved Markdown to HTML for delivery. The team uses the howto article pattern across all procedural content — a pattern that requires a title, a prerequisites section, and at least one ordered procedure.
 
-The problem is consistency. Individual authors skip heading levels, omit front matter `articleType` declarations, or submit articles whose structure matches nothing the authoring model recognizes. These errors surface only after publishing, when fixing them requires a second PR and a second review cycle.
+The problem is consistency. Individual authors skip heading levels, omit explicit `articleType` declarations, or submit articles whose structure matches nothing the authoring model recognizes. These errors surface only after publishing, when fixing them requires a second PR and a second review cycle.
 
 `structure_parser` addresses this by running `validate-markdown` as a required CI step. When a file violates the `artHowto.schema.json` schema in strict mode, the command exits with code 1, blocking the PR from merging. Authors read the diagnostic output directly in the CI log and fix the violations before re-pushing.
 
@@ -45,7 +45,7 @@ The problem is consistency. Individual authors skip heading levels, omit front m
     Exit code: 1 (strict mode)
     ```
 
-4. Authors read the diagnostic codes, fix the violations in their branch, and push again. SP-041 tells the author to add `articleType: howto` to the front matter. SP-030 identifies a missing procedure unit. SP-020 identifies an absent H1.
+4. Authors read the diagnostic codes, fix the violations in their branch, and push again. SP-041 tells the author to add `articleType: howto` or restructure the H2 sections so the article matches a known pattern. SP-030 identifies a missing procedure unit. SP-020 identifies an absent H1.
 
 5. After fixing all violations, the CI step passes and exits with code 0.
 
@@ -171,7 +171,7 @@ A technical writer is drafting a new howto article in VS Code. The article will 
       [3] unit_type=unknown  info_type=unknown  title="Next steps"
     ```
 
-    The `[unknown]` labels indicate the parser could not determine the article type or unit types. This usually means the front matter lacks `articleType` or the content does not match any recognized structural pattern.
+    The `[unknown]` labels indicate the parser could not determine the article type or unit types. This usually means the metadata does not declare a known `articleType` and the content does not match any recognized structural pattern.
 
 3. Run `inspect-diagnostics` to see the full set of diagnostics for the file:
 
@@ -195,7 +195,7 @@ A technical writer is drafting a new howto article in VS Code. The article will 
               Remediation: Add a YAML front matter block with at least a title field.
     ```
 
-4. Interpret the output. SP-011 (front matter absent) tells you to add a YAML block at the top of the article. SP-041 (unknown article type) is a downstream consequence: once you add `articleType: howto` to the front matter, the parser can classify the article. SP-021 (heading level skipped) is a structural error at line 12 — you have jumped from H1 directly to H3 somewhere in the article.
+4. Interpret the output. SP-011 (front matter absent) tells you to add a YAML block at the top of the article when you want explicit metadata. SP-041 (unknown article type) means neither metadata nor the current unit population identifies the article, so you can fix it by adding `articleType: howto` or by restructuring the sections so they match a known article pattern. SP-021 (heading level skipped) is a structural error at line 12 — you have jumped from H1 directly to H3 somewhere in the article.
 
 5. Run `validate-markdown` against the target schema to confirm which constraints the current article violates:
 
@@ -213,7 +213,7 @@ A technical writer is drafting a new howto article in VS Code. The article will 
     Summary: 1 file, 2 warnings, 0 errors
     ```
 
-6. Fix the reported violations. Add front matter with `articleType: howto`, restructure the "Steps" section as an ordered list (so the parser classifies it as a procedure unit), and correct the H3 that follows an H1 directly.
+6. Fix the reported violations. Add front matter with `articleType: howto` when you want an explicit declaration, restructure the "Steps" section as an ordered list so the parser classifies it as a procedure unit, and correct the H3 that follows an H1 directly.
 
 7. After fixing, confirm transform readiness to catch any remaining gaps before committing:
 
@@ -325,4 +325,4 @@ A content engineering team is migrating a Markdown-based documentation site to a
         writer.writerow([doc.source_path, status, art_type, codes, messages])
     ```
 
-6. Use the CSV to prioritize remediation work. Files with only SP-041 (missing `articleType` in front matter) are the fastest to fix — one line of YAML per file. Files with SP-020 (no H1) and SP-041 together need structural editing and are more expensive. Files with SP-030 (schema constraint violations) need the most attention because the content structure itself does not match the declared article type.
+6. Use the CSV to prioritize remediation work. Files with only SP-041 are often the fastest to fix because they need either one explicit `articleType` line or clearer H2 unit patterns. Files with SP-020 (no H1) and SP-041 together need structural editing and are more expensive. Files with SP-030 (schema constraint violations) need the most attention because the content structure itself does not match the selected article type.

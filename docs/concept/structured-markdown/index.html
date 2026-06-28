@@ -742,6 +742,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../comparison/" class="md-nav__link">
         
   
@@ -1848,7 +1904,7 @@
 <p>The JSON schemas in <code>model/</code> are the ground truth for classification rules. Each article type has a dedicated schema that specifies which unit types the article may or must contain. Each unit type constrains which component types are meaningful within it. This layered schema structure means the pattern language is not hard-coded in the parser logic — it is a data-driven contract that can be extended, versioned, and audited independently of the parser implementation.</p>
 <h2 id="the-four-level-hierarchy">The Four-Level Hierarchy<a class="headerlink" href="#the-four-level-hierarchy" title="Permanent link">&para;</a></h2>
 <p>The hierarchy has four levels — Article, Unit, Component, and Attribute — each with a defined scope and a direct mapping from Markdown constructs. The levels move from the file level down to the inline level, matching the natural nesting of Markdown document structure.</p>
-<p>An Article corresponds to one Markdown file or one HTML page. It carries article-level metadata — <code>articleType</code>, <code>ditaType</code>, <code>informationType</code>, and <code>title</code> — and contains an ordered sequence of Units. The article type governs which unit types are permitted and which are required; a <code>concept</code> article schema permits <code>unitConcept</code> and <code>unitPrinciple</code> units but does not require procedure or reference units. Front matter fields drive article-level classification, with the parser reading <code>articleType</code>, <code>article_type</code>, or <code>type</code> to determine the article schema to apply.</p>
+<p>An Article corresponds to one Markdown file or one HTML page. It carries article-level metadata — <code>articleType</code>, <code>ditaType</code>, <code>informationType</code>, and <code>title</code> — and contains an ordered sequence of Units. The article type governs which unit types are permitted and which are required; a <code>concept</code> article schema permits <code>unitConcept</code> and <code>unitPrinciple</code> units but does not require procedure or reference units. Front matter fields provide the strongest article-level classification signal, with the parser reading <code>articleType</code>, <code>article_type</code>, or <code>type</code> before falling back to construction-based triage from the classified unit population.</p>
 <p>A Unit corresponds to a logical section of the article, typically bounded by an H2 heading and extending to the next H2 heading or the end of the document. It carries a <code>unitType</code> and <code>informationType</code>, and contains an ordered sequence of Components. Unit type is inferred primarily from the text of the H2 heading: "Prerequisites" maps to <code>unitPrerequisites</code>, "Next Steps" maps to <code>unitLinkNextstep</code>, headings containing "step" or "procedure" map to <code>unitProcedure</code>. Units are the primary rhetorical containers — they correspond to Robert Horn's information types — and their boundaries are the chunk boundaries used when the document is ingested for retrieval-augmented generation.</p>
 <p>A Component corresponds to a block-level Markdown construct within a Unit. Paragraphs, fenced code blocks, ordered lists, unordered lists, tables, alert blockquotes, and headings from H1 through H6 each map to a dedicated component type. Alert blockquotes specialize further: <code>[!NOTE]</code> produces <code>compAlertNote</code>, <code>[!WARNING]</code> produces <code>compAlertWarning</code>, and so on. Components are the rendering atoms — the level at which a transformation pipeline decides how to present content.</p>
 <p>An Attribute corresponds to an inline construct within a Component. Text, bold (<code>**text**</code>), italic (<code>*text*</code>), inline code (<code>`code`</code>), links, images, anchors, and other inline constructs each map to a named attribute type. Attributes carry the leaf-level content of the document: the actual character data and the formatting signals applied to it.</p>
@@ -1964,7 +2020,7 @@
 </tr>
 </tbody>
 </table>
-<p>The <code>topic</code> article type is the most permissive: it accepts any known unit type without requiring any particular unit, making it suitable for content that combines multiple information types without fitting a single rhetorical purpose. The <code>unknown</code> article type places no constraint at all and is the fallback when the parser cannot infer or locate an <code>articleType</code> declaration in front matter. An article classified as <code>unknown</code> can still be fully parsed — all its units, components, and attributes are classified normally — but the article-level semantic contract is absent, which downstream transformation tools must account for.</p>
+<p>The <code>topic</code> article type is the most permissive known type: it accepts any known unit type without requiring any particular unit, making it suitable for content that combines multiple information types without fitting a single rhetorical purpose. The <code>unknown</code> article type places no constraint at all and is the fallback when the parser can neither read a known article type from metadata nor infer one from the unit population. An article classified as <code>unknown</code> can still be fully parsed — all its units, components, and attributes are classified normally — but the article-level semantic contract is absent, which downstream transformation tools must account for.</p>
 <p>The schema files in <code>model/</code> encode these constraints as JSON Schema documents, which means they are both human-readable specifications and machine-executable validation rules. The parser loads the schema corresponding to the inferred article type and runs a Pydantic-based validation pass on the classified content. Validation results — pass, fail, or pass-with-warnings — appear in the <code>ParsedDocument.validation_result</code> field.</p>
 <h2 id="the-tradeoff-feedback-over-format">The Tradeoff — Feedback Over Format<a class="headerlink" href="#the-tradeoff-feedback-over-format" title="Permanent link">&para;</a></h2>
 <p>Because Structured Markdown does not alter the source format, the contract can only be enforced by feeding diagnostic information back to the author, and that pipeline dependency is the defining tradeoff of the approach. A DITA-aware XML editor enforces the schema at authoring time: when an author attempts to insert a <code>&lt;steps&gt;</code> element inside a <code>&lt;concept&gt;</code> body, the editor rejects the action immediately. The schema validation is synchronous with the act of writing. An author cannot save an invalid DITA file to disk, because the editor will not permit it.</p>
@@ -1973,11 +2029,11 @@
 <h2 id="the-fallback-model">The Fallback Model<a class="headerlink" href="#the-fallback-model" title="Permanent link">&para;</a></h2>
 <p>When classification fails, the model preserves content under Unknown types rather than discarding it, making uncertainty explicit without losing information. This design principle applies at every level of the hierarchy: <code>artUnknown</code> at the article level, <code>unitUnknown</code> at the unit level, <code>compUnknown</code> at the component level, and <code>attUnknown</code> at the attribute level. Every source construct that the parser cannot confidently classify produces a named Unknown node in the output model rather than a parse error or a dropped element.</p>
 <p>A document with five H2 sections where one section heading matches no known unit-type keyword produces a <code>ParsedDocument</code> with four classified units and one <code>unitUnknown</code> — not a parsing failure. All of the components within the unclassified unit are still parsed and attached to the <code>unitUnknown</code> node. The <code>unitUnknown</code> node carries a diagnostic reference to SP-040, which reports what heading text was encountered and why it did not match any known pattern. The author can read the diagnostic, rename the heading to a recognized pattern, and reparse to obtain a classified unit.</p>
-<p>This fallback design makes the parser safe to run on any Markdown file, including files that make no attempt to conform to the pattern language. A repository of ad-hoc Markdown notes, blog posts, or scratch files can be passed to the parser without error. The output will contain mostly <code>artUnknown</code> articles with <code>unitUnknown</code> units, and the diagnostic list will be long, but no content will be lost and no process will fail. This property matters for incremental adoption: teams can run the parser across an existing corpus, inspect the diagnostic output to understand how far the content is from the pattern language, and prioritize conformance work without committing to a big-bang migration.</p>
+<p>This fallback design makes the parser safe to run on any Markdown file, including files that make no attempt to conform to the pattern language. A repository of ad-hoc Markdown notes, blog posts, or scratch files can be passed to the parser without error. The output may contain inferred <code>topic</code> articles when the file has recognizable section patterns, or <code>artUnknown</code> articles with <code>unitUnknown</code> units when the file provides too little signal, but no content will be lost and no process will fail. This property matters for incremental adoption: teams can run the parser across an existing corpus, inspect the diagnostic output to understand how far the content is from the pattern language, and prioritize conformance work without committing to a big-bang migration.</p>
 <pre class="mermaid"><code>stateDiagram-v2
     [*] --&gt; Parsing
 
-    Parsing --&gt; Known : heading or front matter\nmatches known pattern
+    Parsing --&gt; Known : metadata, heading, or\nconstruction matches pattern
     Parsing --&gt; Ambiguous : multiple patterns match\nor confidence below threshold
     Parsing --&gt; Unknown : no pattern matches
 
@@ -1991,7 +2047,7 @@
     Unknown --&gt; DiagnosticEmitted
 
     DiagnosticEmitted --&gt; [*]</code></pre>
-<p>The state diagram reflects the triage logic at each classification decision point. Content moves to Known when the parser finds a confident match, to Ambiguous when multiple interpretations are possible or the signal is weak, and to Unknown when no interpretation succeeds. Ambiguous content can be resolved by the author providing an explicit front matter override — setting <code>articleType</code> directly bypasses inference for article classification, and future heading-level overrides can similarly resolve unit ambiguity. Unknown content with an emitted diagnostic is a stable terminal state: the content is preserved, the uncertainty is named, and the author has the information needed to decide whether to correct the source.</p>
+<p>The state diagram reflects the triage logic at each classification decision point. Content moves to Known when the parser finds a confident match in metadata, heading conventions, body construction, or unit populations; it moves to Ambiguous when multiple interpretations are possible or the signal is weak; and it moves to Unknown when no interpretation succeeds. Ambiguous article content can be resolved by the author providing an explicit front matter override, while future heading-level overrides can similarly resolve unit ambiguity. Unknown content with an emitted diagnostic is a stable terminal state: the content is preserved, the uncertainty is named, and the author has the information needed to decide whether to correct the source.</p>
 <h2 id="what-the-parser-produces">What the Parser Produces<a class="headerlink" href="#what-the-parser-produces" title="Permanent link">&para;</a></h2>
 <p>The parser produces a <code>ParsedDocument</code> Pydantic model containing the classified content, diagnostics, references, and transform-readiness assessments, and that output model is the interface between the parser and every downstream tool. The <code>StructuredContent</code> field carries the full classification result: <code>article_type</code>, <code>dita_type</code>, <code>information_type</code>, and a <code>content</code> list of Unit objects. Each Unit carries its own <code>unit_type</code>, <code>information_type</code>, <code>title</code>, and <code>content</code> list of Component objects. Each Component carries its component type, child components (for nested structures like list items within lists), and a list of Attribute objects for inline content.</p>
 <p>Diagnostics appear as a list of <code>Diagnostic</code> objects, each carrying an SP-NNN code, a severity level (error, warning, or info), a human-readable message, and a location reference. SP-040 reports content classified as unknown; SP-041 reports an unknown article type. The full diagnostic code space covers classification ambiguity, missing required units, schema validation failures, and reference resolution failures. Diagnostics are structured rather than plain text, making them parseable by IDE extensions and CI tooling without string matching.</p>

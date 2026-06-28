@@ -37,7 +37,7 @@ This hierarchy enables machine-processable output that carries structural guaran
 
 The current runtime enum implements `concept`, `procedure`, `process`, `principle`, and `fact`, with `mixed` and `unknown` as parser states. The `structure` and `classification` types are reserved model-expansion targets for future schema work.
 
-**DITA 1.3 topic types** classify the document's publishing intent: `topic`, `concept`, `howto`, `reference`, `troubleshooting`, `glossary`, `glossentry`. These map from the article's `articleType` front matter field and drive which schema in `model/articles/` is used for validation.
+**DITA-inspired topic types** classify the document's publishing intent: `topic`, `concept`, `howto`, `reference`, `troubleshooting`, `glossary`, `glossentry`. The parser selects this article type from recognized front matter first and then from construction-based triage when metadata is absent or unsupported. The selected article type drives which schema in `model/articles/` is used for validation.
 
 ## Quick Start
 

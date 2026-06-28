@@ -742,6 +742,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../comparison/" class="md-nav__link">
         
   
@@ -1864,7 +1920,7 @@
 <p>The cost is real and well-documented. DITA requires specialized editors — oXygen XML Editor, XMetaL, Arbortext — because raw XML authoring is error-prone and slow. Authors must understand topic specialization, the difference between a concept and a task, when to use <code>&lt;note&gt;</code> versus <code>&lt;hazardstatement&gt;</code>, and how to manage content reuse through keyrefs and conrefs. The DITA-OT transformation pipeline requires configuration, specialization awareness, and maintenance. DocBook carries similar costs: its schema is exhaustive and precise, and precisely for that reason it has remained a format for technical publishers rather than a general-purpose authoring tool. These are not failures of DITA or DocBook — they are the deliberate tradeoffs of a format designed for semantic contracts over authoring ease.</p>
 <h2 id="modest-semantic-enrichment-the-middle-path">Modest Semantic Enrichment — the Middle Path<a class="headerlink" href="#modest-semantic-enrichment-the-middle-path" title="Permanent link">&para;</a></h2>
 <p>Structured Markdown occupies the space between unconstrained Markdown and schema-first formats by defining a pattern language that maps authoring conventions to a semantic contract without altering the source format. The approach does not introduce new Markdown syntax. Authors write ordinary Markdown — headings, paragraphs, code blocks, lists, front matter — using the conventions they already know. The parser reads the content and classifies it against a four-level hierarchy: Article, Unit, Component, and Attribute. When classification succeeds, the content satisfies a semantic contract that can be used to drive DITA output, Schema.org markup, or RAG chunk boundaries.</p>
-<p>When classification fails, the parser emits author-facing diagnostics rather than a parse error. A heading that does not match a known unit type produces an SP-040 diagnostic identifying what could not be classified and why. A document with no <code>articleType</code> in front matter produces an SP-041 diagnostic. These diagnostics create a feedback loop: the author learns where the content deviates from the pattern language and can decide whether to conform or accept the classification gap. The contract lives outside the source file, in the parser and the schemas, not inside the Markdown itself. The source file remains plain Markdown, readable in any editor, renderable on any platform, and processable by any Markdown tool — the semantic enrichment is additive, not disruptive.</p>
+<p>When classification fails, the parser emits author-facing diagnostics rather than a parse error. A heading that does not match a known unit type produces an SP-040 diagnostic identifying what could not be classified and why. A document receives SP-041 when the parser can neither read a known <code>articleType</code> from front matter nor infer an article type from the constructed units. These diagnostics create a feedback loop: the author learns where the content deviates from the pattern language and can decide whether to conform or accept the classification gap. The contract lives outside the source file, in the parser and the schemas, not inside the Markdown itself. The source file remains plain Markdown, readable in any editor, renderable on any platform, and processable by any Markdown tool — the semantic enrichment is additive, not disruptive.</p>
 <p>The following diagram shows where Structured Markdown sits relative to plain Markdown and schema-first formats:</p>
 <pre class="mermaid"><code>graph LR
     subgraph Plain["Plain Markdown"]

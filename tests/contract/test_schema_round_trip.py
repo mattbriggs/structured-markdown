@@ -24,7 +24,10 @@ import pytest
 from structure_parser import parse_file
 from structure_parser.contracts.parsed_document import ParsedDocument
 from structure_parser.domain.enums import SourceFormat
-from structure_parser.validation.model_validator import validate_against_declared_schema, validate_model
+from structure_parser.validation.model_validator import (
+    validate_against_declared_schema,
+    validate_model,
+)
 
 _FIXTURE_ROOT = Path(__file__).parent.parent / "fixtures"
 

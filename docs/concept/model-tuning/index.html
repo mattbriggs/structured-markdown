@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../adapters/">
+        <link rel="prev" href="../document-type-triage/">
       
       
-        <link rel="next" href="../compatibility/">
+        <link rel="next" href="../comparison/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Writing Validators - Structure-Aware Parser</title>
+        <title>Tuning the Model for Triage - Structure-Aware Parser</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#writing-validators" class="md-skip">
+        <a href="#tuning-the-model-for-triage" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Writing Validators
+              Tuning the Model for Triage
             
           </span>
         </div>
@@ -243,11 +243,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../concept/markdown-semantics/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../markdown-semantics/" class="md-tabs__link">
           
   
   
@@ -323,13 +325,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../adapters/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../developer-guide/adapters/" class="md-tabs__link">
           
   
   
@@ -485,26 +485,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -522,7 +527,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -540,7 +545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concept/markdown-semantics/" class="md-nav__link">
+      <a href="../markdown-semantics/" class="md-nav__link">
         
   
   
@@ -568,7 +573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concept/structured-markdown/" class="md-nav__link">
+      <a href="../structured-markdown/" class="md-nav__link">
         
   
   
@@ -596,7 +601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concept/information-architecture/" class="md-nav__link">
+      <a href="../information-architecture/" class="md-nav__link">
         
   
   
@@ -624,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concept/document-type-triage/" class="md-nav__link">
+      <a href="../document-type-triage/" class="md-nav__link">
         
   
   
@@ -649,10 +654,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../concept/model-tuning/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -668,6 +700,114 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concept
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discussion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-how-to-article" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: How-To Article
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-reference-article" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Reference Article
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-topic-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Topic Fallback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -680,7 +820,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concept/comparison/" class="md-nav__link">
+      <a href="../comparison/" class="md-nav__link">
         
   
   
@@ -708,7 +848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concept/parsing-approaches/" class="md-nav__link">
+      <a href="../parsing-approaches/" class="md-nav__link">
         
   
   
@@ -1421,31 +1561,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1463,7 +1598,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1481,7 +1616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/" class="md-nav__link">
+      <a href="../../developer-guide/adapters/" class="md-nav__link">
         
   
   
@@ -1506,37 +1641,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Writing Validators
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../developer-guide/validators/" class="md-nav__link">
         
   
   
@@ -1552,125 +1660,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#validator-responsibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validator Responsibility
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-validate_against_schema-function" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The validate_against_schema Function
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-schema-store" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Schema Store
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#advisory-vs-strict-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Advisory vs. Strict Validation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-known-ref-resolution-limitation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Known $ref Resolution Limitation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#validation-profiles" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validation Profiles
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#programmatic-validation-with-a-custom-schema-directory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Programmatic Validation with a Custom Schema Directory
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#interpreting-modelvalidationresult" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Interpreting ModelValidationResult
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#future-path-migrating-to-the-referencing-library" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Future Path: Migrating to the referencing Library
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1683,7 +1672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../compatibility/" class="md-nav__link">
+      <a href="../../developer-guide/compatibility/" class="md-nav__link">
         
   
   
@@ -1711,7 +1700,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../testing/" class="md-nav__link">
+      <a href="../../developer-guide/testing/" class="md-nav__link">
         
   
   
@@ -1739,7 +1728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../schema-versioning/" class="md-nav__link">
+      <a href="../../developer-guide/schema-versioning/" class="md-nav__link">
         
   
   
@@ -1929,153 +1918,172 @@
   
 
 
-<h1 id="writing-validators">Writing Validators<a class="headerlink" href="#writing-validators" title="Permanent link">&para;</a></h1>
-<h2 id="validator-responsibility">Validator Responsibility<a class="headerlink" href="#validator-responsibility" title="Permanent link">&para;</a></h2>
-<p>A validator takes a serialized <code>StructuredContent</code> dictionary and checks it against a JSON Schema from the model directory, returning a <code>ModelValidationResult</code> that records whether the document is valid and any schema errors encountered. Validation is intentionally decoupled from parsing: the parser always produces a <code>ParsedDocument</code> even when validation fails, and the result is stored in <code>ParsedDocument.validation</code> as a nullable field. This design lets downstream consumers read and display partial results without blocking on schema compliance.</p>
-<h2 id="the-validate_against_schema-function">The validate_against_schema Function<a class="headerlink" href="#the-validate_against_schema-function" title="Permanent link">&para;</a></h2>
-<p><code>validate_against_schema()</code> in <code>validation/schema_validator.py</code> is the primary entry point for programmatic validation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">validate_against_schema</span><span class="p">(</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">schema_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">model_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">source_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelValidationResult</span><span class="p">:</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>data</code></td>
-<td><code>dict[str, Any]</code></td>
-<td>The JSON-serializable dict to validate (typically <code>StructuredContent.model_dump()</code>)</td>
-</tr>
-<tr>
-<td><code>schema_id</code></td>
-<td><code>str</code></td>
-<td>Filename of the target schema, e.g. <code>"artHowto.schema.json"</code></td>
-</tr>
-<tr>
-<td><code>model_dir</code></td>
-<td><code>Path \| None</code></td>
-<td>Override the default model directory; <code>None</code> uses <code>model/articles/</code></td>
-</tr>
-<tr>
-<td><code>source_path</code></td>
-<td><code>str \| None</code></td>
-<td>Path string attached to diagnostics for context</td>
-</tr>
-</tbody>
-</table>
-<p>The function loads the named schema from <code>model_dir</code>, builds a schema store, and validates <code>data</code> using <code>jsonschema.Draft7Validator</code>. It returns a <code>ModelValidationResult</code> with <code>valid=True</code> on success or a list of <code>Diagnostic</code> objects on failure. Individual schema violations are converted to SP-030 diagnostics, capped at 50 per run. Failures to locate the schema file produce an SP-031 diagnostic; unsupported schema versions produce SP-032.</p>
-<h2 id="the-schema-store">The Schema Store<a class="headerlink" href="#the-schema-store" title="Permanent link">&para;</a></h2>
-<p>Before validation runs, <code>_build_schema_store()</code> pre-loads every <code>.schema.json</code> file found recursively under the model directory. Each schema is registered under three keys:</p>
+<h1 id="tuning-the-model-for-triage">Tuning the Model for Triage<a class="headerlink" href="#tuning-the-model-for-triage" title="Permanent link">&para;</a></h1>
+<h2 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h2>
+<p>Model tuning is the practice of adjusting schemas and classifier signatures so the
+parser can use the model as a practical triage instrument. The goal is not only to
+validate finished structured output, but also to help the parser choose the closest
+article and unit types from non-semantic Markdown evidence.</p>
+<p>The schema model defines the authoritative semantic contract. Article schemas describe
+which unit populations are valid, unit schemas describe which component populations are
+valid, and component schemas describe which nested components or attributes are valid.</p>
+<p>The classifier uses runtime signatures to make triage decisions before validation. These
+signatures should mirror the schema contract closely enough that classification and
+validation tell the same story.</p>
+<p>The tuning problem exists because JSON Schema is a validation language, not a scoring
+language. A schema can say that a how-to article must contain a procedure unit, but the
+classifier still needs a runtime rule that turns a discovered procedure unit into
+how-to evidence.</p>
+<h2 id="process">Process<a class="headerlink" href="#process" title="Permanent link">&para;</a></h2>
+<p>The model can be tuned by treating each schema as a source of classification evidence.
+Article schemas contribute article signatures, unit schemas contribute unit signatures,
+and component schemas contribute line-element signatures.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Article Schema] --&gt; B[Allowed Unit Set]
+    A --&gt; C[Required Unit Set]
+    B --&gt; D[Article Runtime Signature]
+    C --&gt; D
+    E[Unit Schema] --&gt; F[Allowed Component Set]
+    E --&gt; G[Required Component Set]
+    F --&gt; H[Unit Runtime Signature]
+    G --&gt; H
+    D --&gt; I[Article Triage]
+    H --&gt; J[Unit Triage]
+    I --&gt; K[StructuredContent]
+    J --&gt; K
+    K --&gt; L[JSON Schema Validation]</code></pre>
+<p>The article schema tuning surface is the <code>content</code> field. The <code>items.anyOf</code> or
+<code>items.oneOf</code> list defines the allowed unit set, while <code>contains</code> defines the required
+or strongly expected unit set.</p>
+<p>The unit schema tuning surface is also the <code>content</code> field. The allowed component set
+defines what may appear inside the unit, while <code>contains</code> identifies components that are
+strong evidence for the unit type.</p>
+<p>The runtime signature tuning surface currently lives in classifier code. The article
+signature table maps required, preferred, and excluded unit sets to article scores, and
+the unit title map plus construction heuristics map headings and line elements to unit
+types.</p>
+<h2 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">&para;</a></h2>
+<p>Use this procedure when adding or changing an article type.</p>
 <ol>
-<li>Its absolute <code>file://</code> URI (e.g., <code>file:///…/articles/artHowto.schema.json</code>)</li>
-<li>Its bare filename (e.g., <code>artHowto.schema.json</code>)</li>
-<li>Its <code>$id</code> value when that value differs from the filename</li>
+<li>
+<p>Define the article's semantic purpose before editing schema files.</p>
+</li>
+<li>
+<p>Identify the required unit set that makes the article recognizable.</p>
+</li>
+<li>
+<p>Identify the preferred unit set that commonly supports the article but should not be
+   mandatory.</p>
+</li>
+<li>
+<p>Identify the excluded unit set that should lower confidence when present.</p>
+</li>
+<li>
+<p>Encode the allowed units and required units in the article schema.</p>
+</li>
+<li>
+<p>Add or adjust the runtime article signature in the classifier so it mirrors the
+   schema's required and preferred unit sets.</p>
+</li>
+<li>
+<p>Add fixture Markdown files that omit metadata but contain the expected construction
+   signal.</p>
+</li>
+<li>
+<p>Add tests that prove the classifier can infer the article type from construction
+   alone.</p>
+</li>
+<li>
+<p>Add tests that prove metadata still wins when metadata is explicit and supported.</p>
+</li>
+<li>
+<p>Add tests that prove weak or unrelated construction falls back to <code>topic</code> or
+    <code>unknown</code> according to policy.</p>
+</li>
 </ol>
-<p>Non-schema JSON files such as <code>compMapping.json</code> are also loaded by file URI. In addition, <code>_OFFLINE_STORE</code> pre-populates stub entries for Draft 7 and Draft 2019-09 meta-schemas so the resolver never issues a network request during validation. The full store is then passed to <code>jsonschema.RefResolver</code> as its <code>store</code> argument, keeping all <code>$ref</code> resolution local.</p>
-<h2 id="advisory-vs-strict-validation">Advisory vs. Strict Validation<a class="headerlink" href="#advisory-vs-strict-validation" title="Permanent link">&para;</a></h2>
-<p>The <code>validation_mode</code> field on <code>ParserConfig</code> controls how schema failures are surfaced. In <code>"advisory"</code> mode (the default), a validation failure appends SP-030 diagnostics to <code>ParsedDocument.diagnostics</code> with <code>severity=warning</code>. The document's <code>has_errors</code> property remains <code>False</code> unless other error-severity diagnostics exist, and downstream transforms can still proceed. In <code>"strict"</code> mode, a validation failure causes the parser to emit an SP-099 <code>internal_error</code> diagnostic with <code>severity=error</code>, setting <code>has_errors=True</code> and signaling to the caller that the document should not be forwarded for transformation. Strict mode is appropriate for CI pipelines that enforce schema compliance before publishing.</p>
-<h2 id="the-known-ref-resolution-limitation">The Known $ref Resolution Limitation<a class="headerlink" href="#the-known-ref-resolution-limitation" title="Permanent link">&para;</a></h2>
-<p>Cross-directory <code>$ref</code> resolution using <code>jsonschema.RefResolver</code> has a known limitation: when a nested schema uses a bare <code>$id</code> value (a relative string without a full URI) to identify itself, the resolver may anchor resolution to the wrong base directory when the referencing schema and the referenced schema live in different subdirectories. This causes <code>RefResolver</code> to fail silently or raise a <code>RefResolutionError</code>. The current implementation catches this exception in a broad <code>except</code> block and returns an advisory SP-030 warning rather than propagating the error. Documents affected by this limitation receive a warning message that reads "Schema resolution inconclusive." The schema store pre-loading mitigates most cases by registering all schemas by filename, but the limitation remains for complex multi-level cross-directory chains.</p>
-<h2 id="validation-profiles">Validation Profiles<a class="headerlink" href="#validation-profiles" title="Permanent link">&para;</a></h2>
-<p><code>validation/validation_profiles.py</code> defines named <code>ValidationProfile</code> dataclasses that bundle a schema ID, a strictness flag, required metadata fields, and allowed article types:</p>
-<table>
-<thead>
-<tr>
-<th>Profile</th>
-<th>Schema</th>
-<th>Strict</th>
-<th>Required Metadata</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>default</code></td>
-<td><code>artArticle.schema.json</code></td>
-<td>No</td>
-<td>—</td>
-</tr>
-<tr>
-<td><code>howto</code></td>
-<td><code>artHowto.schema.json</code></td>
-<td>Yes</td>
-<td><code>title</code></td>
-</tr>
-<tr>
-<td><code>concept</code></td>
-<td><code>artConcept.schema.json</code></td>
-<td>Yes</td>
-<td><code>title</code></td>
-</tr>
-<tr>
-<td><code>reference</code></td>
-<td><code>artReference.schema.json</code></td>
-<td>Yes</td>
-<td><code>title</code></td>
-</tr>
-</tbody>
-</table>
-<p>Call <code>get_profile(name)</code> to retrieve a profile; unknown names fall back to <code>"default"</code>. Profiles are used internally by the parser pipeline to select the correct schema based on the classified <code>article_type</code>. You can provide a custom <code>model_schema_dir</code> in <code>ParserConfig</code> to validate against schemas that are not part of the built-in model directory.</p>
-<h2 id="programmatic-validation-with-a-custom-schema-directory">Programmatic Validation with a Custom Schema Directory<a class="headerlink" href="#programmatic-validation-with-a-custom-schema-directory" title="Permanent link">&para;</a></h2>
-<p>To validate against your own schemas, pass a <code>model_schema_dir</code> in <code>ParserConfig</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_file</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">structure_parser.contracts.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParserConfig</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">config</span> <span class="o">=</span> <span class="n">ParserConfig</span><span class="p">(</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">model_schema_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/my/schemas&quot;</span><span class="p">),</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">validation_mode</span><span class="o">=</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">)</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">doc</span> <span class="o">=</span> <span class="n">parse_file</span><span class="p">(</span><span class="s2">&quot;article.md&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">valid</span><span class="p">:</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="k">for</span> <span class="n">diag</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">:</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">diag</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
-</code></pre></div>
-<p>You can also call <code>validate_against_schema()</code> directly without involving the parser, passing any JSON-serializable dict and any schema filename present in your custom directory.</p>
-<h2 id="interpreting-modelvalidationresult">Interpreting ModelValidationResult<a class="headerlink" href="#interpreting-modelvalidationresult" title="Permanent link">&para;</a></h2>
-<p><code>ModelValidationResult</code> carries four fields relevant to consumers:</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>valid</code></td>
-<td><code>bool</code></td>
-<td><code>True</code> if the document passed all schema checks</td>
-</tr>
-<tr>
-<td><code>schema_id</code></td>
-<td><code>str \| None</code></td>
-<td>The schema filename used for validation</td>
-</tr>
-<tr>
-<td><code>diagnostics</code></td>
-<td><code>list[Diagnostic]</code></td>
-<td>Schema violations as SP-030 entries; SP-031 for missing schema file; SP-032 for unsupported version</td>
-</tr>
-<tr>
-<td><code>source_path</code></td>
-<td><code>str \| None</code></td>
-<td>The source file path attached for context</td>
-</tr>
-</tbody>
-</table>
-<p>Filter <code>diagnostics</code> by <code>code</code> to distinguish between structural violations (<code>SP-030</code>), missing schema files (<code>SP-031</code>), and unsupported schema versions (<code>SP-032</code>).</p>
-<h2 id="future-path-migrating-to-the-referencing-library">Future Path: Migrating to the referencing Library<a class="headerlink" href="#future-path-migrating-to-the-referencing-library" title="Permanent link">&para;</a></h2>
-<p>The <code>jsonschema</code> package deprecated <code>RefResolver</code> in version 4.18.0 in favor of the <code>referencing</code> library, which offers a cleaner URI resolution model and proper support for cross-directory <code>$ref</code> chains. The current implementation uses <code>RefResolver</code> because it integrates directly with <code>Draft7Validator</code>. A future migration should replace <code>_build_schema_store()</code> and the <code>RefResolver</code> construction with a <code>referencing.Registry</code> instance and pass it to <code>Draft7Validator</code> via the <code>registry</code> keyword argument introduced in jsonschema 4.18+. This change will resolve the cross-directory <code>$ref</code> limitation described above and eliminate the advisory catch-all for <code>RefResolutionError</code>.</p>
+<p>Use this procedure when adding or changing a unit type.</p>
+<ol>
+<li>
+<p>Define the unit's rhetorical function using the information type vocabulary.</p>
+</li>
+<li>
+<p>Identify heading phrases that authors naturally use for the unit.</p>
+</li>
+<li>
+<p>Identify required or strongly expected line elements such as ordered lists, tables,
+   code blocks, alerts, or link lists.</p>
+</li>
+<li>
+<p>Encode the allowed and required component sets in the unit schema.</p>
+</li>
+<li>
+<p>Add heading keywords to the unit title map when naming convention is strong evidence.</p>
+</li>
+<li>
+<p>Add construction heuristics when line-element population is stronger than heading
+   text.</p>
+</li>
+<li>
+<p>Add tests that prove the unit can be inferred from heading text.</p>
+</li>
+<li>
+<p>Add tests that prove the unit can be inferred from construction when appropriate.</p>
+</li>
+<li>
+<p>Add tests that prove ambiguous units fall back to <code>unitUnknown</code>.</p>
+</li>
+</ol>
+<h2 id="discussion">Discussion<a class="headerlink" href="#discussion" title="Permanent link">&para;</a></h2>
+<p>The model should be tuned as a contract first and a classifier input second. Schema
+constraints should express the content pattern that downstream tools need, and runtime
+signatures should follow those constraints.</p>
+<p>The classifier should not become a parallel model. If a runtime signature says a how-to
+article requires a procedure unit, the article schema should say the same thing through
+<code>contains</code>.</p>
+<p>The schemas currently provide validation sets directly. For example, an article schema
+uses <code>items.anyOf</code> to name valid child unit schemas and <code>contains</code> to require at least
+one important child unit.</p>
+<p>The runtime classifier currently mirrors those sets manually. The table in
+<code>structured_markdown/classifier.py</code> defines article signatures from required,
+preferred, and excluded unit sets that should stay aligned with <code>model/articles</code>.</p>
+<p>The next tuning improvement is schema-derived signatures. A future implementation can
+read <code>items.anyOf</code>, <code>contains</code>, and schema <code>$ref</code> values to derive at least part of the
+runtime article and unit signature tables automatically.</p>
+<p>The practical tuning standard is consistency. A schema, runtime signature, fixture, and
+documentation page should all describe the same article or unit shape in different
+forms.</p>
+<h2 id="example-how-to-article">Example: How-To Article<a class="headerlink" href="#example-how-to-article" title="Permanent link">&para;</a></h2>
+<p>The how-to schema requires procedure-shaped content. The schema expresses that
+requirement with a <code>contains</code> rule over procedure unit schemas.</p>
+<p>The how-to runtime signature uses the same idea as triage evidence. A procedure unit is
+required evidence, while prerequisites, introduction, next-step links, and related links
+increase confidence.</p>
+<p>The how-to tuning rule is therefore simple. If the schema changes to require a
+prerequisites unit, the runtime signature and tests should change at the same time.</p>
+<h2 id="example-reference-article">Example: Reference Article<a class="headerlink" href="#example-reference-article" title="Permanent link">&para;</a></h2>
+<p>The reference schema requires reference-shaped content. A table-heavy or option-oriented
+unit should usually become <code>unitReference</code>, and a reference unit should become strong
+evidence for <code>artReference</code>.</p>
+<p>The reference runtime signature should penalize procedure-heavy construction. A document
+dominated by ordered steps should not become a reference article unless explicit
+metadata says it is one.</p>
+<h2 id="example-topic-fallback">Example: Topic Fallback<a class="headerlink" href="#example-topic-fallback" title="Permanent link">&para;</a></h2>
+<p>The topic article type is the broad known fallback. It should be used when the document
+contains known units but no specialized article signature wins.</p>
+<p>The unknown article type is the low-evidence fallback. It should be used when neither
+metadata nor document construction provides enough signal to identify a useful known
+article type.</p>
+<h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The schema states the allowed child set.</li>
+<li>The schema states the required or expected child set.</li>
+<li>The classifier has a matching runtime signature.</li>
+<li>The fixture suite contains metadata-free examples.</li>
+<li>The fixture suite contains weak-signal examples.</li>
+<li>The fixture suite contains metadata-and-construction conflict examples when conflict
+  policy is implemented.</li>
+<li>The documentation names the current behavior and the future tuning direction.</li>
+</ul>
 
 
 

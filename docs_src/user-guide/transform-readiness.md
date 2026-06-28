@@ -190,7 +190,7 @@ articleType: howto
 
 **Unknown article type (SP-041) — blocks DITA**
 
-Add `articleType` to the front matter. Choose the type that matches the article's purpose.
+Add `articleType` to the front matter, or revise the H2 sections so the parser can infer a known article type from the unit population. Choose the type or section pattern that matches the article's purpose.
 
 ```yaml
 ---

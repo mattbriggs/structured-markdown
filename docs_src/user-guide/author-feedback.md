@@ -74,7 +74,7 @@ Read from top to bottom. Fix errors first, then warnings. Info items are last an
 Message: `Front matter absent`
 Remediation: Add a YAML front matter block with at least a `title` field.
 
-The article has no YAML front matter block. The parser can still parse the article, but metadata-dependent features — article type classification, description extraction, and schema validation — will be limited. Add a front matter block at the top of the file:
+The article has no YAML front matter block. The parser can still parse the article and can still infer article type from construction evidence, but metadata-dependent features such as description extraction and explicit article-type declaration will be limited. Add a front matter block at the top of the file:
 
 ```yaml
 ---
@@ -103,7 +103,7 @@ A heading jumps from one level to a non-consecutive deeper level — for example
 Message: `Article type could not be determined`
 Remediation: Add `articleType` metadata or conform to a known article pattern.
 
-The parser could not determine the article type from the content structure or front matter. This blocks DITA transformation and schema validation against type-specific schemas. Add `articleType: howto` (or the appropriate type) to the front matter.
+The parser could not determine the article type from metadata or from the content structure. This blocks DITA transformation and schema validation against type-specific schemas. Add `articleType: howto` (or the appropriate type) to the front matter, or revise the H2 sections so they match a known article pattern.
 
 **SP-030 — Schema constraint violated**
 

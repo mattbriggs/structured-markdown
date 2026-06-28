@@ -624,6 +624,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concept/comparison/" class="md-nav__link">
         
   
@@ -1930,7 +1986,7 @@
 <p><strong>SP-011 — Front matter absent</strong></p>
 <p>Message: <code>Front matter absent</code>
 Remediation: Add a YAML front matter block with at least a <code>title</code> field.</p>
-<p>The article has no YAML front matter block. The parser can still parse the article, but metadata-dependent features — article type classification, description extraction, and schema validation — will be limited. Add a front matter block at the top of the file:</p>
+<p>The article has no YAML front matter block. The parser can still parse the article and can still infer article type from construction evidence, but metadata-dependent features such as description extraction and explicit article-type declaration will be limited. Add a front matter block at the top of the file:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nn">---</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">articleType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">howto</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Article Title</span>
@@ -1948,7 +2004,7 @@ Remediation: Do not skip heading levels.</p>
 <p><strong>SP-041 — Article type unknown</strong></p>
 <p>Message: <code>Article type could not be determined</code>
 Remediation: Add <code>articleType</code> metadata or conform to a known article pattern.</p>
-<p>The parser could not determine the article type from the content structure or front matter. This blocks DITA transformation and schema validation against type-specific schemas. Add <code>articleType: howto</code> (or the appropriate type) to the front matter.</p>
+<p>The parser could not determine the article type from metadata or from the content structure. This blocks DITA transformation and schema validation against type-specific schemas. Add <code>articleType: howto</code> (or the appropriate type) to the front matter, or revise the H2 sections so they match a known article pattern.</p>
 <p><strong>SP-030 — Schema constraint violated</strong></p>
 <p>Message: <code>Schema validation failed: &lt;detail&gt;</code>
 Remediation: Review the authoring model and fix reported violations.</p>

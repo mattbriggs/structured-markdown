@@ -14,7 +14,7 @@
         <link rel="prev" href="../structured-markdown/">
       
       
-        <link rel="next" href="../comparison/">
+        <link rel="next" href="../document-type-triage/">
       
       
         
@@ -730,6 +730,62 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1959,9 +2015,9 @@
 <p>All of these belong within <code>artHowto</code>, because the article-level <code>informationType: procedure</code> describes the article's primary purpose, not the rhetorical type of every unit it contains. This mirrors how technical writers actually structure content: the article is "a how-to" in the sense that its primary value is the sequence of steps that accomplishes a goal, but it provides enough supporting context that the steps can be followed successfully. A model that required every unit in a procedure article to carry <code>informationType: procedure</code> would force technical writers to split naturally unified articles into multiple files, increasing navigation overhead without improving content quality.</p>
 <p>The Structured Markdown model takes a principled stance on this: article-level classification describes the dominant rhetorical purpose; unit-level classification describes the actual rhetorical function of each section. These two levels of description are complementary, and the full picture requires both. A content quality dashboard can surface articles where the dominant information type at the unit level contradicts the article-level claim — a <code>artHowto</code> where eighty percent of the units are <code>unitConcept</code> is probably misclassified or structurally imbalanced — without requiring that every unit conform to the article's type.</p>
 <h2 id="classification-in-the-parser">Classification in the Parser<a class="headerlink" href="#classification-in-the-parser" title="Permanent link">&para;</a></h2>
-<p>The parser infers article type and unit type from source Markdown signals rather than requiring authors to annotate every structural element. Article type inference is currently metadata-first: the parser reads front matter and looks for fields named <code>articleType</code>, <code>article_type</code>, or <code>type</code>.</p>
-<p>The current article classifier selects the first recognized metadata value from that key list. If a recognized value maps to a known article type, the parser applies the corresponding schema. If no recognized field is present, the article is classified as <code>artUnknown</code> and an SP-041 diagnostic is emitted.</p>
-<p>Construction-based article triage is planned design work rather than current behavior. The target design is to infer article type from unit populations when metadata is absent or weak, then reconcile metadata evidence with construction evidence and emit diagnostics for conflicts.</p>
+<p>The parser infers article type and unit type from source Markdown signals rather than requiring authors to annotate every structural element. Article type inference is metadata-first and construction-aware: the parser checks front matter for <code>articleType</code>, <code>article_type</code>, or <code>type</code>, then falls back to unit populations when metadata is absent or unsupported.</p>
+<p>The current article classifier selects the first recognized metadata value from that key list when it maps to a known article type. Metadata is treated as the strongest article-level signal because it is an explicit author declaration.</p>
+<p>Construction-based article triage is the active fallback when metadata does not identify a known article type. The classifier first builds units, assigns each unit a <code>unitType</code>, and scores the resulting unit-type set against article signatures. A document with procedure units can classify as <code>howto</code>, a document with reference or fact units can classify as <code>reference</code>, and a document with mixed known units that do not fit a specialized signature falls back to <code>topic</code>. Only documents with no useful metadata signal and no useful construction signal remain <code>artUnknown</code> and receive SP-041.</p>
 <p>Unit type inference is driven by the text of H2 headings, using a keyword-matching pass that resolves common heading conventions to known unit types:</p>
 <ul>
 <li>"Introduction" or "Overview" at the unit level → <code>unitIntroduction</code></li>
@@ -1978,14 +2034,13 @@
     START([Markdown file]) --&gt; FM{Front matter\npresent?}
 
     FM --&gt;|Yes| AT{articleType\nfield found?}
-    FM --&gt;|No| ARTUNKNOWN[artUnknown\n+ SP-041 diagnostic]
+    FM --&gt;|No| H2[Parse H2 headings\nas unit boundaries]
 
     AT --&gt;|Yes, recognized value| ARTKNOWN[Apply article schema]
-    AT --&gt;|Yes, unrecognized value| ARTUNKNOWN
-    AT --&gt;|No| ARTUNKNOWN
+    AT --&gt;|Yes, unrecognized value| H2
+    AT --&gt;|No| H2
 
     ARTKNOWN --&gt; H2[Parse H2 headings\nas unit boundaries]
-    ARTUNKNOWN --&gt; H2
 
     H2 --&gt; KW{Heading text\nmatches keyword?}
 
@@ -1993,9 +2048,18 @@
     KW --&gt;|No heading match,\nbut procedure shape| UNITPROC[Infer procedure-like unit\nfrom ordered lists or code blocks]
     KW --&gt;|No match| UNITUNKNOWN[unitUnknown\n+ SP-040 diagnostic]
 
-    UNITKNOWN --&gt; VALIDATE{Schema\nvalidation}
-    UNITPROC --&gt; VALIDATE
+    UNITKNOWN --&gt; ARTINFER{Article known\nfrom metadata?}
+    UNITPROC --&gt; ARTINFER
     UNITUNKNOWN --&gt; PRESERVE[Preserve content\nin unitUnknown node]
+
+    ARTINFER --&gt;|Yes| VALIDATE{Schema\nvalidation}
+    ARTINFER --&gt;|No, signature matches| ARTCONSTRUCT[Assign articleType\nfrom unit population]
+    ARTINFER --&gt;|No, mixed known units| ARTTOPIC[Assign topic]
+    ARTINFER --&gt;|No useful signal| ARTUNKNOWN[artUnknown\n+ SP-041 diagnostic]
+
+    ARTCONSTRUCT --&gt; VALIDATE
+    ARTTOPIC --&gt; VALIDATE
+    ARTUNKNOWN --&gt; VALIDATE
 
     VALIDATE --&gt;|Pass| READY[ParsedDocument:\nclassified + valid]
     VALIDATE --&gt;|Fail| DIAGFAIL[ParsedDocument:\nclassified + diagnostics]
