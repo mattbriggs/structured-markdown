@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from structure_parser.contracts.diagnostics import Diagnostic, DiagnosticFactory
@@ -21,37 +21,80 @@ from structure_parser.structured_markdown.component_mapper import map_block_node
 from structure_parser.structured_markdown.unknowns import unknown_unit
 
 # ---------------------------------------------------------------------------
+# Evidence models
+# ---------------------------------------------------------------------------
+
+@dataclass
+class _MetadataEvidence:
+    """Evidence contributed by front-matter metadata."""
+    candidate_type: ArticleType
+    weight: int  # 10 = authoritative, 6 = secondary-exact, 4 = suffix-matched
+
+
+@dataclass
+class _ArticleCandidateScore:
+    """Score accumulated for one article type candidate."""
+    article_type: ArticleType
+    score: int
+    required_met: bool
+    supporting_units: list[UnitType] = field(default_factory=list)
+    conflicting_units: list[UnitType] = field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
 # Heading keyword → UnitType
 # ---------------------------------------------------------------------------
 _UNIT_TITLE_MAP: dict[str, UnitType] = {
+    # Longer / more-specific patterns must appear before shorter ones so the
+    # substring match picks the most precise classification first.
+    "before creating": UnitType.concept,
+    "before you begin": UnitType.prerequisites,
+    "what is": UnitType.concept,
+    "how to": UnitType.procedure,
+    "how it works": UnitType.process,
+    "best practices": UnitType.principle,
+    "best practice": UnitType.principle,
+    "design considerations": UnitType.principle,
+    "related topics": UnitType.link_related,
+    "next steps": UnitType.link_nextstep,
+    "next step": UnitType.link_nextstep,
+    "cheat sheet": UnitType.reference,
+    "api version": UnitType.reference,
+    "release notes": UnitType.reference,
+    # Single-word / short patterns
     "overview": UnitType.introduction,
     "introduction": UnitType.introduction,
-    "concept": UnitType.concept,
+    "about": UnitType.concept,
     "background": UnitType.concept,
-    "what is": UnitType.concept,
-    "before you begin": UnitType.prerequisites,
+    "concept": UnitType.concept,
+    "understand": UnitType.concept,
+    "architecture": UnitType.concept,
     "prerequisites": UnitType.prerequisites,
     "requirements": UnitType.prerequisites,
     "steps": UnitType.procedure,
     "procedure": UnitType.procedure,
-    "how to": UnitType.procedure,
-    "how it works": UnitType.process,
     "process": UnitType.process,
+    "lifecycle": UnitType.principle,
     "principles": UnitType.principle,
     "principle": UnitType.principle,
     "guidelines": UnitType.principle,
+    "considerations": UnitType.principle,
     "rules": UnitType.principle,
     "facts": UnitType.fact,
     "parameters": UnitType.reference,
     "options": UnitType.reference,
     "configuration": UnitType.reference,
-    "next steps": UnitType.link_nextstep,
-    "next step": UnitType.link_nextstep,
+    "settings": UnitType.reference,
+    "limits": UnitType.reference,
+    "limitations": UnitType.reference,
+    "matrix": UnitType.reference,
+    "comparison": UnitType.reference,
+    "differences": UnitType.reference,
+    "versions": UnitType.reference,
+    "reference": UnitType.reference,
     "related": UnitType.link_related,
-    "related topics": UnitType.link_related,
     "see also": UnitType.link_related,
     "glossary": UnitType.glossary,
-    "reference": UnitType.reference,
     "troubleshoot": UnitType.troubleshooting,
     "troubleshooting": UnitType.troubleshooting,
 }
@@ -74,20 +117,28 @@ _UNIT_INFO_TYPE: dict[UnitType, InformationType] = {
     UnitType.unknown: InformationType.unknown,
 }
 
-# Metadata value → ArticleType
+# Metadata value → ArticleType (shared by all metadata key lookups)
 _ARTICLE_TYPE_MAP: dict[str, ArticleType] = {
     "topic": ArticleType.topic,
     "concept": ArticleType.concept,
+    "conceptual": ArticleType.concept,
+    "overview": ArticleType.overview,
     "howto": ArticleType.howto,
     "how-to": ArticleType.howto,
+    "task": ArticleType.howto,
+    "procedure": ArticleType.howto,
     "reference": ArticleType.reference,
+    "api": ArticleType.reference,
+    "schema": ArticleType.reference,
+    "configuration": ArticleType.reference,
     "troubleshooting": ArticleType.troubleshooting,
     "glossary": ArticleType.glossary,
     "glossentry": ArticleType.glossentry,
-    "overview": ArticleType.overview,
     "quickstart": ArticleType.quickstart,
     "quick-start": ArticleType.quickstart,
     "tutorial": ArticleType.tutorial,
+    "guide": ArticleType.topic,
+    "article": ArticleType.topic,
 }
 
 # ArticleType → DITA topic type string
@@ -120,50 +171,77 @@ _SCHEMA_MAP: dict[ArticleType, str] = {
     ArticleType.unknown: "artUnknown.schema.json",
 }
 
+# ---------------------------------------------------------------------------
+# Metadata key classification
+# ---------------------------------------------------------------------------
+
+# Keys whose values are treated as direct author declarations (weight 10).
+_AUTHORITATIVE_METADATA_KEYS: frozenset[str] = frozenset({"articleType", "article_type"})
+
+# Additional exact keys whose values are treated as secondary evidence (weight 6).
+_SECONDARY_EXACT_KEYS: frozenset[str] = frozenset({
+    "type", "topic", "topic_type", "content_type", "document_type", "information_type",
+})
+
+# Suffix patterns for namespaced keys such as "ms.topic", "vendor.content_type" (weight 4).
+_METADATA_SUFFIX_PATTERNS: tuple[str, ...] = (".topic", ".type", ".content_type")
+
+
+# ---------------------------------------------------------------------------
+# Article triage signatures
+# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class ArticleSignature:
-    """Runtime article triage signature derived from model schema intent."""
+    """Evidence-based triage signature for one article type."""
 
     required_any: frozenset[UnitType]
-    preferred: frozenset[UnitType] = frozenset()
+    supporting: frozenset[UnitType] = frozenset()
+    neutral: frozenset[UnitType] = frozenset()
+    conflicting: frozenset[UnitType] = frozenset()
     excluded: frozenset[UnitType] = frozenset()
+    required_weight: int = 5
+    supporting_weight: int = 2
+    neutral_weight: int = 0
+    conflict_weight: int = -3
     min_score: int = 5
 
 
 _ARTICLE_SIGNATURES: dict[ArticleType, ArticleSignature] = {
     ArticleType.howto: ArticleSignature(
         required_any=frozenset({UnitType.procedure}),
-        preferred=frozenset(
-            {
-                UnitType.prerequisites,
-                UnitType.introduction,
-                UnitType.link_nextstep,
-                UnitType.link_related,
-            }
-        ),
+        supporting=frozenset({UnitType.prerequisites, UnitType.introduction}),
+        # link_nextstep is navigation, not procedure evidence — keep neutral
+        neutral=frozenset({UnitType.link_nextstep, UnitType.link_related}),
+        conflicting=frozenset({UnitType.concept, UnitType.reference, UnitType.fact, UnitType.principle}),
         excluded=frozenset({UnitType.glossary, UnitType.glossentry}),
+        conflict_weight=-3,
     ),
     ArticleType.reference: ArticleSignature(
         required_any=frozenset({UnitType.reference, UnitType.fact}),
-        preferred=frozenset({UnitType.introduction, UnitType.link_related}),
+        supporting=frozenset({UnitType.introduction, UnitType.link_related}),
+        neutral=frozenset({UnitType.link_nextstep}),
         excluded=frozenset({UnitType.procedure, UnitType.troubleshooting}),
     ),
     ArticleType.troubleshooting: ArticleSignature(
         required_any=frozenset({UnitType.troubleshooting}),
-        preferred=frozenset({UnitType.procedure, UnitType.reference}),
+        supporting=frozenset({UnitType.procedure, UnitType.reference}),
     ),
     ArticleType.glossary: ArticleSignature(
         required_any=frozenset({UnitType.glossary, UnitType.glossentry}),
-        preferred=frozenset({UnitType.introduction}),
+        supporting=frozenset({UnitType.introduction}),
         excluded=frozenset({UnitType.procedure}),
     ),
     ArticleType.concept: ArticleSignature(
         required_any=frozenset({UnitType.concept, UnitType.principle, UnitType.process}),
-        preferred=frozenset({UnitType.introduction, UnitType.link_related}),
+        supporting=frozenset({UnitType.introduction, UnitType.link_related}),
+        neutral=frozenset({UnitType.prerequisites, UnitType.link_nextstep}),
         excluded=frozenset({UnitType.procedure, UnitType.reference}),
     ),
 }
+
+# Minimum margin the winning candidate must beat the runner-up by.
+_MIN_MARGIN = 3
 
 
 # ---------------------------------------------------------------------------
@@ -193,8 +271,8 @@ def classify(
     article_id = _make_id(source_path)
     title = metadata.get("title") or _find_h1_title(raw.nodes)
 
-    # Collect explicit article metadata before construction-based triage.
-    metadata_article_type = _infer_article_type_from_metadata(metadata)
+    # Extract metadata evidence before construction-based triage.
+    meta_evidence = _infer_article_type_from_metadata(metadata)
 
     # Build units from sections
     units: list[Unit] = []
@@ -220,7 +298,7 @@ def classify(
             )
 
     # Determine article type after units exist so construction can inform triage.
-    article_type = _select_article_type(metadata_article_type, units)
+    article_type = _select_article_type(meta_evidence, units)
     if article_type == ArticleType.unknown:
         diags.append(DiagnosticFactory.unknown_article_type(source_path=source_path))
 
@@ -294,71 +372,144 @@ def _find_h1_title(nodes: list[RawNode]) -> str | None:
     return None
 
 
-def _infer_article_type_from_metadata(metadata: dict[str, Any]) -> ArticleType:
-    for key in ("articleType", "article_type", "type"):
+def _infer_article_type_from_metadata(metadata: dict[str, Any]) -> _MetadataEvidence:
+    """Extract article type evidence from front-matter metadata.
+
+    Checks authoritative keys first (direct author declaration), then
+    secondary exact keys, then suffix-matched namespaced keys.
+
+    Returns:
+        A _MetadataEvidence with candidate_type=unknown and weight=0 when no
+        supported key or value is found.
+    """
+    # Authoritative: direct author declaration — highest weight
+    for key in _AUTHORITATIVE_METADATA_KEYS:
         val = metadata.get(key)
         if val:
             mapped = _ARTICLE_TYPE_MAP.get(str(val).lower())
             if mapped is not None:
-                return mapped
-    return ArticleType.unknown
+                return _MetadataEvidence(candidate_type=mapped, weight=10)
+
+    # Secondary exact keys — medium weight
+    for key in _SECONDARY_EXACT_KEYS:
+        val = metadata.get(key)
+        if val:
+            mapped = _ARTICLE_TYPE_MAP.get(str(val).lower())
+            if mapped is not None:
+                return _MetadataEvidence(candidate_type=mapped, weight=6)
+
+    # Suffix-matched namespaced keys (e.g. "ms.topic", "vendor.content_type") — low weight
+    for meta_key in metadata:
+        if meta_key in _AUTHORITATIVE_METADATA_KEYS or meta_key in _SECONDARY_EXACT_KEYS:
+            continue
+        for suffix in _METADATA_SUFFIX_PATTERNS:
+            if meta_key.endswith(suffix):
+                val = metadata.get(meta_key)
+                if val:
+                    mapped = _ARTICLE_TYPE_MAP.get(str(val).lower())
+                    if mapped is not None:
+                        return _MetadataEvidence(candidate_type=mapped, weight=4)
+
+    return _MetadataEvidence(candidate_type=ArticleType.unknown, weight=0)
 
 
 def _select_article_type(
-    metadata_article_type: ArticleType,
+    meta_evidence: _MetadataEvidence,
     units: list[Unit],
 ) -> ArticleType:
-    """Select article type from metadata first, then construction evidence.
+    """Select article type from metadata evidence and unit construction.
 
-    :param metadata_article_type:
-        Article type declared or implied by front matter. ``unknown`` means no
-        supported metadata value was found.
-    :param units:
-        Units already classified from document construction.
-    :returns:
-        A known article type when metadata or unit populations provide enough
-        evidence, otherwise ``ArticleType.unknown``.
+    Authoritative metadata (weight ≥ 10) wins immediately. For weaker metadata
+    and construction-only signals, uses evidence-based scoring with a minimum
+    margin requirement to avoid over-selecting specialised article types.
     """
-    if metadata_article_type != ArticleType.unknown:
-        return metadata_article_type
-    return _infer_article_type_from_units(units)
+    # Authoritative metadata wins directly without scoring
+    if meta_evidence.candidate_type != ArticleType.unknown and meta_evidence.weight >= 10:
+        return meta_evidence.candidate_type
+
+    return _score_article_type(meta_evidence, units)
 
 
-def _infer_article_type_from_units(units: list[Unit]) -> ArticleType:
-    """Infer article type from the population of unit types.
+def _score_article_type(
+    meta_evidence: _MetadataEvidence,
+    units: list[Unit],
+) -> ArticleType:
+    """Score article type candidates from metadata and unit evidence.
 
-    :param units:
-        Classified units in source order.
-    :returns:
-        The closest article type supported by runtime signatures, ``topic`` for
-        mixed known content, or ``unknown`` when no useful construction signal exists.
+    Applies per-type minimum score and a global minimum margin. Falls back to
+    ``topic`` when known units exist but no specialised type wins by margin,
+    or ``unknown`` when there is insufficient evidence to classify at all.
     """
-    unit_types = [unit.unit_type for unit in units]
-    known_types = {unit_type for unit_type in unit_types if unit_type != UnitType.unknown}
-    if not known_types:
+    unit_types = [u.unit_type for u in units]
+    known_types = {t for t in unit_types if t != UnitType.unknown}
+
+    scores: dict[ArticleType, _ArticleCandidateScore] = {}
+
+    for article_type, sig in _ARTICLE_SIGNATURES.items():
+        # Hard exclusion: any excluded unit disqualifies this type entirely
+        if known_types & sig.excluded:
+            continue
+
+        # Required unit check: must have at least one required unit
+        if sig.required_any and known_types.isdisjoint(sig.required_any):
+            continue
+
+        supporting_hit = list(known_types & sig.supporting)
+        conflicting_hit = list(known_types & sig.conflicting)
+
+        score = 0
+        # Metadata evidence seeds the score for this type
+        if meta_evidence.candidate_type == article_type:
+            score += meta_evidence.weight
+
+        score += sig.required_weight * len(known_types & sig.required_any)
+        score += sig.supporting_weight * len(supporting_hit)
+        score += sig.neutral_weight * len(known_types & sig.neutral)
+        score += sig.conflict_weight * len(conflicting_hit)
+
+        if score >= sig.min_score:
+            scores[article_type] = _ArticleCandidateScore(
+                article_type=article_type,
+                score=score,
+                required_met=True,
+                supporting_units=supporting_hit,
+                conflicting_units=conflicting_hit,
+            )
+
+    # Metadata-only candidate: if metadata points to a type with no matching
+    # signature, add it directly so it can still win when units are absent.
+    if (
+        meta_evidence.candidate_type != ArticleType.unknown
+        and meta_evidence.candidate_type not in scores
+        and meta_evidence.weight >= 6
+    ):
+        scores[meta_evidence.candidate_type] = _ArticleCandidateScore(
+            article_type=meta_evidence.candidate_type,
+            score=meta_evidence.weight,
+            required_met=False,
+        )
+
+    if not scores:
+        # No specialised type qualifies — fall back based on known unit count
+        if len(known_types) >= 2:
+            return ArticleType.topic
         return ArticleType.unknown
 
-    scores: dict[ArticleType, int] = {}
-    for article_type, signature in _ARTICLE_SIGNATURES.items():
-        if signature.required_any and known_types.isdisjoint(signature.required_any):
-            continue
-        score = 0
-        score += 5 * len(known_types & signature.required_any)
-        score += 2 * len(known_types & signature.preferred)
-        score -= 4 * len(known_types & signature.excluded)
-        if score >= signature.min_score:
-            scores[article_type] = score
+    ordered = sorted(
+        scores.values(),
+        key=lambda c: (c.score, _article_specificity(c.article_type)),
+        reverse=True,
+    )
+    best = ordered[0]
 
-    if scores:
-        ordered = sorted(
-            scores.items(),
-            key=lambda item: (item[1], _article_specificity(item[0])),
-            reverse=True,
-        )
-        best_type, best_score = ordered[0]
-        if len(ordered) == 1 or best_score > ordered[1][1]:
-            return best_type
+    if len(ordered) == 1:
+        return best.article_type
 
+    # Require a margin over the runner-up to avoid ambiguous over-selection
+    if best.score - ordered[1].score >= _MIN_MARGIN:
+        return best.article_type
+
+    # Tied or narrow margin — use topic for mixed known content
     if len(known_types) >= 2:
         return ArticleType.topic
     return ArticleType.unknown
@@ -410,12 +561,14 @@ def _build_unit(
     proc_repr: ProcedureRepresentation | None = None
 
     if unit_type == UnitType.unknown:
-        # Heuristic: infer procedure from content shape
         has_ordered_list = any(n.node_type == "list" and n.tag == "ol" for n in nodes)
         has_code_block = any(n.node_type == "code_block" for n in nodes)
         has_paragraphs = any(n.node_type == "paragraph" for n in nodes)
 
-        if has_ordered_list:
+        if heading is None and has_paragraphs and not has_ordered_list:
+            # Pre-H2 preamble with introductory paragraphs — classify as introduction
+            unit_type = UnitType.introduction
+        elif has_ordered_list:
             unit_type = UnitType.procedure
             proc_repr = ProcedureRepresentation.ordered_list
         elif has_code_block and not has_paragraphs:

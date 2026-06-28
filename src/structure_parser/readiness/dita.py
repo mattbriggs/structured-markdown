@@ -18,6 +18,7 @@ class DitaReadinessEvaluator:
         - Document must have an H1 title.
         - Article type must be classified (not "unknown").
         - DITA type mapping must be present.
+        - Schema validation must pass (failure → degraded, not blocked).
 
         Args:
             doc: The parsed document to evaluate.
@@ -43,6 +44,14 @@ class DitaReadinessEvaluator:
             met.append("DITA type is mapped")
         else:
             missing.append("DITA type mapping required")
+
+        # Schema validation is advisory by default but affects DITA transform
+        # confidence: a document that passes structural checks but fails schema
+        # validation is degraded, not blocked.
+        if doc.validation is not None and not doc.validation.valid:
+            missing.append(
+                "Schema validation failed; DITA output may not conform to article schema"
+            )
 
         if not missing:
             status = ReadinessStatus.ready

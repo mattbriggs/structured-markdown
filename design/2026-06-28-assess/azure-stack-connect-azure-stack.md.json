@@ -1,0 +1,2589 @@
+{
+  "schema_version": "1",
+  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+  "source_format": "markdown",
+  "provenance": {
+    "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+    "source_format": "markdown",
+    "content_hash": "f3f21ebc69ec9930cf7ca5dde1827fbd730aba5cd03122527ea755735e6f20ff",
+    "start_line": 1,
+    "end_line": null
+  },
+  "metadata": {
+    "title": "Connect to Azure Stack | Microsoft Docs",
+    "description": "Learn how to connect Azure Stack.",
+    "services": "azure-stack",
+    "documentationcenter": "",
+    "author": "mattbriggs",
+    "manager": "femila",
+    "editor": "",
+    "ms.service": "azure-stack",
+    "ms.workload": "na",
+    "ms.tgt_pltfrm": "na",
+    "ms.devlang": "na",
+    "ms.topic": "conceptual",
+    "ms.date": "05/16/2019",
+    "ms.author": "mabrigg",
+    "ms.reviewer": "thoroet",
+    "ms.lastreviewed": "01/14/2019"
+  },
+  "title": "Connect to Azure Stack | Microsoft Docs",
+  "structure": {
+    "root": {
+      "node_id": "root",
+      "node_type": "document",
+      "title": null,
+      "level": null,
+      "path": "/",
+      "children": [
+        {
+          "node_id": "h1-147de6",
+          "node_type": "section",
+          "title": "Connect to Azure Stack",
+          "level": 1,
+          "path": "/1",
+          "children": [
+            {
+              "node_id": "h2-3f21c7",
+              "node_type": "section",
+              "title": "Connect to Azure Stack with Remote Desktop",
+              "level": 2,
+              "path": "/1/1",
+              "children": [],
+              "source": {
+                "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                "start_line": 28,
+                "end_line": 28,
+                "query_path": null,
+                "provenance_status": "available"
+              },
+              "triage_status": "known"
+            },
+            {
+              "node_id": "h2-53bd73",
+              "node_type": "section",
+              "title": "Connect to Azure Stack with VPN",
+              "level": 2,
+              "path": "/1/2",
+              "children": [
+                {
+                  "node_id": "h3-1aba3c",
+                  "node_type": "section",
+                  "title": "Prerequisites",
+                  "level": 3,
+                  "path": "/1/2/1",
+                  "children": [],
+                  "source": {
+                    "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                    "start_line": 45,
+                    "end_line": 45,
+                    "query_path": null,
+                    "provenance_status": "available"
+                  },
+                  "triage_status": "known"
+                },
+                {
+                  "node_id": "h3-9e991a",
+                  "node_type": "section",
+                  "title": "Configure VPN connectivity",
+                  "level": 3,
+                  "path": "/1/2/2",
+                  "children": [],
+                  "source": {
+                    "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                    "start_line": 50,
+                    "end_line": 50,
+                    "query_path": null,
+                    "provenance_status": "available"
+                  },
+                  "triage_status": "known"
+                },
+                {
+                  "node_id": "h3-e475f2",
+                  "node_type": "section",
+                  "title": "Connect to Azure Stack",
+                  "level": 3,
+                  "path": "/1/2/3",
+                  "children": [],
+                  "source": {
+                    "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                    "start_line": 87,
+                    "end_line": 87,
+                    "query_path": null,
+                    "provenance_status": "available"
+                  },
+                  "triage_status": "known"
+                },
+                {
+                  "node_id": "h3-cef842",
+                  "node_type": "section",
+                  "title": "Test the VPN connectivity",
+                  "level": 3,
+                  "path": "/1/2/4",
+                  "children": [],
+                  "source": {
+                    "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                    "start_line": 102,
+                    "end_line": 102,
+                    "query_path": null,
+                    "provenance_status": "available"
+                  },
+                  "triage_status": "known"
+                }
+              ],
+              "source": {
+                "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                "start_line": 38,
+                "end_line": 38,
+                "query_path": null,
+                "provenance_status": "available"
+              },
+              "triage_status": "known"
+            },
+            {
+              "node_id": "h2-dff53b",
+              "node_type": "section",
+              "title": "Next steps",
+              "level": 2,
+              "path": "/1/3",
+              "children": [],
+              "source": {
+                "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                "start_line": 106,
+                "end_line": 106,
+                "query_path": null,
+                "provenance_status": "available"
+              },
+              "triage_status": "known"
+            }
+          ],
+          "source": {
+            "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+            "start_line": 21,
+            "end_line": 21,
+            "query_path": null,
+            "provenance_status": "available"
+          },
+          "triage_status": "known"
+        }
+      ],
+      "source": {
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null,
+        "query_path": null,
+        "provenance_status": "unavailable"
+      },
+      "triage_status": "known"
+    },
+    "heading_count": 8,
+    "max_depth": 3,
+    "has_title": true
+  },
+  "structured_content": {
+    "schema_version": "1",
+    "schema": "artHowto.schema.json",
+    "version": "0.1.0",
+    "article_id": "Volumes-Matt_files-Data-azure-stack-docs-azure-stack-user-azure-",
+    "article_type": "howto",
+    "dita_type": "howto",
+    "information_type": "procedure",
+    "title": "Connect to Azure Stack | Microsoft Docs",
+    "triage_status": "known",
+    "metadata": {
+      "title": "Connect to Azure Stack | Microsoft Docs",
+      "description": "Learn how to connect Azure Stack.",
+      "services": "azure-stack",
+      "documentationcenter": "",
+      "author": "mattbriggs",
+      "manager": "femila",
+      "editor": "",
+      "ms.service": "azure-stack",
+      "ms.workload": "na",
+      "ms.tgt_pltfrm": "na",
+      "ms.devlang": "na",
+      "ms.topic": "conceptual",
+      "ms.date": "05/16/2019",
+      "ms.author": "mabrigg",
+      "ms.reviewer": "thoroet",
+      "ms.lastreviewed": "01/14/2019"
+    },
+    "source": {
+      "sourcePath": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "sourceFormat": "markdown",
+      "contentHash": "f3f21ebc69ec9930cf7ca5dde1827fbd730aba5cd03122527ea755735e6f20ff"
+    },
+    "content": [
+      {
+        "unit_type": "unknown",
+        "unit_id": "unit",
+        "information_type": "unknown",
+        "title": null,
+        "triage_status": "unknown",
+        "metadata": {},
+        "source": null,
+        "procedure_representation": null,
+        "term": null,
+        "content": [
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:",
+            "html": null,
+            "text": "To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 23,
+              "end_line": 23,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:",
+                "html": null,
+                "text": "To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compListUnordered",
+            "component_id": null,
+            "markdown": null,
+            "html": null,
+            "text": null,
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": 2,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 25,
+              "end_line": 27,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "Remote Desktop: lets a single concurrent user quickly connect from the development kit.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 1,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 25,
+                  "end_line": 25,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "Remote Desktop: lets a single concurrent user quickly connect from the development kit.",
+                    "html": null,
+                    "text": "Remote Desktop: lets a single concurrent user quickly connect from the development kit.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              },
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "Virtual Private Network (VPN): lets multiple concurrent users connect from clients outside of the Azure Stack infrastructure (requires configuration).",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 2,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 26,
+                  "end_line": 27,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "Virtual Private Network (VPN): lets multiple concurrent users connect from clients outside of the Azure Stack infrastructure (requires configuration).",
+                    "html": null,
+                    "text": "Virtual Private Network (VPN): lets multiple concurrent users connect from clients outside of the Azure Stack infrastructure (requires configuration).",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          }
+        ]
+      },
+      {
+        "unit_type": "procedure",
+        "unit_id": "Connect-to-Azure-Stack-with-Remote-Desktop",
+        "information_type": "procedure",
+        "title": "Connect to Azure Stack with Remote Desktop",
+        "triage_status": "known",
+        "metadata": {},
+        "source": {
+          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+          "start_line": 28,
+          "end_line": 28,
+          "query_path": null,
+          "provenance_status": "available"
+        },
+        "procedure_representation": "ordered-list",
+        "term": null,
+        "content": [
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.",
+            "html": null,
+            "text": "With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 29,
+              "end_line": 29,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.",
+                "html": null,
+                "text": "With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compListOrdered",
+            "component_id": null,
+            "markdown": null,
+            "html": null,
+            "text": null,
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": 3,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 31,
+              "end_line": 37,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "Open a Remote Desktop Connection and connect to the development kit. Enter **AzureStack\\AzureStackAdmin** as the username, and the administrative password that you provided during Azure Stack setup.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 1,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 31,
+                  "end_line": 32,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "Open a Remote Desktop Connection and connect to the development kit. Enter ",
+                    "html": null,
+                    "text": "Open a Remote Desktop Connection and connect to the development kit. Enter ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attStrong",
+                    "att_id": null,
+                    "markdown": "**AzureStack\\AzureStackAdmin**",
+                    "html": null,
+                    "text": "AzureStack\\AzureStackAdmin",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [
+                      {
+                        "att_type": "attText",
+                        "att_id": null,
+                        "markdown": "AzureStack\\AzureStackAdmin",
+                        "html": null,
+                        "text": "AzureStack\\AzureStackAdmin",
+                        "href": null,
+                        "target": null,
+                        "source": null,
+                        "alt_text": null,
+                        "metadata": {},
+                        "provenance": {
+                          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                          "start_line": null,
+                          "end_line": null,
+                          "query_path": null,
+                          "provenance_status": "unavailable"
+                        },
+                        "content": [],
+                        "triage_status": "known"
+                      }
+                    ],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": " as the username, and the administrative password that you provided during Azure Stack setup.",
+                    "html": null,
+                    "text": " as the username, and the administrative password that you provided during Azure Stack setup.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              },
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "From the development kit computer, open Server Manager, click **Local Server**, turn off Internet Explorer Enhanced Security, and then close Server Manager.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 2,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 33,
+                  "end_line": 34,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "From the development kit computer, open Server Manager, click ",
+                    "html": null,
+                    "text": "From the development kit computer, open Server Manager, click ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attStrong",
+                    "att_id": null,
+                    "markdown": "**Local Server**",
+                    "html": null,
+                    "text": "Local Server",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [
+                      {
+                        "att_type": "attText",
+                        "att_id": null,
+                        "markdown": "Local Server",
+                        "html": null,
+                        "text": "Local Server",
+                        "href": null,
+                        "target": null,
+                        "source": null,
+                        "alt_text": null,
+                        "metadata": {},
+                        "provenance": {
+                          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                          "start_line": null,
+                          "end_line": null,
+                          "query_path": null,
+                          "provenance_status": "unavailable"
+                        },
+                        "content": [],
+                        "triage_status": "known"
+                      }
+                    ],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": ", turn off Internet Explorer Enhanced Security, and then close Server Manager.",
+                    "html": null,
+                    "text": ", turn off Internet Explorer Enhanced Security, and then close Server Manager.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              },
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "To open the portal, go to (https://portal.local.azurestack.external/) and sign in using user credentials.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 3,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 35,
+                  "end_line": 37,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "To open the portal, go to (https://portal.local.azurestack.external/) and sign in using user credentials.",
+                    "html": null,
+                    "text": "To open the portal, go to (https://portal.local.azurestack.external/) and sign in using user credentials.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          }
+        ]
+      },
+      {
+        "unit_type": "unknown",
+        "unit_id": "Connect-to-Azure-Stack-with-VPN",
+        "information_type": "unknown",
+        "title": "Connect to Azure Stack with VPN",
+        "triage_status": "unknown",
+        "metadata": {},
+        "source": {
+          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+          "start_line": 38,
+          "end_line": 38,
+          "query_path": null,
+          "provenance_status": "available"
+        },
+        "procedure_representation": null,
+        "term": null,
+        "content": [
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.",
+            "html": null,
+            "text": "You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 40,
+              "end_line": 40,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.",
+                "html": null,
+                "text": "You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compAlert",
+            "component_id": null,
+            "markdown": null,
+            "html": null,
+            "text": null,
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": "note",
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 42,
+              "end_line": 43,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "component_type": "compParagraph",
+                "component_id": null,
+                "markdown": "[!NOTE] \nThis VPN connection doesn't provide connectivity to Azure Stack infrastructure VMs.",
+                "html": null,
+                "text": "[!NOTE] \nThis VPN connection doesn't provide connectivity to Azure Stack infrastructure VMs.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": null,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 42,
+                  "end_line": 43,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "[!NOTE]",
+                    "html": null,
+                    "text": "[!NOTE]",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attUnknown",
+                    "att_id": null,
+                    "markdown": null,
+                    "html": null,
+                    "text": "\n",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "unknown"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "This VPN connection doesn't provide connectivity to Azure Stack infrastructure VMs.",
+                    "html": null,
+                    "text": "This VPN connection doesn't provide connectivity to Azure Stack infrastructure VMs.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compHeaderH3",
+            "component_id": null,
+            "markdown": "### Prerequisites",
+            "html": null,
+            "text": "Prerequisites",
+            "level": 3,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 45,
+              "end_line": 45,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "Prerequisites",
+                "html": null,
+                "text": "Prerequisites",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compListUnordered",
+            "component_id": null,
+            "markdown": null,
+            "html": null,
+            "text": null,
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": 2,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 47,
+              "end_line": 49,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "Install [Azure Stack compatible Azure PowerShell](../operator/azure-stack-powershell-install.md) on your local computer.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 1,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 47,
+                  "end_line": 47,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "Install ",
+                    "html": null,
+                    "text": "Install ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attLink",
+                    "att_id": null,
+                    "markdown": "[Azure Stack compatible Azure PowerShell](../operator/azure-stack-powershell-install.md)",
+                    "html": null,
+                    "text": "Azure Stack compatible Azure PowerShell",
+                    "href": "../operator/azure-stack-powershell-install.md",
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": " on your local computer.",
+                    "html": null,
+                    "text": " on your local computer.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              },
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "Download the [tools required to work with Azure Stack](../operator/azure-stack-powershell-download.md).",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 2,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 48,
+                  "end_line": 49,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "Download the ",
+                    "html": null,
+                    "text": "Download the ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attLink",
+                    "att_id": null,
+                    "markdown": "[tools required to work with Azure Stack](../operator/azure-stack-powershell-download.md)",
+                    "html": null,
+                    "text": "tools required to work with Azure Stack",
+                    "href": "../operator/azure-stack-powershell-download.md",
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": ".",
+                    "html": null,
+                    "text": ".",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compHeaderH3",
+            "component_id": null,
+            "markdown": "### Configure VPN connectivity",
+            "html": null,
+            "text": "Configure VPN connectivity",
+            "level": 3,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 50,
+              "end_line": 50,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "Configure VPN connectivity",
+                "html": null,
+                "text": "Configure VPN connectivity",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):",
+            "html": null,
+            "text": "To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 52,
+              "end_line": 52,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):",
+                "html": null,
+                "text": "To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compBlockCode",
+            "component_id": null,
+            "markdown": "```powershell\n# Configure winrm if it's not already configured\nwinrm quickconfig  \n\nSet-ExecutionPolicy RemoteSigned\n\n# Import the Connect module\nImport-Module .\\Connect\\AzureStack.Connect.psm1 \n\n# Add the development kit computer's host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \n\n$hostIP = \"<Azure Stack host IP address>\"\n\n$Password = ConvertTo-SecureString `\n  \"<Administrator password provided when deploying Azure Stack>\" `\n  -AsPlainText `\n  -Force\n\nSet-Item wsman:\\localhost\\Client\\TrustedHosts `\n  -Value $hostIP `\n  -Concatenate\n\n# Create a VPN connection entry for the local user\nAdd-AzsVpnConnection `\n  -ServerAddress $hostIP `\n  -Password $Password```",
+            "html": null,
+            "text": null,
+            "level": null,
+            "language": "powershell",
+            "code": "# Configure winrm if it's not already configured\nwinrm quickconfig  \n\nSet-ExecutionPolicy RemoteSigned\n\n# Import the Connect module\nImport-Module .\\Connect\\AzureStack.Connect.psm1 \n\n# Add the development kit computer's host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \n\n$hostIP = \"<Azure Stack host IP address>\"\n\n$Password = ConvertTo-SecureString `\n  \"<Administrator password provided when deploying Azure Stack>\" `\n  -AsPlainText `\n  -Force\n\nSet-Item wsman:\\localhost\\Client\\TrustedHosts `\n  -Value $hostIP `\n  -Concatenate\n\n# Create a VPN connection entry for the local user\nAdd-AzsVpnConnection `\n  -ServerAddress $hostIP `\n  -Password $Password",
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 54,
+              "end_line": 81,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "If the setup succeeds, you'll see `azurestack` in your list of VPN connections.",
+            "html": null,
+            "text": "If the setup succeeds, you'll see `azurestack` in your list of VPN connections.",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 83,
+              "end_line": 83,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "If the setup succeeds, you'll see ",
+                "html": null,
+                "text": "If the setup succeeds, you'll see ",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              },
+              {
+                "att_type": "attCode",
+                "att_id": null,
+                "markdown": "`azurestack`",
+                "html": null,
+                "text": "azurestack",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              },
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": " in your list of VPN connections.",
+                "html": null,
+                "text": " in your list of VPN connections.",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "![Network connections](media/azure-stack-connect-azure-stack/image3.png)",
+            "html": null,
+            "text": "![Network connections](media/azure-stack-connect-azure-stack/image3.png)",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 85,
+              "end_line": 85,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attImage",
+                "att_id": null,
+                "markdown": "![Network connections](media/azure-stack-connect-azure-stack/image3.png)",
+                "html": null,
+                "text": null,
+                "href": null,
+                "target": null,
+                "source": "media/azure-stack-connect-azure-stack/image3.png",
+                "alt_text": "Network connections",
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compHeaderH3",
+            "component_id": null,
+            "markdown": "### Connect to Azure Stack",
+            "html": null,
+            "text": "Connect to Azure Stack",
+            "level": 3,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 87,
+              "end_line": 87,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "Connect to Azure Stack",
+                "html": null,
+                "text": "Connect to Azure Stack",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "Connect to the Azure Stack instance by using either of the following two methods:",
+            "html": null,
+            "text": "Connect to the Azure Stack instance by using either of the following two methods:",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 89,
+              "end_line": 89,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "Connect to the Azure Stack instance by using either of the following two methods:",
+                "html": null,
+                "text": "Connect to the Azure Stack instance by using either of the following two methods:",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compListUnordered",
+            "component_id": null,
+            "markdown": null,
+            "html": null,
+            "text": null,
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": 2,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 91,
+              "end_line": 101,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "When prompted, trust the Azure Stack host and install the certificate from **AzureStackCertificateAuthority** onto your local computer's certificate store. The prompt might appear behind the PowerShell session window.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 1,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 91,
+                  "end_line": 99,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "When prompted, trust the Azure Stack host and install the certificate from ",
+                    "html": null,
+                    "text": "When prompted, trust the Azure Stack host and install the certificate from ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attStrong",
+                    "att_id": null,
+                    "markdown": "**AzureStackCertificateAuthority**",
+                    "html": null,
+                    "text": "AzureStackCertificateAuthority",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [
+                      {
+                        "att_type": "attText",
+                        "att_id": null,
+                        "markdown": "AzureStackCertificateAuthority",
+                        "html": null,
+                        "text": "AzureStackCertificateAuthority",
+                        "href": null,
+                        "target": null,
+                        "source": null,
+                        "alt_text": null,
+                        "metadata": {},
+                        "provenance": {
+                          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                          "start_line": null,
+                          "end_line": null,
+                          "query_path": null,
+                          "provenance_status": "unavailable"
+                        },
+                        "content": [],
+                        "triage_status": "known"
+                      }
+                    ],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": " onto your local computer's certificate store. The prompt might appear behind the PowerShell session window.",
+                    "html": null,
+                    "text": " onto your local computer's certificate store. The prompt might appear behind the PowerShell session window.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              },
+              {
+                "component_type": "compListItem",
+                "component_id": null,
+                "markdown": null,
+                "html": null,
+                "text": "On your local computer, go to **Network Settings** > **VPN** > select `azurestack` > **connect**. At the sign-in prompt, enter the username (AzureStack\\AzureStackAdmin) and the password.",
+                "level": null,
+                "language": null,
+                "code": null,
+                "alert_type": null,
+                "href": null,
+                "alt_text": null,
+                "count": null,
+                "order": 2,
+                "column_count": null,
+                "row_count": null,
+                "row_index": null,
+                "row_role": null,
+                "cell_role": null,
+                "column_index": null,
+                "colspan": null,
+                "rowspan": null,
+                "metadata": {},
+                "source": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": 100,
+                  "end_line": 101,
+                  "query_path": null,
+                  "provenance_status": "available"
+                },
+                "content": [
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": "On your local computer, go to ",
+                    "html": null,
+                    "text": "On your local computer, go to ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attStrong",
+                    "att_id": null,
+                    "markdown": "**Network Settings**",
+                    "html": null,
+                    "text": "Network Settings",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [
+                      {
+                        "att_type": "attText",
+                        "att_id": null,
+                        "markdown": "Network Settings",
+                        "html": null,
+                        "text": "Network Settings",
+                        "href": null,
+                        "target": null,
+                        "source": null,
+                        "alt_text": null,
+                        "metadata": {},
+                        "provenance": {
+                          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                          "start_line": null,
+                          "end_line": null,
+                          "query_path": null,
+                          "provenance_status": "unavailable"
+                        },
+                        "content": [],
+                        "triage_status": "known"
+                      }
+                    ],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": " > ",
+                    "html": null,
+                    "text": " > ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attStrong",
+                    "att_id": null,
+                    "markdown": "**VPN**",
+                    "html": null,
+                    "text": "VPN",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [
+                      {
+                        "att_type": "attText",
+                        "att_id": null,
+                        "markdown": "VPN",
+                        "html": null,
+                        "text": "VPN",
+                        "href": null,
+                        "target": null,
+                        "source": null,
+                        "alt_text": null,
+                        "metadata": {},
+                        "provenance": {
+                          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                          "start_line": null,
+                          "end_line": null,
+                          "query_path": null,
+                          "provenance_status": "unavailable"
+                        },
+                        "content": [],
+                        "triage_status": "known"
+                      }
+                    ],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": " > select ",
+                    "html": null,
+                    "text": " > select ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attCode",
+                    "att_id": null,
+                    "markdown": "`azurestack`",
+                    "html": null,
+                    "text": "azurestack",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": " > ",
+                    "html": null,
+                    "text": " > ",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attStrong",
+                    "att_id": null,
+                    "markdown": "**connect**",
+                    "html": null,
+                    "text": "connect",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [
+                      {
+                        "att_type": "attText",
+                        "att_id": null,
+                        "markdown": "connect",
+                        "html": null,
+                        "text": "connect",
+                        "href": null,
+                        "target": null,
+                        "source": null,
+                        "alt_text": null,
+                        "metadata": {},
+                        "provenance": {
+                          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                          "start_line": null,
+                          "end_line": null,
+                          "query_path": null,
+                          "provenance_status": "unavailable"
+                        },
+                        "content": [],
+                        "triage_status": "known"
+                      }
+                    ],
+                    "triage_status": "known"
+                  },
+                  {
+                    "att_type": "attText",
+                    "att_id": null,
+                    "markdown": ". At the sign-in prompt, enter the username (AzureStack\\AzureStackAdmin) and the password.",
+                    "html": null,
+                    "text": ". At the sign-in prompt, enter the username (AzureStack\\AzureStackAdmin) and the password.",
+                    "href": null,
+                    "target": null,
+                    "source": null,
+                    "alt_text": null,
+                    "metadata": {},
+                    "provenance": {
+                      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                      "start_line": null,
+                      "end_line": null,
+                      "query_path": null,
+                      "provenance_status": "unavailable"
+                    },
+                    "content": [],
+                    "triage_status": "known"
+                  }
+                ],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compHeaderH3",
+            "component_id": null,
+            "markdown": "### Test the VPN connectivity",
+            "html": null,
+            "text": "Test the VPN connectivity",
+            "level": 3,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 102,
+              "end_line": 102,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "Test the VPN connectivity",
+                "html": null,
+                "text": "Test the VPN connectivity",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          },
+          {
+            "component_type": "compParagraph",
+            "component_id": null,
+            "markdown": "To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.",
+            "html": null,
+            "text": "To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.",
+            "level": null,
+            "language": null,
+            "code": null,
+            "alert_type": null,
+            "href": null,
+            "alt_text": null,
+            "count": null,
+            "order": null,
+            "column_count": null,
+            "row_count": null,
+            "row_index": null,
+            "row_role": null,
+            "cell_role": null,
+            "column_index": null,
+            "colspan": null,
+            "rowspan": null,
+            "metadata": {},
+            "source": {
+              "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+              "start_line": 104,
+              "end_line": 104,
+              "query_path": null,
+              "provenance_status": "available"
+            },
+            "content": [
+              {
+                "att_type": "attText",
+                "att_id": null,
+                "markdown": "To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.",
+                "html": null,
+                "text": "To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.",
+                "href": null,
+                "target": null,
+                "source": null,
+                "alt_text": null,
+                "metadata": {},
+                "provenance": {
+                  "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+                  "start_line": null,
+                  "end_line": null,
+                  "query_path": null,
+                  "provenance_status": "unavailable"
+                },
+                "content": [],
+                "triage_status": "known"
+              }
+            ],
+            "triage_status": "known"
+          }
+        ]
+      },
+      {
+        "unit_type": "procedure",
+        "unit_id": "Next-steps",
+        "information_type": "procedure",
+        "title": "Next steps",
+        "triage_status": "known",
+        "metadata": {},
+        "source": {
+          "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+          "start_line": 106,
+          "end_line": 106,
+          "query_path": null,
+          "provenance_status": "available"
+        },
+        "procedure_representation": null,
+        "term": null,
+        "content": []
+      }
+    ]
+  },
+  "references": [
+    {
+      "schema_version": "1",
+      "ref_type": "link",
+      "href": "../operator/azure-stack-powershell-install.md",
+      "text": "Azure Stack compatible Azure PowerShell",
+      "alt_text": null,
+      "state": "not_attempted",
+      "resolved_path": null,
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "ref_type": "link",
+      "href": "../operator/azure-stack-powershell-download.md",
+      "text": "tools required to work with Azure Stack",
+      "alt_text": null,
+      "state": "not_attempted",
+      "resolved_path": null,
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "ref_type": "image",
+      "href": "media/azure-stack-connect-azure-stack/image3.png",
+      "text": null,
+      "alt_text": "Network connections",
+      "state": "not_attempted",
+      "resolved_path": null,
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    }
+  ],
+  "diagnostics": [
+    {
+      "schema_version": "1",
+      "code": "SP-040",
+      "severity": "info",
+      "category": "unknown_classification",
+      "message": "Content classified as unknown: Unit 'unnamed' could not be classified.",
+      "detail": "Unit 'unnamed' could not be classified.",
+      "remediation": "Review content structure; it may not match any known pattern.",
+      "provenance_status": "unavailable",
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "code": "SP-040",
+      "severity": "info",
+      "category": "unknown_classification",
+      "message": "Content classified as unknown: Unit 'Connect to Azure Stack with VPN' could not be classified.",
+      "detail": "Unit 'Connect to Azure Stack with VPN' could not be classified.",
+      "remediation": "Review content structure; it may not match any known pattern.",
+      "provenance_status": "unavailable",
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": 38,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "code": "SP-030",
+      "severity": "warning",
+      "category": "authoring_violation",
+      "message": "Schema validation failed: $.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+      "detail": "$.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+      "remediation": "Review the authoring model and fix reported violations.",
+      "provenance_status": "unavailable",
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "code": "SP-030",
+      "severity": "warning",
+      "category": "authoring_violation",
+      "message": "Schema validation failed: $.content[1]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]} is not valid under any of the given schemas",
+      "detail": "$.content[1]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]} is not valid under any of the given schemas",
+      "remediation": "Review the authoring model and fix reported violations.",
+      "provenance_status": "unavailable",
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "code": "SP-030",
+      "severity": "warning",
+      "category": "authoring_violation",
+      "message": "Schema validation failed: $.content[2]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]} is not valid under any of the given schemas",
+      "detail": "$.content[2]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]} is not valid under any of the given schemas",
+      "remediation": "Review the authoring model and fix reported violations.",
+      "provenance_status": "unavailable",
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "code": "SP-030",
+      "severity": "warning",
+      "category": "authoring_violation",
+      "message": "Schema validation failed: $.content[3]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []} is not valid under any of the given schemas",
+      "detail": "$.content[3]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []} is not valid under any of the given schemas",
+      "remediation": "Review the authoring model and fix reported violations.",
+      "provenance_status": "unavailable",
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    },
+    {
+      "schema_version": "1",
+      "code": "SP-030",
+      "severity": "warning",
+      "category": "authoring_violation",
+      "message": "Schema validation failed: $.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+      "detail": "$.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+      "remediation": "Review the authoring model and fix reported violations.",
+      "provenance_status": "unavailable",
+      "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+      "start_line": null,
+      "end_line": null
+    }
+  ],
+  "validation": {
+    "schema_version": "1",
+    "schema_id": "artHowto.schema.json",
+    "valid": false,
+    "diagnostics": [
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+        "detail": "$.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[1]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]} is not valid under any of the given schemas",
+        "detail": "$.content[1]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[2]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]} is not valid under any of the given schemas",
+        "detail": "$.content[2]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[3]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []} is not valid under any of the given schemas",
+        "detail": "$.content[3]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+        "detail": "$.content[0]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[1]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]} is not valid under any of the given schemas",
+        "detail": "$.content[1]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[2]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]} is not valid under any of the given schemas",
+        "detail": "$.content[2]: {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content[3]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []} is not valid under any of the given schemas",
+        "detail": "$.content[3]: {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []} is not valid under any of the given schemas",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      },
+      {
+        "schema_version": "1",
+        "code": "SP-030",
+        "severity": "warning",
+        "category": "authoring_violation",
+        "message": "Schema validation failed: $.content: [{'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]}, {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]}, {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]}, {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []}] does not contain items matching the given schema",
+        "detail": "$.content: [{'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'unit', 'content': [{'componentType': 'compParagraph', 'markdown': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:', 'text': 'To manage resources, you must connect to the Azure Stack Development Kit. This article details the steps required to connect to the development kit. You can use either of the following connection options:'}, {'componentType': 'compListUnordered'}]}, {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Connect-to-Azure-Stack-with-Remote-Desktop', 'title': 'Connect to Azure Stack with Remote Desktop', 'content': [{'componentType': 'compParagraph', 'markdown': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.', 'text': 'With a Remote Desktop Connection, a single concurrent user can work with the portal to manage resources.'}, {'componentType': 'compListOrdered'}]}, {'unitType': 'unknown', 'informationType': 'unknown', 'triageStatus': 'unknown', 'unitId': 'Connect-to-Azure-Stack-with-VPN', 'title': 'Connect to Azure Stack with VPN', 'content': [{'componentType': 'compParagraph', 'markdown': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.', 'text': 'You can establish a split tunnel VPN connection to an Azure Stack Development Kit. Through the VPN connection you can access the admin portal, user portal, and locally installed tools such as Visual Studio and PowerShell to manage Azure Stack resources. VPN connectivity is supported in both Azure Active Directory (AAD) and Active Directory Federation Services (AD FS)-based deployments. VPN connections let multiple clients connect to Azure Stack at the same time.'}, {'componentType': 'compAlert'}, {'componentType': 'compHeaderH3', 'markdown': '### Prerequisites', 'text': 'Prerequisites'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Configure VPN connectivity', 'text': 'Configure VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):', 'text': 'To create a VPN connection to the development kit, open an elevated PowerShell session from your local Windows-based computer and run the following script (make sure to update the IP address and password values for your environment):'}, {'componentType': 'compBlockCode', 'markdown': '```powershell\\n# Configure winrm if it\\'s not already configured\\nwinrm quickconfig  \\n\\nSet-ExecutionPolicy RemoteSigned\\n\\n# Import the Connect module\\nImport-Module .\\\\Connect\\\\AzureStack.Connect.psm1 \\n\\n# Add the development kit computer\\'s host IP address & certificate authority (CA) to the list of trusted hosts. Make sure to update the IP address and password values for your environment. \\n\\n$hostIP = \"<Azure Stack host IP address>\"\\n\\n$Password = ConvertTo-SecureString `\\n  \"<Administrator password provided when deploying Azure Stack>\" `\\n  -AsPlainText `\\n  -Force\\n\\nSet-Item wsman:\\\\localhost\\\\Client\\\\TrustedHosts `\\n  -Value $hostIP `\\n  -Concatenate\\n\\n# Create a VPN connection entry for the local user\\nAdd-AzsVpnConnection `\\n  -ServerAddress $hostIP `\\n  -Password $Password```'}, {'componentType': 'compParagraph', 'markdown': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\", 'text': \"If the setup succeeds, you'll see `azurestack` in your list of VPN connections.\"}, {'componentType': 'compParagraph', 'markdown': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)', 'text': '![Network connections](media/azure-stack-connect-azure-stack/image3.png)'}, {'componentType': 'compHeaderH3', 'markdown': '### Connect to Azure Stack', 'text': 'Connect to Azure Stack'}, {'componentType': 'compParagraph', 'markdown': 'Connect to the Azure Stack instance by using either of the following two methods:', 'text': 'Connect to the Azure Stack instance by using either of the following two methods:'}, {'componentType': 'compListUnordered'}, {'componentType': 'compHeaderH3', 'markdown': '### Test the VPN connectivity', 'text': 'Test the VPN connectivity'}, {'componentType': 'compParagraph', 'markdown': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.', 'text': 'To test the portal connection, open a browser and go to the user portal (https://portal.local.azurestack.external/), sign in, and then create resources.'}]}, {'unitType': 'procedure', 'informationType': 'procedure', 'triageStatus': 'known', 'unitId': 'Next-steps', 'title': 'Next steps', 'content': []}] does not contain items matching the given schema",
+        "remediation": "Review the authoring model and fix reported violations.",
+        "provenance_status": "unavailable",
+        "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+        "start_line": null,
+        "end_line": null
+      }
+    ],
+    "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md"
+  },
+  "readiness": {
+    "schema_version": "1",
+    "source_path": "/Volumes/Matt_files/Data/azure-stack-docs/azure-stack/user/azure-stack-connect-azure-stack.md",
+    "targets": [
+      {
+        "target": "dita",
+        "status": "ready",
+        "prerequisites_met": [
+          "Document has a title",
+          "Article type is classified",
+          "DITA type is mapped"
+        ],
+        "prerequisites_missing": [],
+        "diagnostics": []
+      },
+      {
+        "target": "schema_org",
+        "status": "ready",
+        "prerequisites_met": [
+          "Title available for name property",
+          "Description available"
+        ],
+        "prerequisites_missing": [],
+        "diagnostics": []
+      },
+      {
+        "target": "rag_ingestion",
+        "status": "ready",
+        "prerequisites_met": [
+          "Document title available for chunk context",
+          "Document has structured units for chunking",
+          "No parse errors"
+        ],
+        "prerequisites_missing": [],
+        "diagnostics": []
+      }
+    ]
+  }
+}
