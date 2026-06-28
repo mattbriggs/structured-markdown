@@ -4,6 +4,7 @@ from __future__ import annotations
 import logging
 import time
 import uuid
+from collections.abc import Callable
 from pathlib import Path
 
 from structure_parser.application.orchestrator import parse_one
@@ -34,7 +35,11 @@ class PipelineOrchestrator:
     aggregation without implementing Markdown parsing or content semantics.
     """
 
-    def run(self, config: PipelineConfig) -> PipelineRunResult:
+    def run(
+        self,
+        config: PipelineConfig,
+        progress_callback: Callable[[str, int, int], None] | None = None,
+    ) -> PipelineRunResult:
         """Run the complete pipeline and return a result.
 
         :param config: Pipeline configuration.
@@ -86,9 +91,12 @@ class PipelineOrchestrator:
 
         # Process each file independently
         file_results: list[PipelineFileResult] = []
-        for source in sources:
+        total = len(sources)
+        for i, source in enumerate(sources):
             result = _process_one(source, config, writer, run_id)
             file_results.append(result)
+            if progress_callback is not None:
+                progress_callback(source.relative_path.as_posix(), i + 1, total)
 
         stats = _build_stats(file_results, time.perf_counter() - run_start)
 

@@ -14,6 +14,7 @@ from structure_parser.validation.validation_profiles import get_profile
 def validate_against_declared_schema(
     content: StructuredContent,
     model_dir: Path | None = None,
+    timeout_seconds: int | None = None,
 ) -> ModelValidationResult:
     """Validate StructuredContent against the article schema it declares.
 
@@ -39,6 +40,7 @@ def validate_against_declared_schema(
         schema_id=content.schema_name,
         model_dir=model_dir,
         source_path=source_path,
+        timeout_seconds=timeout_seconds,
     )
 
 
@@ -46,6 +48,7 @@ def validate_model(
     content: StructuredContent,
     profile_name: str = "default",
     model_dir: Path | None = None,
+    timeout_seconds: int | None = None,
 ) -> ModelValidationResult:
     """Validate a StructuredContent against a named validation profile.
 
@@ -66,6 +69,7 @@ def validate_model(
         schema_id=profile.schema_id,
         model_dir=model_dir,
         source_path=source_path,
+        timeout_seconds=timeout_seconds,
     )
 
     # Extra profile-level checks that JSON Schema cannot express

@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import signal
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +24,35 @@ _OFFLINE_META_URIS = [
     "http://json-schema.org/draft-07/schema",
 ]
 _META_STUB: dict[str, Any] = {"type": "object"}
+_MAX_SCHEMA_ERRORS = 50
+
+
+class _SchemaValidationTimeout(Exception):
+    """Raised when advisory JSON Schema validation exceeds its time budget."""
+
+
+@contextmanager
+def _schema_validation_timer(seconds: int):
+    """Bound schema validation time on platforms that support SIGALRM."""
+    if seconds <= 0 or not hasattr(signal, "SIGALRM"):
+        yield
+        return
+
+    previous_handler = signal.getsignal(signal.SIGALRM)
+    previous_timer = signal.setitimer(signal.ITIMER_REAL, 0)
+
+    def _raise_timeout(_signum: int, _frame: object) -> None:
+        raise _SchemaValidationTimeout
+
+    signal.signal(signal.SIGALRM, _raise_timeout)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous_handler)
+        if previous_timer[0] > 0:
+            signal.setitimer(signal.ITIMER_REAL, previous_timer[0], previous_timer[1])
 
 
 def _build_registry(model_dir: Path) -> Registry:
@@ -42,6 +73,7 @@ def _build_registry(model_dir: Path) -> Registry:
             schema = json.loads(schema_file.read_text(encoding="utf-8"))
         except Exception:
             continue
+        schema = _normalize_schema_for_validation(schema)
         resource = Resource.from_contents(schema, default_specification=DRAFT7)
         file_uri = schema_file.as_uri()
         resources.append((file_uri, resource))
@@ -53,11 +85,35 @@ def _build_registry(model_dir: Path) -> Registry:
     return Registry().with_resources(resources)
 
 
+def _normalize_schema_for_validation(value: Any) -> Any:
+    """Normalize discriminated schema unions for faster local validation.
+
+    The model schemas use ``oneOf`` for article, unit, component, and attribute
+    unions. Those branches are already discriminated by const fields such as
+    ``articleType``, ``unitType``, ``componentType``, and ``attType``, so
+    ``anyOf`` is equivalent for accepted parser output and avoids the expensive
+    exhaustiveness checks performed by ``oneOf`` on deeply nested documents.
+    """
+    if isinstance(value, dict):
+        normalized = {
+            key: _normalize_schema_for_validation(child)
+            for key, child in value.items()
+            if key != "oneOf"
+        }
+        if "oneOf" in value:
+            normalized["anyOf"] = _normalize_schema_for_validation(value["oneOf"])
+        return normalized
+    if isinstance(value, list):
+        return [_normalize_schema_for_validation(item) for item in value]
+    return value
+
+
 def validate_against_schema(
     data: dict[str, Any],
     schema_id: str,
     model_dir: Path | None = None,
     source_path: str | None = None,
+    timeout_seconds: int | None = None,
 ) -> ModelValidationResult:
     """Validate a dict against a named JSON Schema from the model directory.
 
@@ -85,7 +141,28 @@ def validate_against_schema(
         # Use a $ref wrapper so the validator retrieves the schema from the registry
         # by its file:// URI — this gives relative $refs the correct directory context.
         root = {"$ref": schema_file_uri}
-        errors = list(Draft7Validator(root, registry=registry).iter_errors(data))
+        validator = Draft7Validator(root, registry=registry)
+        errors = []
+        with _schema_validation_timer(timeout_seconds or 0):
+            for error in validator.iter_errors(data):
+                errors.append(error)
+                if len(errors) >= _MAX_SCHEMA_ERRORS:
+                    break
+    except _SchemaValidationTimeout:
+        timeout_label = timeout_seconds if timeout_seconds is not None else 0
+        return ModelValidationResult(
+            schema_id=schema_id,
+            valid=False,
+            source_path=source_path,
+            diagnostics=[DiagnosticFactory.schema_validation_failed(
+                detail=(
+                    "Schema validation timed out after "
+                    f"{timeout_label}s; parsed content was preserved "
+                    "but schema conformance was not fully assessed."
+                ),
+                source_path=source_path,
+            )],
+        )
     except Exception as exc:
         return ModelValidationResult(
             schema_id=schema_id,
@@ -105,7 +182,7 @@ def validate_against_schema(
             detail=f"{e.json_path}: {e.message}",
             source_path=source_path,
         )
-        for e in errors[:50]
+        for e in errors[:_MAX_SCHEMA_ERRORS]
     ]
     return ModelValidationResult(
         schema_id=schema_id,

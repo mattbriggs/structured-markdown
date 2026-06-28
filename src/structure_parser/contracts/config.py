@@ -15,6 +15,7 @@ class ParserConfig(BaseModel):
         default=None, description="Override format detection."
     )
     enable_structured_markdown: bool = Field(default=True)
+    enable_model_validation: bool = Field(default=True)
     validation_mode: str = Field(default="advisory", description="advisory or strict")
     resolve_local_references: bool = Field(default=False)
     model_schema_dir: Path | None = Field(
@@ -22,5 +23,12 @@ class ParserConfig(BaseModel):
     )
     emit_debug_logs: bool = Field(default=False)
     max_diagnostic_count: int = Field(default=500)
+    schema_validation_timeout_seconds: int | None = Field(
+        default=5,
+        description=(
+            "Maximum seconds for advisory runtime schema validation. "
+            "Set to None to allow unbounded validation."
+        ),
+    )
 
     model_config = {"frozen": True}
