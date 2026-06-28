@@ -132,11 +132,11 @@ The SP-030 `detail` field names the specific constraint that failed. In the exam
 
 ## Common Validation Failures and Fixes
 
-**SP-041 — Article type not declared**
+**SP-041 — Article type not determined**
 
-The parser could not determine the article type from the content structure, and no `articleType` field is present in the front matter.
+The parser could not determine the article type from recognized metadata or from the content structure.
 
-Fix: Add `articleType: howto` (or the appropriate type) to the YAML front matter block.
+Fix: Add `articleType: howto` (or the appropriate type) to the YAML front matter block, or revise the H2 sections so their unit types match a known article pattern.
 
 ```yaml
 ---

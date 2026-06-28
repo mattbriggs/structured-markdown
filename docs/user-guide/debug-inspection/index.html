@@ -624,6 +624,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concept/document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concept/model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concept/comparison/" class="md-nav__link">
         
   
@@ -1920,7 +1976,7 @@
 <a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>  SP-011  Front matter absent
 <a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>          Remediation: Add a YAML front matter block with at least a title field.
 </code></pre></div>
-<p>Read the output from top to bottom and address items in that order. Fixing SP-011 (add front matter) and SP-020 (add H1) often resolves SP-041 (unknown article type) as a downstream consequence, because the parser uses <code>articleType</code> from front matter and the H1 to classify the article.</p>
+<p>Read the output from top to bottom and address items in that order. Fixing SP-011 (add front matter), SP-020 (add H1), and SP-040 (unknown units) often resolves SP-041 (unknown article type) as a downstream consequence, because the parser uses explicit <code>articleType</code> metadata first and construction-based unit populations when metadata is absent or unsupported.</p>
 <p>Use <code>inspect-diagnostics</code> immediately after making structural changes to confirm that each fix removes its corresponding diagnostic.</p>
 <hr />
 <h2 id="-json-flag-on-parse">--json Flag on parse<a class="headerlink" href="#-json-flag-on-parse" title="Permanent link">&para;</a></h2>

@@ -629,6 +629,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../document-type-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Document Type Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../model-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tuning the Model for Triage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../comparison/" class="md-nav__link">
         
   
@@ -1858,9 +1914,11 @@
 <li>The section heading's text is matched against a keyword table (<code>_UNIT_TITLE_MAP</code>). A heading whose text contains "Prerequisites" maps to <code>UnitType.prerequisites</code>; "Introduction" or "Overview" maps to <code>UnitType.introduction</code>; "Next Steps" maps to <code>UnitType.link_nextstep</code>.</li>
 <li>If the heading does not match any keyword, the section's body nodes are inspected for content shape: a section containing an ordered list is classified as <code>UnitType.procedure</code> with <code>ProcedureRepresentation.ordered_list</code>; a section containing only a fenced code block is classified as <code>UnitType.procedure</code> with <code>ProcedureRepresentation.code_block</code>.</li>
 <li>Each body node within a section is mapped to a Component type. A fenced code block becomes <code>compBlockCode</code>; a blockquote beginning with <code>[!NOTE]</code> becomes <code>compAlertNote</code>; a paragraph becomes <code>compParagraph</code>; an ordered list becomes <code>compListOrdered</code>.</li>
-<li>The article type is read from front matter (<code>articleType</code>, <code>article_type</code>, or <code>type</code> key) and mapped against <code>_ARTICLE_TYPE_MAP</code>. If no match is found, <code>ArticleType.unknown</code> is assigned and an SP-041 diagnostic is emitted.</li>
+<li>The article type is read from front matter first (<code>articleType</code>, <code>article_type</code>, or <code>type</code> key) and mapped against <code>_ARTICLE_TYPE_MAP</code>.</li>
+<li>If no supported metadata value is present, the classifier scores the inferred unit types against runtime article signatures that mirror the schema model's required and preferred unit populations.</li>
+<li>If a specialized signature wins, the classifier assigns that article type; if the document contains known units without a specialized match, it falls back to <code>ArticleType.topic</code>; if neither metadata nor construction provides a useful signal, <code>ArticleType.unknown</code> is assigned and an SP-041 diagnostic is emitted.</li>
 </ul>
-<p>This approach is not general-purpose. It is purpose-built to map Markdown to a specific schema and produces useful results only for content that follows the conventions the schema expects. A Markdown document that uses heading levels unconventionally, lacks front matter, or organizes content in ways the classifier does not recognize will receive <code>unknown</code> triage status on the unclassified units and corresponding SP-040 diagnostics — but the parse will still complete and produce a partial structured result.</p>
+<p>This approach is not general-purpose. It is purpose-built to map Markdown to a specific schema and produces useful results only for content that follows the conventions the schema expects. A Markdown document that uses heading levels unconventionally or organizes content in ways the classifier does not recognize will receive <code>unknown</code> triage status on the unclassified units and corresponding SP-040 diagnostics; if neither metadata nor construction identifies the article, it also receives SP-041 — but the parse will still complete and produce a partial structured result.</p>
 <h2 id="the-tradeoffs-of-each-approach">The Tradeoffs of Each Approach<a class="headerlink" href="#the-tradeoffs-of-each-approach" title="Permanent link">&para;</a></h2>
 <p>Each approach makes a different tradeoff between generality, composability, and semantic expressiveness, and the right choice depends on the problem the parser is solving.</p>
 <p>AST parsers — <code>markdown-it-py</code>, remark, pandoc — are general-purpose tools. They are the right choice when the downstream consumer decides what structure means: a static site generator, a format converter, or a plugin pipeline that applies its own interpretation. They are the wrong choice when you need a guaranteed semantic contract in the output, because the AST provides no guarantee that "Introduction" means a Unit introduction or that a blockquote is a warning rather than an arbitrary quoted passage.</p>

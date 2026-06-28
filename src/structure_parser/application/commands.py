@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 import json
+import logging
 from pathlib import Path
 
 from structure_parser.application.orchestrator import parse_many, parse_one
 from structure_parser.contracts.config import ParserConfig
+from structure_parser.contracts.pipeline import PipelineConfig
+from structure_parser.domain.enums import Severity
 from structure_parser.validation.author_feedback import format_feedback
 from structure_parser.validation.model_validator import validate_model
 
@@ -192,6 +195,97 @@ class TransformReadinessCommand:
 
         exit_code = 1 if has_blocked else 0
         return "\n".join(lines), exit_code
+
+
+class PipelineCommand:
+    """Execute the ``pipe`` CLI command."""
+
+    def run(self, config: PipelineConfig) -> tuple[str, int]:
+        """Run the pipeline and return (summary_text, exit_code).
+
+        :param config: Pipeline configuration.
+        :returns:
+            A tuple of human-readable summary text and a CLI exit code.
+            Exit code is 0 on success, 1 when errors or failures are present,
+            and 1 in strict mode when warnings are present.
+        :side effects:
+            Runs the pipeline orchestrator, writes parsed outputs, writes the
+            CSV inventory report, and optionally adds a log file handler.
+        """
+        from structure_parser.pipeline.orchestrator import PipelineOrchestrator
+        from structure_parser.pipeline.reporting import CsvInventoryReporter
+
+        log_handler = _add_log_file_handler(config) if config.log_file else None
+        try:
+            result = PipelineOrchestrator().run(config)
+            report_path = config.effective_report_path()
+            CsvInventoryReporter().write(result, report_path)
+            _log_report_written(report_path)
+
+            stats = result.stats
+            lines = [
+                f"Pipeline parsed {stats.discovered_count} Markdown file(s)"
+                f" in {stats.duration_ms:.0f}ms"
+            ]
+            lines.append(
+                f"  Parsed: {stats.parsed_count}"
+                f"  Failed: {stats.failed_count}"
+                f"  Skipped: {stats.skipped_count}"
+            )
+            lines.append(f"  Errors: {stats.error_count}  Warnings: {stats.warning_count}")
+            lines.append(f"  Output: {config.output_dir}")
+            lines.append(f"  Report: {report_path}")
+            if config.log_file:
+                lines.append(f"  Log: {config.log_file}")
+
+            has_run_errors = any(d.severity == Severity.error for d in result.run_diagnostics)
+            has_errors = stats.error_count > 0 or stats.failed_count > 0 or has_run_errors
+            has_warnings = stats.warning_count > 0
+
+            exit_code = 1 if has_errors or (config.strict and has_warnings) else 0
+
+            return "\n".join(lines), exit_code
+        finally:
+            if log_handler:
+                logging.getLogger("structure_parser").removeHandler(log_handler)
+                log_handler.close()
+
+
+def _add_log_file_handler(config: PipelineConfig) -> logging.Handler:
+    """Add a file handler to the structure_parser logger for the pipeline run.
+
+    :param config: Pipeline configuration with log_file and log_format.
+    :returns: The added handler (caller must remove it when the run finishes).
+    :side effects: Creates parent directories, opens a log file, adds a handler.
+    """
+    assert config.log_file is not None
+    config.log_file.parent.mkdir(parents=True, exist_ok=True)
+    handler: logging.Handler = logging.FileHandler(str(config.log_file), encoding="utf-8")
+    if config.log_format == "jsonl":
+        try:
+            from pythonjsonlogger import jsonlogger  # type: ignore[import]
+
+            handler.setFormatter(jsonlogger.JsonFormatter())
+        except ImportError:
+            handler.setFormatter(
+                logging.Formatter("%(asctime)s %(levelname)s [%(name)s] %(message)s")
+            )
+    else:
+        handler.setFormatter(
+            logging.Formatter("%(asctime)s %(levelname)s [%(name)s] %(message)s")
+        )
+    sp_logger = logging.getLogger("structure_parser")
+    # Ensure the logger emits at least INFO when no prior configuration has run.
+    if sp_logger.level == logging.NOTSET:
+        sp_logger.setLevel(logging.INFO)
+    sp_logger.addHandler(handler)
+    return handler
+
+
+def _log_report_written(report_path: Path) -> None:
+    logging.getLogger("structure_parser.pipeline").info(
+        "pipeline.report.written", extra={"report_path": str(report_path)}
+    )
 
 
 class ValidateContractCommand:

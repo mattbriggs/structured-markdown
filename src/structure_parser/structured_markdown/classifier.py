@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+from dataclasses import dataclass
 from typing import Any
 
 from structure_parser.contracts.diagnostics import Diagnostic, DiagnosticFactory
@@ -25,9 +26,25 @@ from structure_parser.structured_markdown.unknowns import unknown_unit
 _UNIT_TITLE_MAP: dict[str, UnitType] = {
     "overview": UnitType.introduction,
     "introduction": UnitType.introduction,
+    "concept": UnitType.concept,
+    "background": UnitType.concept,
+    "what is": UnitType.concept,
     "before you begin": UnitType.prerequisites,
     "prerequisites": UnitType.prerequisites,
     "requirements": UnitType.prerequisites,
+    "steps": UnitType.procedure,
+    "procedure": UnitType.procedure,
+    "how to": UnitType.procedure,
+    "how it works": UnitType.process,
+    "process": UnitType.process,
+    "principles": UnitType.principle,
+    "principle": UnitType.principle,
+    "guidelines": UnitType.principle,
+    "rules": UnitType.principle,
+    "facts": UnitType.fact,
+    "parameters": UnitType.reference,
+    "options": UnitType.reference,
+    "configuration": UnitType.reference,
     "next steps": UnitType.link_nextstep,
     "next step": UnitType.link_nextstep,
     "related": UnitType.link_related,
@@ -104,6 +121,51 @@ _SCHEMA_MAP: dict[ArticleType, str] = {
 }
 
 
+@dataclass(frozen=True)
+class ArticleSignature:
+    """Runtime article triage signature derived from model schema intent."""
+
+    required_any: frozenset[UnitType]
+    preferred: frozenset[UnitType] = frozenset()
+    excluded: frozenset[UnitType] = frozenset()
+    min_score: int = 5
+
+
+_ARTICLE_SIGNATURES: dict[ArticleType, ArticleSignature] = {
+    ArticleType.howto: ArticleSignature(
+        required_any=frozenset({UnitType.procedure}),
+        preferred=frozenset(
+            {
+                UnitType.prerequisites,
+                UnitType.introduction,
+                UnitType.link_nextstep,
+                UnitType.link_related,
+            }
+        ),
+        excluded=frozenset({UnitType.glossary, UnitType.glossentry}),
+    ),
+    ArticleType.reference: ArticleSignature(
+        required_any=frozenset({UnitType.reference, UnitType.fact}),
+        preferred=frozenset({UnitType.introduction, UnitType.link_related}),
+        excluded=frozenset({UnitType.procedure, UnitType.troubleshooting}),
+    ),
+    ArticleType.troubleshooting: ArticleSignature(
+        required_any=frozenset({UnitType.troubleshooting}),
+        preferred=frozenset({UnitType.procedure, UnitType.reference}),
+    ),
+    ArticleType.glossary: ArticleSignature(
+        required_any=frozenset({UnitType.glossary, UnitType.glossentry}),
+        preferred=frozenset({UnitType.introduction}),
+        excluded=frozenset({UnitType.procedure}),
+    ),
+    ArticleType.concept: ArticleSignature(
+        required_any=frozenset({UnitType.concept, UnitType.principle, UnitType.process}),
+        preferred=frozenset({UnitType.introduction, UnitType.link_related}),
+        excluded=frozenset({UnitType.procedure, UnitType.reference}),
+    ),
+}
+
+
 # ---------------------------------------------------------------------------
 # Public entry point
 # ---------------------------------------------------------------------------
@@ -131,10 +193,8 @@ def classify(
     article_id = _make_id(source_path)
     title = metadata.get("title") or _find_h1_title(raw.nodes)
 
-    # Determine article type
-    article_type = _infer_article_type(metadata)
-    if article_type == ArticleType.unknown:
-        diags.append(DiagnosticFactory.unknown_article_type(source_path=source_path))
+    # Collect explicit article metadata before construction-based triage.
+    metadata_article_type = _infer_article_type_from_metadata(metadata)
 
     # Build units from sections
     units: list[Unit] = []
@@ -159,6 +219,11 @@ def classify(
                 )
             )
 
+    # Determine article type after units exist so construction can inform triage.
+    article_type = _select_article_type(metadata_article_type, units)
+    if article_type == ArticleType.unknown:
+        diags.append(DiagnosticFactory.unknown_article_type(source_path=source_path))
+
     dita_type = _DITA_TYPE_MAP.get(article_type, "topic")
     info_type = _infer_article_info_type(units)
     triage = TriageStatus.known if article_type != ArticleType.unknown else TriageStatus.unknown
@@ -172,7 +237,7 @@ def classify(
         source_dict["contentHash"] = raw.content_hash
 
     content = StructuredContent(
-        schema=schema_id,
+        schema_name=schema_id,
         article_id=article_id,
         article_type=article_type,
         dita_type=dita_type,
@@ -229,7 +294,7 @@ def _find_h1_title(nodes: list[RawNode]) -> str | None:
     return None
 
 
-def _infer_article_type(metadata: dict[str, Any]) -> ArticleType:
+def _infer_article_type_from_metadata(metadata: dict[str, Any]) -> ArticleType:
     for key in ("articleType", "article_type", "type"):
         val = metadata.get(key)
         if val:
@@ -237,6 +302,78 @@ def _infer_article_type(metadata: dict[str, Any]) -> ArticleType:
             if mapped is not None:
                 return mapped
     return ArticleType.unknown
+
+
+def _select_article_type(
+    metadata_article_type: ArticleType,
+    units: list[Unit],
+) -> ArticleType:
+    """Select article type from metadata first, then construction evidence.
+
+    :param metadata_article_type:
+        Article type declared or implied by front matter. ``unknown`` means no
+        supported metadata value was found.
+    :param units:
+        Units already classified from document construction.
+    :returns:
+        A known article type when metadata or unit populations provide enough
+        evidence, otherwise ``ArticleType.unknown``.
+    """
+    if metadata_article_type != ArticleType.unknown:
+        return metadata_article_type
+    return _infer_article_type_from_units(units)
+
+
+def _infer_article_type_from_units(units: list[Unit]) -> ArticleType:
+    """Infer article type from the population of unit types.
+
+    :param units:
+        Classified units in source order.
+    :returns:
+        The closest article type supported by runtime signatures, ``topic`` for
+        mixed known content, or ``unknown`` when no useful construction signal exists.
+    """
+    unit_types = [unit.unit_type for unit in units]
+    known_types = {unit_type for unit_type in unit_types if unit_type != UnitType.unknown}
+    if not known_types:
+        return ArticleType.unknown
+
+    scores: dict[ArticleType, int] = {}
+    for article_type, signature in _ARTICLE_SIGNATURES.items():
+        if signature.required_any and known_types.isdisjoint(signature.required_any):
+            continue
+        score = 0
+        score += 5 * len(known_types & signature.required_any)
+        score += 2 * len(known_types & signature.preferred)
+        score -= 4 * len(known_types & signature.excluded)
+        if score >= signature.min_score:
+            scores[article_type] = score
+
+    if scores:
+        ordered = sorted(
+            scores.items(),
+            key=lambda item: (item[1], _article_specificity(item[0])),
+            reverse=True,
+        )
+        best_type, best_score = ordered[0]
+        if len(ordered) == 1 or best_score > ordered[1][1]:
+            return best_type
+
+    if len(known_types) >= 2:
+        return ArticleType.topic
+    return ArticleType.unknown
+
+
+def _article_specificity(article_type: ArticleType) -> int:
+    """Return a deterministic tie-break priority for construction triage."""
+    priority = {
+        ArticleType.troubleshooting: 5,
+        ArticleType.glossary: 4,
+        ArticleType.howto: 3,
+        ArticleType.reference: 2,
+        ArticleType.concept: 1,
+    }
+    return priority.get(article_type, 0)
 
 
 def _infer_unit_type(

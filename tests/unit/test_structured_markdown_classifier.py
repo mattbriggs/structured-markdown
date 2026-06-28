@@ -44,6 +44,43 @@ class TestClassifier:
         codes = {d.code for d in diags}
         assert "SP-041" in codes
 
+    def test_howto_article_type_inferred_from_procedure_units(self):
+        md = "# Test\n\n## Prerequisites\n\n- Access\n\n## Steps\n\n1. Do this\n"
+        raw = _parse_md(md)
+        sc, diags = classify(raw, {})
+        assert sc.article_type == ArticleType.howto
+        assert sc.schema_name == "artHowto.schema.json"
+        codes = {d.code for d in diags}
+        assert "SP-041" not in codes
+
+    def test_reference_article_type_inferred_from_reference_units(self):
+        md = "# Ref\n\n## Options\n\n| Name | Value |\n| --- | --- |\n| a | b |\n"
+        raw = _parse_md(md)
+        sc, diags = classify(raw, {})
+        assert sc.article_type == ArticleType.reference
+        assert sc.schema_name == "artReference.schema.json"
+
+    def test_concept_article_type_inferred_from_concept_units(self):
+        md = "# Concept\n\n## What is structured Markdown?\n\nStructured Markdown adds meaning.\n"
+        raw = _parse_md(md)
+        sc, diags = classify(raw, {})
+        assert sc.article_type == ArticleType.concept
+        assert sc.schema_name == "artConcept.schema.json"
+
+    def test_topic_article_type_inferred_from_mixed_known_units(self):
+        md = "# Topic\n\n## Introduction\n\nIntro.\n\n## Related\n\n- Link\n"
+        raw = _parse_md(md)
+        sc, diags = classify(raw, {})
+        assert sc.article_type == ArticleType.topic
+        assert sc.schema_name == "artTopic.schema.json"
+
+    def test_metadata_article_type_wins_over_construction_signal(self):
+        md = "---\narticleType: reference\n---\n# Ref\n\n## Steps\n\n1. Do this\n"
+        raw = _parse_md(md)
+        sc, diags = classify(raw, {"articleType": "reference"})
+        assert sc.article_type == ArticleType.reference
+        assert sc.schema_name == "artReference.schema.json"
+
     def test_introduction_unit_type(self):
         md = "---\ntitle: T\n---\n# T\n\n## Introduction\n\nIntro text.\n"
         raw = _parse_md(md)

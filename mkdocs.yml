@@ -37,6 +37,8 @@ nav:
       - Why Markdown Is Not a Semantic Format: concept/markdown-semantics.md
       - The Structured Markdown Pattern Language: concept/structured-markdown.md
       - Information Architecture: concept/information-architecture.md
+      - Document Type Triage: concept/document-type-triage.md
+      - Tuning the Model for Triage: concept/model-tuning.md
       - Comparison with Similar Approaches: concept/comparison.md
       - "Parsing Approaches: AST, BNF, and Schema Mapping": concept/parsing-approaches.md
   - Architecture:
