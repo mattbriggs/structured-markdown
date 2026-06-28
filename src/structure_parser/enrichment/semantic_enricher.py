@@ -77,7 +77,7 @@ def enrich(raw: RawParseModel, config: ParserConfig) -> ParsedDocument:
 
     # 7. Validate model (advisory or strict)
     validation_result = None
-    if structured_content and config.enable_structured_markdown:
+    if structured_content and config.enable_structured_markdown and config.enable_model_validation:
         try:
             profile = "default"
             if structured_content.article_type.value in ("howto", "concept", "reference"):
@@ -86,6 +86,7 @@ def enrich(raw: RawParseModel, config: ParserConfig) -> ParsedDocument:
                 structured_content,
                 profile_name=profile,
                 model_dir=config.model_schema_dir,
+                timeout_seconds=config.schema_validation_timeout_seconds,
             )
             if not validation_result.valid and config.validation_mode == "strict":
                 all_diags.extend(validation_result.diagnostics)

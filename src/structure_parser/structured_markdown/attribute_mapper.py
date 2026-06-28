@@ -86,6 +86,7 @@ def _map_node(node: RawNode, source_path: str) -> Attribute | None:
     return Attribute(
         att_type=AttributeType.attUnknown,
         text=node.content,
+        markdown=node.content or "",
         triage_status=TriageStatus.unknown,
         provenance=span,
     )

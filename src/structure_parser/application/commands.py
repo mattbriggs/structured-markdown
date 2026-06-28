@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import logging
+from collections.abc import Callable
 from pathlib import Path
 
 from structure_parser.application.orchestrator import parse_many, parse_one
@@ -75,6 +76,7 @@ class ValidateMarkdownCommand:
                     doc.structured_content,
                     profile_name="default",
                     model_dir=config.model_schema_dir,
+                    timeout_seconds=config.schema_validation_timeout_seconds,
                 )
                 status = "VALID" if result.valid else "INVALID"
                 lines.append(f"{path}: {status}")
@@ -200,7 +202,11 @@ class TransformReadinessCommand:
 class PipelineCommand:
     """Execute the ``pipe`` CLI command."""
 
-    def run(self, config: PipelineConfig) -> tuple[str, int]:
+    def run(
+        self,
+        config: PipelineConfig,
+        progress_callback: Callable[[str, int, int], None] | None = None,
+    ) -> tuple[str, int]:
         """Run the pipeline and return (summary_text, exit_code).
 
         :param config: Pipeline configuration.
@@ -217,7 +223,7 @@ class PipelineCommand:
 
         log_handler = _add_log_file_handler(config) if config.log_file else None
         try:
-            result = PipelineOrchestrator().run(config)
+            result = PipelineOrchestrator().run(config, progress_callback=progress_callback)
             report_path = config.effective_report_path()
             CsvInventoryReporter().write(result, report_path)
             _log_report_written(report_path)
