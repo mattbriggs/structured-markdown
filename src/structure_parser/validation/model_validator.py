@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 from structure_parser.contracts.diagnostics import DiagnosticFactory
 from structure_parser.contracts.structured_markdown import StructuredContent
@@ -13,6 +14,7 @@ from structure_parser.validation.validation_profiles import get_profile
 def validate_against_declared_schema(
     content: StructuredContent,
     model_dir: Path | None = None,
+    timeout_seconds: int | None = None,
 ) -> ModelValidationResult:
     """Validate StructuredContent against the article schema it declares.
 
@@ -38,6 +40,7 @@ def validate_against_declared_schema(
         schema_id=content.schema_name,
         model_dir=model_dir,
         source_path=source_path,
+        timeout_seconds=timeout_seconds,
     )
 
 
@@ -45,6 +48,7 @@ def validate_model(
     content: StructuredContent,
     profile_name: str = "default",
     model_dir: Path | None = None,
+    timeout_seconds: int | None = None,
 ) -> ModelValidationResult:
     """Validate a StructuredContent against a named validation profile.
 
@@ -65,6 +69,7 @@ def validate_model(
         schema_id=profile.schema_id,
         model_dir=model_dir,
         source_path=source_path,
+        timeout_seconds=timeout_seconds,
     )
 
     # Extra profile-level checks that JSON Schema cannot express
@@ -126,16 +131,12 @@ def _to_schema_dict(content: StructuredContent) -> dict:
             u_dict["title"] = unit.title
         if unit.metadata:
             u_dict["metadata"] = unit.metadata
+        if unit.procedure_representation is not None:
+            u_dict["procedureRepresentation"] = unit.procedure_representation.value
+        if unit.term:
+            u_dict["term"] = unit.term
 
-        comps = []
-        for comp in unit.content:
-            c_dict: dict = {"componentType": comp.component_type.value}
-            if comp.markdown:
-                c_dict["markdown"] = comp.markdown
-            if comp.text:
-                c_dict["text"] = comp.text
-            comps.append(c_dict)
-        u_dict["content"] = comps
+        u_dict["content"] = [_component_to_dict(c) for c in unit.content]
         units.append(u_dict)
 
     result: dict = {
@@ -155,3 +156,136 @@ def _to_schema_dict(content: StructuredContent) -> dict:
     if content.metadata:
         result["metadata"] = content.metadata
     return result
+
+
+def _component_to_dict(comp: Any) -> dict:
+    """Serialise a Component to a schema-aligned dict.
+
+    Only fields that appear in the JSON schema (camelCase) are emitted, and only
+    required-or-present fields are included so that optional-but-absent fields do
+    not trip ``additionalProperties`` validators.
+    """
+    from structure_parser.contracts.structured_markdown import Component
+    from structure_parser.domain.enums import ComponentType
+
+    c: Component = comp
+    ct = c.component_type
+
+    d: dict = {"componentType": ct.value}
+
+    # Common optional fields included when present
+    if c.markdown:
+        d["markdown"] = c.markdown
+    if c.text:
+        d["text"] = c.text
+    if c.triage_status and c.triage_status.value != "known":
+        d["triageStatus"] = c.triage_status.value
+
+    # compUnknown always needs triageStatus
+    if ct == ComponentType.compUnknown:
+        d["triageStatus"] = c.triage_status.value if c.triage_status else "unknown"
+
+    # Header components require level
+    if ct in (
+        ComponentType.compHeaderH1, ComponentType.compHeaderH2, ComponentType.compHeaderH3,
+        ComponentType.compHeaderH4, ComponentType.compHeaderH5, ComponentType.compHeaderH6,
+    ):
+        if c.level is not None:
+            d["level"] = c.level
+
+    # Code block requires code field
+    if ct == ComponentType.compBlockCode:
+        if c.code is not None:
+            d["code"] = c.code
+        if c.language:
+            d["language"] = c.language
+
+    # List components require count and content (list items)
+    if ct in (ComponentType.compListOrdered, ComponentType.compListUnordered):
+        if c.count is not None:
+            d["count"] = c.count
+        d["content"] = [_component_to_dict(item) for item in c.content]
+
+    # List item requires order; content may be attributes or nested block components
+    if ct == ComponentType.compListItem:
+        if c.order is not None:
+            d["order"] = c.order
+        if c.content:
+            d["content"] = [_mixed_to_dict(item) for item in c.content]
+
+    # Alert requires alertType
+    if ct == ComponentType.compAlert:
+        if c.alert_type:
+            d["alertType"] = c.alert_type
+        if c.content:
+            d["content"] = [_component_to_dict(child) for child in c.content]
+
+    # Block quote may have content
+    if ct == ComponentType.compBlockQuote:
+        if c.content:
+            d["content"] = [_component_to_dict(child) for child in c.content]
+
+    # Table requires columnCount, rowCount, content (rows)
+    if ct == ComponentType.compTable:
+        if c.column_count is not None:
+            d["columnCount"] = c.column_count
+        if c.row_count is not None:
+            d["rowCount"] = c.row_count
+        d["content"] = [_component_to_dict(row) for row in c.content]
+
+    # Table row requires rowIndex, rowRole, content (cells)
+    if ct == ComponentType.compTableRow:
+        if c.row_index is not None:
+            d["rowIndex"] = c.row_index
+        if c.row_role:
+            d["rowRole"] = c.row_role
+        d["content"] = [_component_to_dict(cell) for cell in c.content]
+
+    # Table cell requires cellRole, columnIndex
+    if ct == ComponentType.compTableCell:
+        if c.cell_role:
+            d["cellRole"] = c.cell_role
+        if c.column_index is not None:
+            d["columnIndex"] = c.column_index
+        if c.colspan is not None:
+            d["colspan"] = c.colspan
+        if c.rowspan is not None:
+            d["rowspan"] = c.rowspan
+        if c.content:
+            d["content"] = [_mixed_to_dict(a) for a in c.content]
+
+    return d
+
+
+def _mixed_to_dict(item: Any) -> dict:
+    """Serialise either an Attribute or a Component to a schema-aligned dict."""
+    from structure_parser.contracts.structured_markdown import Attribute, Component
+
+    if isinstance(item, Component):
+        return _component_to_dict(item)
+    return _attr_to_dict(item)
+
+
+def _attr_to_dict(attr: Any) -> dict:
+    """Serialise an Attribute to a schema-aligned dict."""
+    from structure_parser.contracts.structured_markdown import Attribute
+    from structure_parser.domain.enums import AttributeType
+
+    a: Attribute = attr
+    d: dict = {"attType": a.att_type.value}
+    if a.text:
+        d["text"] = a.text
+    if a.markdown:
+        d["markdown"] = a.markdown
+    if a.href:
+        d["href"] = a.href
+    if a.alt_text:
+        d["altText"] = a.alt_text
+    if a.source:
+        d["source"] = a.source
+    # attUnknown requires triageStatus
+    if a.att_type == AttributeType.attUnknown and a.triage_status:
+        d["triageStatus"] = a.triage_status.value
+    if a.content:
+        d["content"] = [_attr_to_dict(child) for child in a.content]
+    return d

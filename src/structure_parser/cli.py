@@ -1,6 +1,7 @@
 """Typer CLI entry point for the structure-parser tool."""
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 from typing import Annotated
 
@@ -42,6 +43,10 @@ def _config(debug: bool = False) -> ParserConfig:
     if debug:
         configure_logging(debug=True)
     return ParserConfig(emit_debug_logs=debug)
+
+
+def _pipeline_config(debug: bool = False) -> ParserConfig:
+    return _config(debug).model_copy(update={"enable_model_validation": False})
 
 
 @app.command("parse")
@@ -173,9 +178,38 @@ def cmd_pipe(
         log_format=log_format,
         strict=strict,
         dry_run=dry_run,
-        parser_config=_config(debug),
+        parser_config=_pipeline_config(debug),
     )
-    text, exit_code = PipelineCommand().run(cfg)
+    if sys.stderr.isatty():
+        from rich.console import Console
+        from rich.progress import (
+            BarColumn,
+            MofNCompleteColumn,
+            Progress,
+            SpinnerColumn,
+            TextColumn,
+            TimeElapsedColumn,
+        )
+
+        _console = Console(stderr=True)
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[cyan]{task.description}"),
+            BarColumn(),
+            MofNCompleteColumn(),
+            TimeElapsedColumn(),
+            console=_console,
+        ) as _progress:
+            _task = _progress.add_task("Discovering files…", total=None)
+
+            def _on_file(rel: str, done: int, total: int) -> None:
+                desc = f"…{rel[-48:]}" if len(rel) > 50 else rel
+                _progress.update(_task, total=total, completed=done, description=desc)
+
+            text, exit_code = PipelineCommand().run(cfg, progress_callback=_on_file)
+    else:
+        text, exit_code = PipelineCommand().run(cfg)
+
     typer.echo(text)
     raise typer.Exit(exit_code)
 

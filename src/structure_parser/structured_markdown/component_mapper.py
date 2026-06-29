@@ -70,14 +70,23 @@ def map_block_node(node: RawNode, source_path: str) -> Component:
             if c.node_type != "heading"
         ]
         if alert_type:
+            inner = "\n".join(
+                f"> {c.content}" for c in node.children if c.node_type == "paragraph" and c.content
+            )
+            md = f"> [!{alert_type.upper()}]\n{inner}" if inner else f"> [!{alert_type.upper()}]"
             return Component(
                 component_type=ComponentType.compAlert,
                 alert_type=alert_type,
+                markdown=md,
                 source=span,
                 content=children_comps,
             )
+        inner = "\n".join(
+            f"> {c.content}" for c in node.children if c.node_type == "paragraph" and c.content
+        )
         return Component(
             component_type=ComponentType.compBlockQuote,
+            markdown=inner or "> ...",
             source=span,
             content=children_comps,
         )
@@ -137,6 +146,7 @@ def map_block_node(node: RawNode, source_path: str) -> Component:
     return Component(
         component_type=ComponentType.compUnknown,
         text=node.content,
+        markdown=node.content or "",
         source=span,
         triage_status=TriageStatus.unknown,
     )
@@ -159,6 +169,7 @@ def _map_list_item(node: RawNode, source_path: str, order: int) -> Component:
     return Component(
         component_type=ComponentType.compListItem,
         text=text,
+        markdown=text,
         order=order,
         source=span,
         content=attrs + sub_comps,  # type: ignore[operator]
@@ -194,6 +205,7 @@ def _map_table_cell(
     return Component(
         component_type=ComponentType.compTableCell,
         text=node.content,
+        markdown=node.content or "",
         column_index=col_index,
         cell_role=cell_role,
         source=span,
